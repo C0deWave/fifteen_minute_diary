@@ -1,6 +1,7 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/component/page_model_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +29,8 @@ class _InitSplashScreenState extends State<InitSplashScreen> {
           }
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(isViewSplashView_Key, true);
-          Navigator.pop(context);
+          // Navigator.pop(context);
+          Get.back();
         },
         onSkip: () async {
           if (kDebugMode) {
@@ -36,7 +38,8 @@ class _InitSplashScreenState extends State<InitSplashScreen> {
           }
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(isViewSplashView_Key, true);
-          Navigator.pop(context);
+          // Navigator.pop(context);
+          Get.back();
         },
         showSkipButton: true,
         skip: const Text("Skip", style: TextStyle(fontWeight: FontWeight.w600)),

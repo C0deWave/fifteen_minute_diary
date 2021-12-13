@@ -28,6 +28,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   # 임시 데이터 저장용
   shared_preferences: ^2.0.11
+  # 라우팅 및 상태관리
+  get: ^4.5.1
 
 dev_dependencies:
   flutter_test:

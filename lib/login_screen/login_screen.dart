@@ -1,6 +1,7 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String _tag = 'login_screen:';
@@ -32,8 +33,9 @@ class LoginScreen extends StatelessWidget {
       if (kDebugMode) {
         print('$_tag Splash이동');
       }
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const InitSplashScreen()));
+      Get.to(InitSplashScreen());
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
     }
   }
 }
