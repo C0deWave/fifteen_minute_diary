@@ -19,7 +19,9 @@ dependencies:
   # 라우팅 및 상태관리
   get: ^4.5.1
   # svg 벡터 이미지 관리
-  flutter_svg: ^1.0.0
+  flutter_svg: ^0.23.0+1
+  # svg 벡터 이미지 프로바이더
+  flutter_svg_provider: ^0.1.3
 
 dev_dependencies:
   flutter_test:
