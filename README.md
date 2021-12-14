@@ -4,14 +4,15 @@
 
 업데이트 예정
 - [ ] Style: login_screen ui 구현
-- [ ] Style: 로그인 회피 가능하게 구현하기
 - [ ] Feat: firebase를 이용한 로그인 연동
 - [ ] Docs: readme 업데이트
+- [ ] Feat: 메인화면 사이드바 기능 구상및 업데이트하기
+- [ ] Feat: radio slider button 구현하기
 
 최근 업데이트
-- [X] Style: 초기 splash_screen 내용 업데이트
-- [X] Refactor : Get 라이브러리를 이용한 라우팅 및 상태 관리 추가
 - [X] Docs: readme 업데이트
+- [X] Style: initSplashScreen의 내용을 개선
+- [X] Style: mainPeedScreen의 ui구상 및 1차 적용
 
 commit 규칙
 1. feat : 새로운 기능에 대한 커밋
