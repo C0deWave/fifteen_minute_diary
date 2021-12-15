@@ -22,6 +22,8 @@ dependencies:
   flutter_svg: ^0.23.0+1
   # svg 벡터 이미지 프로바이더
   flutter_svg_provider: ^0.1.3
+  # 글씨 크기 자동조절
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
