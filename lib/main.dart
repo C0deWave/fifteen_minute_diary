@@ -1,6 +1,6 @@
-import 'package:fifteen_minute_diary/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'main_peed_screen/main_peed_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const MainPeedScreen(),
     );
   }
 }

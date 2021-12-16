@@ -24,6 +24,8 @@ dependencies:
   flutter_svg_provider: ^0.1.3
   # 글씨 크기 자동조절
   auto_size_text: ^3.0.0
+  # cupertino tab bar
+  cupertino_tabbar: ^2.0.0
 
 dev_dependencies:
   flutter_test:
