@@ -1,5 +1,5 @@
+import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'component/mainPeedBody.dart';
 
 class MainPeedScreen extends StatelessWidget {
@@ -8,21 +8,7 @@ class MainPeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.green),
-        elevation: 0,
-        backgroundColor: Colors.white12,
-        //TODO autosizetext 적용하기
-        title: Container(
-          child: const AutoSizeText(
-            "YYYY년 MM월 DD일 HH시 mm분",
-            maxFontSize: 50,
-            minFontSize: 3,
-            maxLines: 1,
-            style: TextStyle(color: Colors.black87),
-          ),
-        ),
-      ),
+      appBar: MainPeedAppBar,
       body: MainPeedBody(),
       //TODO:: 사이드바 추후 개선하기
       drawer: Drawer(

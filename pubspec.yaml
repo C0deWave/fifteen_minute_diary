@@ -26,6 +26,10 @@ dependencies:
   auto_size_text: ^3.0.0
   # cupertino tab bar
   cupertino_tabbar: ^2.0.0
+  # 시계 표시를 위한 타이머 빌더
+  timer_builder: ^2.0.0
+  # 시간 포맷을 적용하기 위함
+  date_format: ^2.0.4
 
 dev_dependencies:
   flutter_test:
