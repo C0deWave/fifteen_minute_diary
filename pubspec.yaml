@@ -30,6 +30,8 @@ dependencies:
   timer_builder: ^2.0.0
   # 시간 포맷을 적용하기 위함
   date_format: ^2.0.4
+  # 탭바를 붙이기 위한 sticky_header
+  flutter_sticky_header: ^0.6.0
 
 dev_dependencies:
   flutter_test:

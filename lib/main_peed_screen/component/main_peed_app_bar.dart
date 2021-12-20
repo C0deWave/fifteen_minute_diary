@@ -6,7 +6,8 @@ import 'package:timer_builder/timer_builder.dart';
 var MainPeedAppBar = AppBar(
     iconTheme: IconThemeData(color: Colors.green),
     elevation: 0,
-    backgroundColor: Colors.white12,
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.white,
     title: TimerBuilder.periodic(
       const Duration(seconds: 1),
       builder: (context) => AutoSizeText(
