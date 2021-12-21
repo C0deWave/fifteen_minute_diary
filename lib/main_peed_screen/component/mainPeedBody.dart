@@ -1,6 +1,9 @@
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
+import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:get/route_manager.dart';
 import 'DiaryCardViewWidget.dart';
 import 'TimerWidget.dart';
 
@@ -24,10 +27,14 @@ class MainPeedBody extends StatelessWidget {
                   (context, i) => Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: TimerWidget(
-                      callback: () {
-                        print("click timer");
-                      },
+                    child: Hero(
+                      tag: k_timer_herotag,
+                      child: TimerWidget(
+                        callback: () {
+                          Get.to(() => WriteDiaryScreen());
+                          print("click timer");
+                        },
+                      ),
                     ),
                   ),
                   childCount: 1,
