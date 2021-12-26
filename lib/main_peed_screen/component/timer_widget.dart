@@ -25,7 +25,7 @@ class TimerWidget extends StatelessWidget {
             // 메인 화면에서는 가만히 있다가
             // 일기 화면으로 넘어가면 카운트 시작
             children: [
-              Obx(() {
+              GetBuilder<TimerController>(builder: (_) {
                 return Text(
                   "${timerController.time}",
                   style: const TextStyle(
