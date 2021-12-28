@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
-import 'DiaryCardViewWidget.dart';
+import 'diary_card_view_widget.dart';
 import 'timer_widget.dart';
 
 class MainPeedBody extends StatelessWidget {
