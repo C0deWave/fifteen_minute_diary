@@ -24,6 +24,9 @@ class WriteDiaryScreen extends StatelessWidget {
       },
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
+          child: RotationTransition(
+              turns: AlwaysStoppedAnimation((315 / 360)),
+              child: Icon(Icons.send)),
           onPressed: () {},
         ),
         body: SafeArea(
