@@ -8,11 +8,13 @@
 - [ ] Style: login_screen ui 구현
 - [ ] Feat: firebase를 이용한 로그인 연동x
 - [ ] Feat: 글쓰기 이후 이미지 선택하기
-- [ ] Refactor: writeScreen 부분 위젯 분리하기
+- [ ] Feat: 일기쓰기 화면 - 제목에서 done 버튼시 내용으로 자동 전환 구현하기
 
 
 최근 업데이트
-- [X] Refactor: 클래스 파일명 통일 하기
+- [X] Style: writeScreen FAB 아이콘 변경
+- [X] Refactor: writeScreen 부분 위젯 분리하기
+- [X] Refactor: 파일명 스네이크 패턴으로 변경
 - [X] Docs: readme 업데이트
 
 commit 규칙
@@ -28,10 +30,10 @@ commit 규칙
 
 ---
 
-12월 27일 일기
+12월 29일 일기
 
-오늘은 갑자기 저녁약속이 생겼다.
-그래서 클래스명 통일만 했다.
+오늘은 갑자기 Xcode에서 flutter빌드가 되지 않는 문제가 있었다. 최신 버전의 ios를 flutter의 구 버전이 빌드를 하지 못해서 일어났었다. 해결법은 flutter channel master 과 flutter upgrade를 하는 것이였다.
+친구랑 밤에 디코를 하면서 코딩을 했다. 누군가와 이렇게 같이 코딩을 해야 빠르게 성장하는 것 같다.
 
 ---
 
