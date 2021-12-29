@@ -1,6 +1,6 @@
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'component/mainPeedBody.dart';
+import 'component/main_peed_body.dart';
 
 class MainPeedScreen extends StatelessWidget {
   const MainPeedScreen({Key? key}) : super(key: key);
