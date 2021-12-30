@@ -1,5 +1,8 @@
+import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/route_manager.dart';
+import 'controller/post_controller.dart';
 import 'main_peed_screen/main_peed_screen.dart';
 
 void main() {
@@ -18,7 +21,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainPeedScreen(),
+      // home: const MainPeedScreen(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const MainPeedScreen()),
+        GetPage(
+            name: '/writepage',
+            page: () => const WriteDiaryScreen(),
+            binding: PostBinding()),
+      ],
     );
   }
 }
