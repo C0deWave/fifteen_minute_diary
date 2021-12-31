@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,13 @@ class HeroTimerWidget extends StatelessWidget {
         actions: <Widget>[
           CupertinoDialogAction(
             child: Text(k_alert_yes),
-            onPressed: () => Get.offAll(MainPeedScreen()),
+            onPressed: () {
+              //TODO: 게시글 저장 구현하기
+              Get.find<PostController>().addPostList();
+              timerController.resetTimer();
+              Get.back();
+              Get.back();
+            },
           ),
           CupertinoDialogAction(
             child: Text(k_alert_no),
@@ -47,7 +54,8 @@ class HeroTimerWidget extends StatelessWidget {
               child: Text(k_alert_cancle),
               onPressed: () {
                 timerController.resetTimer();
-                Get.offAll(MainPeedScreen());
+                Get.back();
+                Get.back();
               }),
         ],
       ),
