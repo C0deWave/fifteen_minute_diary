@@ -32,6 +32,8 @@ dependencies:
   date_format: ^2.0.4
   # 탭바를 붙이기 위한 sticky_header
   flutter_sticky_header: ^0.6.0
+  # 이미지 선택하는 기능 구현
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
