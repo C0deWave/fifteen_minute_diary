@@ -25,19 +25,25 @@ class PostController extends GetxController {
   FocusNode getTitleFocusController() => titleFocusController;
   FocusNode getContextFocusController() => contextFocusController;
 
-  void addPostList() {
+  void addPostList(DateTime writeDate, int duration) {
     if (titleController.text.isNotEmpty && contextController.text.isNotEmpty) {
       var temp = Post(
           title: titleController.text,
           content: contextController.text,
-          image: File(selectedImage.path));
+          image: File(selectedImage.path),
+          writeDate: writeDate,
+          duration: duration);
       postlist.add(temp);
       update();
-      titleController.clear();
-      contextController.clear();
-      isUsedImage = false;
+      resetWriteState();
       print("이미지가 저장되었습니다.");
     }
+  }
+
+  void resetWriteState() {
+    titleController.clear();
+    contextController.clear();
+    isUsedImage = false;
   }
 
   //이미지 사용중으로 변경

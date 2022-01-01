@@ -56,6 +56,8 @@ class MainPeedBody extends StatelessWidget {
                       title: postController.postlist[i].title,
                       content: postController.postlist[i].content,
                       image: postController.postlist[i].image,
+                      writeDate: postController.postlist[i].writeDate,
+                      duration: postController.postlist[i].duration,
                     ),
                     //TODO : 일기 개수 반영하기
                     childCount: postController.postlist.length,

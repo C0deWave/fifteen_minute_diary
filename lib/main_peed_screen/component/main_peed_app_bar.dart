@@ -12,7 +12,7 @@ var MainPeedAppBar = AppBar(
       const Duration(seconds: 1),
       builder: (context) => AutoSizeText(
         formatDate(DateTime.now(),
-            [yyyy, '년 ', mm, '월 ', dd, '일 ', am, " ", hh, '시 ', nn, '분']),
+            [yyyy, '-', mm, '-', dd, "  ", "", HH, ':', nn, '']),
         maxFontSize: 50,
         minFontSize: 3,
         maxLines: 1,

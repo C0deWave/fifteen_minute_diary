@@ -40,7 +40,9 @@ class HeroTimerWidget extends StatelessWidget {
             child: Text(k_alert_yes),
             onPressed: () {
               //TODO: 게시글 저장 구현하기
-              Get.find<PostController>().addPostList();
+              Get.find<PostController>().addPostList(
+                  timerController.getWriteDate(),
+                  timerController.getDuration());
               timerController.resetTimer();
               Get.back();
               Get.back();

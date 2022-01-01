@@ -1,16 +1,23 @@
 import 'dart:io';
 
+import 'package:date_format/date_format.dart';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiaryCardViewWidget extends StatelessWidget {
   DiaryCardViewWidget(
-      {required this.title, required this.content, required this.image});
+      {required this.title,
+      required this.content,
+      required this.image,
+      required this.writeDate,
+      required this.duration});
 
   final String title;
   final String content;
   final File image;
+  final DateTime writeDate;
+  final int duration;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class DiaryCardViewWidget extends StatelessWidget {
               Flexible(
                   child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15)),
                     image: DecorationImage(
@@ -51,13 +58,24 @@ class DiaryCardViewWidget extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            const Text("?시 ??분"),
+                            Text(formatDate(DateTime.now(), [
+                              yyyy,
+                              '년',
+                              mm,
+                              '월',
+                              dd,
+                              "일  ",
+                              hh,
+                              ':',
+                              nn,
+                              ''
+                            ])),
                           ],
                         ),
                         Center(
                           child: Text(content),
                         ),
-                        Text("12분동안 작성...")
+                        Text("${(duration ~/ 60)}분 ${duration % 60}초 동안 작성")
                       ],
                     ),
                   ))
