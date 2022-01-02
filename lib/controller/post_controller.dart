@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostController extends GetxController {
@@ -18,6 +20,8 @@ class PostController extends GetxController {
   var contextFocusController = FocusNode();
   //Post게시글 리스트
   List<Post> postlist = [];
+  //Post list Hive 저장소
+  late Box<Post> postBox;
 
   // getMethod
   TextEditingController getTitleController() => titleController;
@@ -34,6 +38,8 @@ class PostController extends GetxController {
           writeDate: writeDate,
           duration: duration);
       postlist.add(temp);
+      postBox.add(temp);
+      print("postBox크기 ${postBox.length}");
       update();
       resetWriteState();
       print("이미지가 저장되었습니다.");
@@ -69,6 +75,20 @@ class PostController extends GetxController {
 
   void completeContextWrite() {
     print("complete");
+  }
+
+  @override
+  void onInit() async {
+    // Here you can fetch you product from server
+    print('postBox controller 주입');
+    postBox = Hive.box(k_post_box);
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    postBox.close();
+    super.onClose();
   }
 }
 

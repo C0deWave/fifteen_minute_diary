@@ -36,11 +36,17 @@ dependencies:
   image_picker: ^0.8.4+4
   # Nosql 형식의 Database
   hive: ^2.0.5
+  # hive 확장
+  hive_flutter: ^1.1.0
+  # 저장 경로 알려주기 위한 패키지
+  path_provider: ^2.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  hive_generator: ^1.1.1
+  build_runner: ^2.1.7
 
 flutter:
   uses-material-design: true

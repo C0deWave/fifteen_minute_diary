@@ -1,11 +1,20 @@
+import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/route_manager.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'controller/post_controller.dart';
 import 'main_peed_screen/main_peed_screen.dart';
 
-void main() {
+//TODO 튜토리얼 페이지 왜 안뜨는지 확인하기
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final document = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(document.path).then((value) => print("Hive init"));
+  Hive.registerAdapter(PostAdapter());
+  await Hive.openBox<Post>(k_post_box);
   runApp(const MyApp());
 }
 
