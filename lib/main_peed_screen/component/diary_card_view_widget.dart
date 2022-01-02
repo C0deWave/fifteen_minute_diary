@@ -58,7 +58,7 @@ class DiaryCardViewWidget extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            Text(formatDate(DateTime.now(), [
+                            Text(formatDate(writeDate, [
                               yyyy,
                               '년',
                               mm,
