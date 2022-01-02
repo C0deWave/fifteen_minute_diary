@@ -19,6 +19,7 @@ class PhotoDialogWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
+          color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -30,6 +31,7 @@ class PhotoDialogWidget extends StatelessWidget {
                         await _picker.pickImage(source: ImageSource.camera);
                     Get.find<PostController>().updateSelectImage(photo);
                     Get.find<PostController>().changeImageWidgetStatus(true);
+                    Get.back();
                   },
                   child: Container(
                     margin:
@@ -61,6 +63,7 @@ class PhotoDialogWidget extends StatelessWidget {
                         await _picker.pickImage(source: ImageSource.gallery);
                     Get.find<PostController>().updateSelectImage(image);
                     Get.find<PostController>().changeImageWidgetStatus(true);
+                    Get.back();
                   },
                   child: Container(
                     margin:
