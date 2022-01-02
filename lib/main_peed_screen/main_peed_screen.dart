@@ -1,5 +1,9 @@
+import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'component/main_peed_body.dart';
 
 class MainPeedScreen extends StatelessWidget {
@@ -7,6 +11,7 @@ class MainPeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    checkData(context);
     return Scaffold(
       appBar: MainPeedAppBar,
       body: MainPeedBody(),
@@ -40,5 +45,19 @@ class MainPeedScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // 스플래시를 보지 않았을 경우 스플래시 설명화면으로 이동
+  void checkData(var context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isViewSplash = prefs.getBool(isViewSplashView_Key) ?? false;
+    if (!isViewSplash) {
+      if (kDebugMode) {
+        print('Splash이동');
+      }
+      Get.to(InitSplashScreen());
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
+    }
   }
 }

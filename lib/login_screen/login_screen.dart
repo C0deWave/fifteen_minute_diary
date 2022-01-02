@@ -14,7 +14,6 @@ class LoginScreen extends StatelessWidget {
     // if (true) {
     //   return const InitSplashScreen();
     // }
-    checkData(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,19 +22,5 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  // 스플래시를 보지 않았을 경우 스플래시 설명화면으로 이동
-  void checkData(var context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isViewSplash = prefs.getBool(isViewSplashView_Key) ?? false;
-    if (!isViewSplash) {
-      if (kDebugMode) {
-        print('$_tag Splash이동');
-      }
-      Get.to(InitSplashScreen());
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
-    }
   }
 }
