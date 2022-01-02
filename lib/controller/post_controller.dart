@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,10 @@ class PostController extends GetxController {
   var contextController = TextEditingController();
   // 이미지를 선택했는지 확인하는 용도로 사용
   bool isUsedImage = false;
+  //인디케이터 확인용 코드
+  bool isShowIndicator = false;
   // 선택한 이미지 파일
-  late XFile selectedImage;
+  late XFile? selectedImage;
   // 포커스 전환을 하는데 사용합니다.
   var titleFocusController = FocusNode();
   var contextFocusController = FocusNode();
@@ -34,7 +35,7 @@ class PostController extends GetxController {
       var temp = Post(
           title: titleController.text,
           content: contextController.text,
-          image: File(selectedImage.path),
+          image: File(selectedImage!.path),
           writeDate: writeDate,
           duration: duration);
       postlist.add(temp);
@@ -46,10 +47,24 @@ class PostController extends GetxController {
     }
   }
 
+  void changePostIndicatorState(bool state) {
+    isShowIndicator = state;
+    update();
+  }
+
   void resetWriteState() {
     titleController.clear();
     contextController.clear();
     isUsedImage = false;
+    selectedImage = null;
+    update();
+  }
+
+  // 지정된 이미지를 삭제
+  void deleteImage() {
+    selectedImage = null;
+    isUsedImage = false;
+    update();
   }
 
   //이미지 사용중으로 변경

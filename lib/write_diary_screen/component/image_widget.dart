@@ -17,7 +17,7 @@ class ImageWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: FileImage(File(controller.selectedImage.path))),
+                      image: FileImage(File(controller.selectedImage!.path))),
                   borderRadius: BorderRadius.circular(15)),
             )
           : Container();
