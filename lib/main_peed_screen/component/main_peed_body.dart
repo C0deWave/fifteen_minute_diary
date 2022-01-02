@@ -1,6 +1,9 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/diary_list_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,6 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
-import 'diary_card_view_widget.dart';
 import 'timer_widget.dart';
 
 class MainPeedBody extends StatelessWidget {
@@ -17,6 +19,7 @@ class MainPeedBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var postController = Get.put(PostController());
+    var tabbarController = Get.put(TabbarController());
     return Column(children: [
       Expanded(
         child: CustomScrollView(
@@ -50,18 +53,16 @@ class MainPeedBody extends StatelessWidget {
             GetBuilder<PostController>(builder: (_) {
               return SliverStickyHeader(
                 header: TabbarWidget(),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, i) => DiaryCardViewWidget(
-                      title: postController.postlist[i].title,
-                      content: postController.postlist[i].content,
-                      image: postController.postlist[i].image,
-                      writeDate: postController.postlist[i].writeDate,
-                      duration: postController.postlist[i].duration,
-                    ),
-                    //TODO : 일기 개수 반영하기
-                    childCount: postController.postlist.length,
-                  ),
+                sliver: GetBuilder<TabbarController>(
+                  init: TabbarController(),
+                  builder: (_) {
+                    if (tabbarController.currentState ==
+                        TabbarState.diaryState) {
+                      return DiaryListWidget(postController: postController);
+                    } else {
+                      return CalenderWidget();
+                    }
+                  },
                 ),
               );
             })

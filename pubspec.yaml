@@ -40,6 +40,10 @@ dependencies:
   hive_flutter: ^1.1.0
   # 저장 경로 알려주기 위한 패키지
   path_provider: ^2.0.8
+  # 캘린더 뷰
+  table_calendar: ^3.0.3
+  # 캘린더뷰 번역을 위함
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

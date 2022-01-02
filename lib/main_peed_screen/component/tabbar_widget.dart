@@ -1,15 +1,16 @@
 import 'package:cupertino_tabbar/cupertino_tabbar.dart';
+import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TabbarWidget extends StatefulWidget {
-  const TabbarWidget({Key? key}) : super(key: key);
-
   @override
   State<TabbarWidget> createState() => _TabbarWidgetState();
 }
 
 class _TabbarWidgetState extends State<TabbarWidget> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,6 +42,13 @@ class _TabbarWidgetState extends State<TabbarWidget> {
           return index;
         },
         (data) {
+          if (data == 0) {
+            Get.find<TabbarController>()
+                .changeTabbarState(TabbarState.diaryState);
+          } else {
+            Get.find<TabbarController>()
+                .changeTabbarState(TabbarState.calendarState);
+          }
           setState(() {
             index = data;
           });
