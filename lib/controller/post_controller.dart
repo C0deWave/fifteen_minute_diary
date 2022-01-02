@@ -40,8 +40,8 @@ class PostController extends GetxController {
       postlist.add(temp);
       postBox.add(temp);
       print("postBox크기 ${postBox.length}");
-      update();
       resetWriteState();
+      update();
       print("이미지가 저장되었습니다.");
     }
   }
@@ -82,6 +82,12 @@ class PostController extends GetxController {
     // Here you can fetch you product from server
     print('postBox controller 주입');
     postBox = Hive.box(k_post_box);
+    for (var i = 0; i < postBox.length; i++) {
+      var temp = postBox.get(i);
+      if (temp != null) {
+        postlist.add(temp);
+      }
+    }
     super.onInit();
   }
 

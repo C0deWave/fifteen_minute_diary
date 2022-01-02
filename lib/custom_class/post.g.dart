@@ -21,12 +21,11 @@ class PostAdapter extends TypeAdapter<Post> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
 
-    File temp = File("${fields[2]}");
-    // if (!temp.existsSync()) {
-    //   temp.writeAsBytesSync(fields[2]);
-    // }
-    // temp.writeAsBytesSync(fields[2] as Uint8List);
-    print("${fields[3] as DateTime}");
+    File temp = File("${document.path}/${fields[3].hashCode}");
+    if (!temp.existsSync()) {
+      print("이미지 생성");
+      temp.writeAsBytesSync(fields[2]);
+    }
     return Post(
       title: fields[0] == null ? '제목이 없습니다.' : fields[0] as String,
       content: fields[1] == null ? '내용이 없습니다.' : fields[1] as String,
@@ -40,6 +39,7 @@ class PostAdapter extends TypeAdapter<Post> {
   void write(BinaryWriter writer, Post obj) {
     File temp = File("${document.path}/${obj.writeDate.hashCode}");
     if (!temp.existsSync()) {
+      print("이미지 복사해서 저장");
       temp.writeAsBytesSync(obj.image.readAsBytesSync());
     }
     writer
@@ -49,7 +49,8 @@ class PostAdapter extends TypeAdapter<Post> {
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
-      ..write("${document.path}/${obj.writeDate.hashCode}")
+      ..write(obj.image.readAsBytesSync())
+      // ..write("${document.path}/${obj.writeDate.hashCode}")
       ..writeByte(3)
       ..write(obj.writeDate)
       ..writeByte(4)
