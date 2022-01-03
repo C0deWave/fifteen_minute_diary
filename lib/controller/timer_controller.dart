@@ -59,4 +59,8 @@ class TimerController extends GetxController {
   }
 
   String twoDigits(int n) => n >= 10 ? "$n" : "0$n";
+
+  String getCurrentTime() {
+    return "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}";
+  }
 }

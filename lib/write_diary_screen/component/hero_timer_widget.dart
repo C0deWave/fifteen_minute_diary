@@ -34,7 +34,9 @@ class HeroTimerWidget extends StatelessWidget {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text(k_alert_title),
-        content: Text(k_alert_content),
+        content: Text(k_alert_content1 +
+            Get.find<TimerController>().getCurrentTime() +
+            k_alert_content2),
         actions: <Widget>[
           CupertinoDialogAction(
             child: Text(k_alert_yes),
@@ -71,7 +73,9 @@ class HeroTimerWidget extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(k_alert_title),
-        content: Text(k_alert_content),
+        content: Text(k_alert_content1 +
+            Get.find<TimerController>().getCurrentTime() +
+            k_alert_content2),
         actions: <Widget>[
           TextButton(
             child: Text(k_alert_yes),
