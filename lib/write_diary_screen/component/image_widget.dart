@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/write_diary_screen/component/photo_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,14 +12,20 @@ class ImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PostController>(builder: (controller) {
       return controller.isUsedImage
-          ? Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: FileImage(File(controller.selectedImage!.path))),
-                  borderRadius: BorderRadius.circular(15)),
+          ? GestureDetector(
+              onTap: () {
+                print("tab");
+                Get.dialog(PhotoDialogWidget());
+              },
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: FileImage(File(controller.selectedImage!.path))),
+                    borderRadius: BorderRadius.circular(15)),
+              ),
             )
           : Container();
     });

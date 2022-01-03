@@ -8,14 +8,11 @@ import '../../controller/post_controller.dart';
 class PhotoDialogWidget extends StatelessWidget {
   const PhotoDialogWidget({
     Key? key,
-    required ImagePicker picker,
-  })  : _picker = picker,
-        super(key: key);
-
-  final ImagePicker _picker;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ImagePicker _picker = ImagePicker();
     return Stack(children: [
       Center(
         child: SingleChildScrollView(

@@ -13,8 +13,6 @@ class WriteDiaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ImagePicker _picker = ImagePicker();
-
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -23,7 +21,7 @@ class WriteDiaryScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add_a_photo),
           onPressed: () {
-            Get.dialog(PhotoDialogWidget(picker: _picker));
+            Get.dialog(PhotoDialogWidget());
           },
         ),
         body: SafeArea(
