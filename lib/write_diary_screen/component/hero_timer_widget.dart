@@ -56,6 +56,7 @@ class HeroTimerWidget extends StatelessWidget {
               child: Text(k_alert_cancle),
               onPressed: () {
                 timerController.resetTimer();
+                Get.find<PostController>().resetWriteState();
                 Get.back();
                 Get.back();
               }),
