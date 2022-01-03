@@ -37,8 +37,15 @@ class MainPeedBody extends StatelessWidget {
                       tag: k_timer_herotag,
                       child: TimerWidget(
                         callback: () {
+                          // 일기쓰기 타이머의 시작
                           final timerController = Get.put(TimerController());
-                          timerController.startTimer();
+                          timerController.startTimer(callback: () {
+                            postController.addPostList(
+                                timerController.getWriteDate(),
+                                timerController.getDuration());
+                            timerController.resetTimer();
+                            Get.back();
+                          });
                           Get.to(() => WriteDiaryScreen());
                           print("click timer");
                         },

@@ -1,21 +1,27 @@
 import 'dart:async';
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:get/get.dart';
 
 class TimerController extends GetxController {
-  RxString time = "15:00".obs;
+  TimerController() {
+    time =
+        "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}"
+            .obs;
+  }
+  RxString time = "--:--".obs;
+  int _timerDuration = k_timer_duration;
   RxString subtext = "15분간 일기에 집중하세요".obs;
   // RxString subtext = "Click me. and write diary".obs;
 
-  int _timer_duration = 60 * 15;
   late DateTime writeDate;
   late Timer _timer;
 
   DateTime getWriteDate() => writeDate;
   int getDuration() {
-    return 60 * 15 - _timer_duration;
+    return k_timer_duration - _timerDuration;
   }
 
-  void startTimer() {
+  void startTimer({required Function callback}) {
     subtext = "다 쓰거나 취소시 Click!!.".obs;
     const oneSec = Duration(seconds: 1);
     writeDate = DateTime.now();
@@ -23,8 +29,9 @@ class TimerController extends GetxController {
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) async {
-        if (_timer_duration <= 0) {
+        if (_timerDuration <= 0) {
           timer.cancel();
+          callback();
         } else {
           updateTimer();
         }
@@ -35,16 +42,18 @@ class TimerController extends GetxController {
   void resetTimer() {
     print('타이머 초기화');
     _timer.cancel();
-    _timer_duration = 60 * 15;
-    time = "15:00".obs;
+    _timerDuration = k_timer_duration;
+    time =
+        "${twoDigits(k_timer_duration ~/ 60)}:${twoDigits((k_timer_duration % 60).toInt())}"
+            .obs;
     subtext = "Click me. and write diary".obs;
   }
 
   void updateTimer() async {
-    _timer_duration -= 1;
+    _timerDuration -= 1;
     // print("${_timer_duration}");
     time =
-        "${twoDigits((_timer_duration / 60).toInt())}:${twoDigits((_timer_duration % 60).toInt())}"
+        "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}"
             .obs;
     update();
   }
