@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:fifteen_minute_diary/constant.dart';
-import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/controller/timer_controller.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/timer_widget.dart';
+import 'package:fifteen_minute_diary/write_diary_screen/component/timer_complete_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../controller/timer_controller.dart';
-import '../../main_peed_screen/component/timer_widget.dart';
-import '../../main_peed_screen/main_peed_screen.dart';
 
 class HeroTimerWidget extends StatelessWidget {
   const HeroTimerWidget({Key? key}) : super(key: key);
@@ -19,80 +17,14 @@ class HeroTimerWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Hero(
-          tag: k_timer_herotag,
+          tag: k_TimerHerotag,
           child: TimerWidget(callback: () async {
             Get.dialog(!Platform.isIOS
-                ? await androidWriteCheckAlert(context, timerController)
-                : await iosWriteCheckAlert(context, timerController));
+                ? await TimerCompleteAlert.androidWriteCheckAlert(
+                    context, timerController)
+                : await TimerCompleteAlert.iosWriteCheckAlert(
+                    context, timerController));
           })),
-    );
-  }
-
-  Future<dynamic> iosWriteCheckAlert(
-      BuildContext context, TimerController timerController) {
-    return showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(k_alert_title),
-        content: Text(k_alert_content1 +
-            Get.find<TimerController>().getCurrentTime() +
-            k_alert_content2),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            child: Text(k_alert_yes),
-            onPressed: () {
-              //TODO: 게시글 저장 구현하기
-              Get.find<PostController>().addPostList(
-                  timerController.getWriteDate(),
-                  timerController.getDuration());
-              timerController.resetTimer();
-              Get.back();
-              Get.back();
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text(k_alert_no),
-            onPressed: () => Get.back(),
-          ),
-          CupertinoDialogAction(
-              child: Text(k_alert_cancle),
-              onPressed: () {
-                timerController.resetTimer();
-                Get.find<PostController>().resetWriteState();
-                Get.back();
-                Get.back();
-              }),
-        ],
-      ),
-    );
-  }
-
-  Future<dynamic> androidWriteCheckAlert(
-      BuildContext context, TimerController timerController) {
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(k_alert_title),
-        content: Text(k_alert_content1 +
-            Get.find<TimerController>().getCurrentTime() +
-            k_alert_content2),
-        actions: <Widget>[
-          TextButton(
-            child: Text(k_alert_yes),
-            onPressed: () => Get.offAll(MainPeedScreen()),
-          ),
-          TextButton(
-            child: Text(k_alert_no),
-            onPressed: () => Get.back(),
-          ),
-          TextButton(
-              child: Text(k_alert_cancle),
-              onPressed: () {
-                timerController.resetTimer();
-                Get.offAll(MainPeedScreen());
-              }),
-        ],
-      ),
     );
   }
 }

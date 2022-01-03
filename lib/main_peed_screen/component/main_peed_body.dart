@@ -34,7 +34,7 @@ class MainPeedBody extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: Hero(
-                      tag: k_timer_herotag,
+                      tag: k_TimerHerotag,
                       child: TimerWidget(
                         callback: () {
                           // 일기쓰기 타이머의 시작
@@ -46,8 +46,11 @@ class MainPeedBody extends StatelessWidget {
                             timerController.resetTimer();
                             Get.back();
                           });
-                          Get.to(() => WriteDiaryScreen());
-                          print("click timer");
+                          Get.to(() => const WriteDiaryScreen());
+                          if (k_DebugMode) {
+                            // ignore: avoid_print
+                            print("click timer");
+                          }
                         },
                       ),
                     ),
@@ -67,7 +70,7 @@ class MainPeedBody extends StatelessWidget {
                         TabbarState.diaryState) {
                       return DiaryListWidget(postController: postController);
                     } else {
-                      return CalenderWidget();
+                      return const CalenderWidget();
                     }
                   },
                 ),

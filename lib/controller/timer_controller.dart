@@ -9,7 +9,7 @@ class TimerController extends GetxController {
             .obs;
   }
   RxString time = "--:--".obs;
-  int _timerDuration = k_timer_duration;
+  int _timerDuration = k_TimerDuration;
   RxString subtext = "15분간 일기에 집중하세요".obs;
   // RxString subtext = "Click me. and write diary".obs;
 
@@ -18,7 +18,7 @@ class TimerController extends GetxController {
 
   DateTime getWriteDate() => writeDate;
   int getDuration() {
-    return k_timer_duration - _timerDuration;
+    return k_TimerDuration - _timerDuration;
   }
 
   void startTimer({required Function callback}) {
@@ -42,9 +42,9 @@ class TimerController extends GetxController {
   void resetTimer() {
     print('타이머 초기화');
     _timer.cancel();
-    _timerDuration = k_timer_duration;
+    _timerDuration = k_TimerDuration;
     time =
-        "${twoDigits(k_timer_duration ~/ 60)}:${twoDigits((k_timer_duration % 60).toInt())}"
+        "${twoDigits(k_TimerDuration ~/ 60)}:${twoDigits((k_TimerDuration % 60).toInt())}"
             .obs;
     subtext = "Click me. and write diary".obs;
   }

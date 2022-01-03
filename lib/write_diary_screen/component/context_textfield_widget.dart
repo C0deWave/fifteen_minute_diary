@@ -9,7 +9,7 @@ class ContextTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<PostController>();
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: TextField(
           controller: controller.getContextController(),
           onEditingComplete: () {

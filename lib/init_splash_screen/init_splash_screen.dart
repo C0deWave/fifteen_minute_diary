@@ -24,20 +24,22 @@ class _InitSplashScreenState extends State<InitSplashScreen> {
         animationDuration: 200,
         pages: listPagesViewModel,
         onDone: () async {
-          if (kDebugMode) {
+          if (k_DebugMode) {
+            // ignore: avoid_print
             print('$tag shared_preference 데이터 저장');
           }
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(isViewSplashView_Key, true);
+          prefs.setBool(k_IsViewSplashViewKey, true);
           // Navigator.pop(context);
           Get.back();
         },
         onSkip: () async {
-          if (kDebugMode) {
+          if (k_DebugMode) {
+            // ignore: avoid_print
             print('$tag shared_preference 데이터 저장');
           }
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(isViewSplashView_Key, true);
+          prefs.setBool(k_IsViewSplashViewKey, true);
           // Navigator.pop(context);
           Get.back();
         },

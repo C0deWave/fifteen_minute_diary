@@ -13,9 +13,9 @@ var listPagesViewModel = <PageViewModel>[
       child: Center(
         child: SafeArea(
             child: Container(
-          decoration: BoxDecoration(
-              color: initSplashBackgroundImageColor,
-              shape: initSplashImageShape,
+          decoration: const BoxDecoration(
+              color: k_InitSplashBackgroundImageColor,
+              shape: k_InitSplashImageShape,
               image: DecorationImage(
                 image: Svg(
                     "asset/image/init_splash_screen/init1page_notebook.svg"),
@@ -30,9 +30,9 @@ var listPagesViewModel = <PageViewModel>[
     image: Center(
       child: SafeArea(
           child: Container(
-        decoration: BoxDecoration(
-            shape: initSplashImageShape,
-            color: initSplashBackgroundImageColor,
+        decoration: const BoxDecoration(
+            shape: k_InitSplashImageShape,
+            color: k_InitSplashBackgroundImageColor,
             image: DecorationImage(
               image: Svg("asset/image/init_splash_screen/init3page_notify.svg"),
             )),
@@ -45,9 +45,9 @@ var listPagesViewModel = <PageViewModel>[
     image: Center(
       child: SafeArea(
           child: Container(
-        decoration: BoxDecoration(
-            color: initSplashBackgroundImageColor,
-            shape: initSplashImageShape,
+        decoration: const BoxDecoration(
+            color: k_InitSplashBackgroundImageColor,
+            shape: k_InitSplashImageShape,
             image: DecorationImage(
               image:
                   Svg("asset/image/init_splash_screen/init2page_camping.svg"),

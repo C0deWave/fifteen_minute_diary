@@ -1,17 +1,17 @@
 import 'dart:io';
-
 import 'package:date_format/date_format.dart';
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiaryCardViewWidget extends StatelessWidget {
-  DiaryCardViewWidget(
-      {required this.title,
+  const DiaryCardViewWidget(
+      {Key? key,
+      required this.title,
       required this.content,
       required this.image,
       required this.writeDate,
-      required this.duration});
+      required this.duration})
+      : super(key: key);
 
   final String title;
   final String content;
@@ -31,6 +31,7 @@ class DiaryCardViewWidget extends StatelessWidget {
           elevation: 3,
           color: Colors.orangeAccent.shade400,
           child: Row(
+            // ignore: todo
             //TODO 반전 포맷도 하나 만들기
             children: [
               Flexible(

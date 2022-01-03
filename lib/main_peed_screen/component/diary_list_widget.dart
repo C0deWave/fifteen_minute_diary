@@ -1,7 +1,6 @@
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_view_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class DiaryListWidget extends StatelessWidget {
   const DiaryListWidget({
@@ -22,6 +21,7 @@ class DiaryListWidget extends StatelessWidget {
           writeDate: postController.postlist[i].writeDate,
           duration: postController.postlist[i].duration,
         ),
+        // ignore: todo
         //TODO : 일기 개수 반영하기
         childCount: postController.postlist.length,
       ),

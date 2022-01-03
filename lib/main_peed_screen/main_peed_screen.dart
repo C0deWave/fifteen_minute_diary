@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
@@ -13,9 +15,10 @@ class MainPeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     checkData(context);
     return Scaffold(
-      appBar: MainPeedAppBar,
-      body: MainPeedBody(),
-      //TODO:: 사이드바 추후 개선하기
+      appBar: mainPeedAppBar,
+      body: const MainPeedBody(),
+      // ignore: todo
+      //TODO 사이드바 추후 개선하기
       drawer: Drawer(
         backgroundColor: Colors.green,
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -25,9 +28,9 @@ class MainPeedScreen extends StatelessWidget {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            Container(
+            const SizedBox(
               height: 80,
-              child: const DrawerHeader(
+              child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
@@ -50,12 +53,12 @@ class MainPeedScreen extends StatelessWidget {
   // 스플래시를 보지 않았을 경우 스플래시 설명화면으로 이동
   void checkData(var context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isViewSplash = prefs.getBool(isViewSplashView_Key) ?? false;
+    bool isViewSplash = prefs.getBool(k_IsViewSplashViewKey) ?? false;
     if (!isViewSplash) {
-      if (kDebugMode) {
+      if (k_DebugMode) {
         print('Splash이동');
       }
-      Get.to(InitSplashScreen());
+      Get.to((_) => const InitSplashScreen());
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
     }

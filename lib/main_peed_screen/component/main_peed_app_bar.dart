@@ -3,8 +3,8 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-var MainPeedAppBar = AppBar(
-    iconTheme: IconThemeData(color: Colors.green),
+var mainPeedAppBar = AppBar(
+    iconTheme: const IconThemeData(color: Colors.green),
     elevation: 0,
     backgroundColor: Colors.white,
     foregroundColor: Colors.white,
@@ -16,6 +16,6 @@ var MainPeedAppBar = AppBar(
         maxFontSize: 50,
         minFontSize: 3,
         maxLines: 1,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
       ),
     ));

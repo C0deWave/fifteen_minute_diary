@@ -1,3 +1,4 @@
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class PhotoDialogWidget extends StatelessWidget {
       Center(
         child: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
             child: Column(
@@ -65,11 +66,11 @@ class PhotoDialogWidget extends StatelessWidget {
                         Get.back();
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                        margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                         decoration: BoxDecoration(
                           color: Colors.green.shade100,
                           shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           ),
                         ),
@@ -101,11 +102,11 @@ class PhotoDialogWidget extends StatelessWidget {
                         Get.back();
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                        margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                         decoration: BoxDecoration(
                           color: Colors.green.shade100,
                           shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           ),
                         ),
@@ -125,11 +126,14 @@ class PhotoDialogWidget extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      print("click");
+                      if (k_DebugMode) {
+                        // ignore: avoid_print
+                        print("click");
+                      }
                       Get.find<PostController>().deleteImage();
                       Get.back();
                     },
-                    child: Text("이미지 삭제")),
+                    child: const Text("이미지 삭제")),
               ],
             ),
           ),
@@ -138,8 +142,8 @@ class PhotoDialogWidget extends StatelessWidget {
       GetBuilder<PostController>(builder: (_) {
         if (_.isShowIndicator) {
           return Container(
-              color: Color(0x00000000),
-              child: Center(
+              color: const Color(0x00000000),
+              child: const Center(
                   child: CupertinoActivityIndicator(
                 color: Colors.black,
               )));

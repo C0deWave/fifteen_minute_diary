@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TabbarWidget extends StatefulWidget {
+  const TabbarWidget({Key? key}) : super(key: key);
+
   @override
   State<TabbarWidget> createState() => _TabbarWidgetState();
 }

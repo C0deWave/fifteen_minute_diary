@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
@@ -40,10 +42,14 @@ class PostController extends GetxController {
           duration: duration);
       postlist.add(temp);
       postBox.add(temp);
-      print("postBox크기 ${postBox.length}");
+      if (k_DebugMode) {
+        print("postBox크기 ${postBox.length}");
+      }
       resetWriteState();
       update();
-      print("이미지가 저장되었습니다.");
+      if (k_DebugMode) {
+        print("이미지가 저장되었습니다.");
+      }
     }
   }
 
@@ -70,7 +76,9 @@ class PostController extends GetxController {
   //이미지 사용중으로 변경
   void changeImageWidgetStatus(bool status) {
     isUsedImage = status;
-    print("이미지 상태 업데이트");
+    if (k_DebugMode) {
+      print("이미지 상태 업데이트");
+    }
     update();
   }
 
@@ -78,25 +86,33 @@ class PostController extends GetxController {
   void updateSelectImage(XFile? imageData) {
     if (imageData != null) {
       selectedImage = imageData;
-      print("이미지 데이터를 업로드 합니다.");
+      if (k_DebugMode) {
+        print("이미지 데이터를 업로드 합니다.");
+      }
     }
   }
 
   // 재목에서 내용으로 포커스 전환
   void completeTitleWrite() {
-    print("data");
+    if (k_DebugMode) {
+      print("data");
+    }
     contextFocusController.requestFocus();
   }
 
   void completeContextWrite() {
-    print("complete");
+    if (k_DebugMode) {
+      print("complete");
+    }
   }
 
   @override
   void onInit() async {
     // Here you can fetch you product from server
-    print('postBox controller 주입');
-    postBox = Hive.box(k_post_box);
+    if (k_DebugMode) {
+      print('postBox controller 주입');
+    }
+    postBox = Hive.box(k_PostBox);
     for (var i = 0; i < postBox.length; i++) {
       var temp = postBox.get(i);
       if (temp != null) {

@@ -9,13 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import 'controller/post_controller.dart';
 import 'main_peed_screen/main_peed_screen.dart';
 
-//TODO 튜토리얼 페이지 왜 안뜨는지 확인하기
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final document = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(document.path).then((value) => print("Hive init"));
   Hive.registerAdapter(PostAdapter());
-  await Hive.openBox<Post>(k_post_box);
+  await Hive.openBox<Post>(k_PostBox);
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
