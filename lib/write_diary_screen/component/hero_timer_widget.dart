@@ -20,10 +20,8 @@ class HeroTimerWidget extends StatelessWidget {
           tag: k_TimerHerotag,
           child: TimerWidget(callback: () async {
             Get.dialog(!Platform.isIOS
-                ? await TimerCompleteAlert.androidWriteCheckAlert(
-                    context, timerController)
-                : await TimerCompleteAlert.iosWriteCheckAlert(
-                    context, timerController));
+                ? await TimerCompleteAlert().androidWriteCheckAlert(context)
+                : await TimerCompleteAlert().iosWriteCheckAlert(context));
           })),
     );
   }
