@@ -1,14 +1,33 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/main_peed_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TimerCompleteAlert {
-  static Future<dynamic> iosWriteCheckAlert(
-      BuildContext context, TimerController timerController) {
+  _yesAction() {
+    TimerController timerController = Get.find<TimerController>();
+    Get.find<PostController>().addPostList(
+        timerController.getWriteDate(), timerController.getDuration());
+    timerController.resetTimer();
+    Get.back();
+    Get.back();
+  }
+
+  _noAction() {
+    Get.back();
+  }
+
+  _cancleAction() {
+    TimerController timerController = Get.find<TimerController>();
+    timerController.resetTimer();
+    Get.find<PostController>().resetWriteState();
+    Get.back();
+    Get.back();
+  }
+
+  Future<dynamic> iosWriteCheckAlert(BuildContext context) {
     return showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
@@ -19,36 +38,20 @@ class TimerCompleteAlert {
         actions: <Widget>[
           CupertinoDialogAction(
             child: const Text(k_AlertYes),
-            onPressed: () {
-              // ignore: todo
-              //TODO: 게시글 저장 구현하기
-              Get.find<PostController>().addPostList(
-                  timerController.getWriteDate(),
-                  timerController.getDuration());
-              timerController.resetTimer();
-              Get.back();
-              Get.back();
-            },
+            onPressed: _yesAction,
           ),
           CupertinoDialogAction(
             child: const Text(k_AlertNo),
-            onPressed: () => Get.back(),
+            onPressed: _noAction,
           ),
           CupertinoDialogAction(
-              child: const Text(k_AlertCancle),
-              onPressed: () {
-                timerController.resetTimer();
-                Get.find<PostController>().resetWriteState();
-                Get.back();
-                Get.back();
-              }),
+              child: const Text(k_AlertCancle), onPressed: _cancleAction),
         ],
       ),
     );
   }
 
-  static Future<dynamic> androidWriteCheckAlert(
-      BuildContext context, TimerController timerController) {
+  Future<dynamic> androidWriteCheckAlert(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -59,18 +62,14 @@ class TimerCompleteAlert {
         actions: <Widget>[
           TextButton(
             child: const Text(k_AlertYes),
-            onPressed: () => Get.offAll(const MainPeedScreen()),
+            onPressed: _yesAction,
           ),
           TextButton(
             child: const Text(k_AlertNo),
-            onPressed: () => Get.back(),
+            onPressed: _noAction,
           ),
           TextButton(
-              child: const Text(k_AlertCancle),
-              onPressed: () {
-                timerController.resetTimer();
-                Get.offAll(const MainPeedScreen());
-              }),
+              child: const Text(k_AlertCancle), onPressed: _cancleAction),
         ],
       ),
     );
