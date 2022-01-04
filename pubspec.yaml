@@ -44,6 +44,8 @@ dependencies:
   table_calendar: ^3.0.3
   # 캘린더뷰 번역을 위함
   intl: ^0.17.0
+  # 카로슈 슬라이더
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:
