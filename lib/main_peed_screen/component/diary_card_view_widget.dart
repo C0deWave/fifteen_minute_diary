@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DiaryCardViewWidget extends StatelessWidget {
   const DiaryCardViewWidget(
@@ -21,67 +20,99 @@ class DiaryCardViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: Get.width,
-        height: Get.height / 3,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-          elevation: 3,
-          color: Colors.orangeAccent.shade400,
-          child: Row(
-            // ignore: todo
-            //TODO 반전 포맷도 하나 만들기
-            children: [
-              Flexible(
-                  child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        bottomLeft: Radius.circular(15)),
-                    image: DecorationImage(
-                        image: FileImage(image), fit: BoxFit.fill)),
-              )),
-              Flexible(
-                  flex: 1,
-                  child: Padding(
+          Text(
+            formatDate(writeDate,
+                [yyyy, '년 ', m, '월 ', dd, "일 ", hh, ':', nn, '분에 작성']),
+            style: const TextStyle(color: Colors.black),
+          ),
+          Expanded(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 1,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        image: DecorationImage(
+                            image: FileImage(image), fit: BoxFit.fill)),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: Color(0x35000000)),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              title.toString(),
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            const SizedBox(
+                              height: 20,
                             ),
-                            Text(formatDate(writeDate, [
-                              yyyy,
-                              '년',
-                              mm,
-                              '월',
-                              dd,
-                              "일  ",
-                              hh,
-                              ':',
-                              nn,
-                              ''
-                            ])),
+                            Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                child: Text(
+                                  title.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         Center(
-                          child: Text(content),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              content,
+                              maxLines: 17,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 25),
+                            ),
+                          ),
                         ),
-                        Text("${(duration ~/ 60)}분 ${duration % 60}초 동안 작성")
+                        duration >= 60
+                            ? Text(
+                                "${(duration ~/ 60)}분 ${duration % 60}초 동안 작성",
+                                style: const TextStyle(color: Colors.white),
+                              )
+                            : Text(
+                                "${duration % 60}초 동안 작성",
+                                style: const TextStyle(color: Colors.white),
+                              )
                       ],
                     ),
-                  ))
-            ],
+                  )
+                ],
+              ),
+            ),
           ),
-        ));
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
   }
 }
