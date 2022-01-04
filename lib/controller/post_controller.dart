@@ -2,10 +2,10 @@
 
 import 'dart:io';
 import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostController extends GetxController {
@@ -24,7 +24,7 @@ class PostController extends GetxController {
   //Post게시글 리스트
   List<Post> postlist = [];
   //Post list Hive 저장소
-  late Box<Post> postBox;
+  late HiveDataBase postBox;
 
   // getMethod
   TextEditingController getTitleController() => titleController;
@@ -32,18 +32,23 @@ class PostController extends GetxController {
   FocusNode getTitleFocusController() => titleFocusController;
   FocusNode getContextFocusController() => contextFocusController;
 
-  void addPostList(DateTime writeDate, int duration) {
+  Future<void> addPostList(DateTime writeDate, int duration) async {
     if (titleController.text.isNotEmpty && contextController.text.isNotEmpty) {
-      var temp = Post(
+      Post temp = Post(
           title: titleController.text,
           content: contextController.text,
           image: File(selectedImage!.path),
           writeDate: writeDate,
           duration: duration);
+      var postIndexKey = (writeDate.year.toString() +
+          addZero(writeDate.month) +
+          addZero(writeDate.day));
       postlist.add(temp);
-      postBox.add(temp);
+      // await postBox.add(temp);
+      postBox.pushPostToHive(postIndexKey, temp);
       if (k_DebugMode) {
-        print("postBox크기 ${postBox.length}");
+        print(postIndexKey);
+        print("postBox크기 ${postBox.getLength()}");
       }
       resetWriteState();
       update();
@@ -112,20 +117,31 @@ class PostController extends GetxController {
     if (k_DebugMode) {
       print('postBox controller 주입');
     }
-    postBox = Hive.box(k_PostBox);
-    for (var i = 0; i < postBox.length; i++) {
-      var temp = postBox.get(i);
+    postBox = HiveDataBase();
+    for (var i = 0; i < postBox.getLength(); i++) {
+      var temp = postBox.getAtPost(i);
       if (temp != null) {
         postlist.add(temp);
       }
     }
+    // 저장소에서 꺼내온 일기를 시간순으로 정렬
+    postlist.sort((Post temp1, Post temp2) {
+      return temp1.writeDate.compareTo(temp2.writeDate);
+    });
     super.onInit();
   }
 
   @override
   void onClose() {
-    postBox.close();
+    postBox.closeDatabase();
     super.onClose();
+  }
+
+  String addZero(int num) {
+    if (num < 10) {
+      return "0$num";
+    }
+    return "$num";
   }
 }
 

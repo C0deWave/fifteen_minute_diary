@@ -58,7 +58,7 @@ class MainPeedScreen extends StatelessWidget {
       if (k_DebugMode) {
         print('Splash이동');
       }
-      Get.to((_) => const InitSplashScreen());
+      Get.to(InitSplashScreen());
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
     }

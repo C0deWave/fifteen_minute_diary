@@ -20,6 +20,7 @@ class MainPeedBody extends StatelessWidget {
   Widget build(BuildContext context) {
     var postController = Get.put(PostController());
     var tabbarController = Get.put(TabbarController());
+    final timerController = Get.put(TimerController());
     return Column(children: [
       Expanded(
         child: CustomScrollView(
@@ -37,19 +38,24 @@ class MainPeedBody extends StatelessWidget {
                       tag: k_TimerHerotag,
                       child: TimerWidget(
                         callback: () {
-                          // 일기쓰기 타이머의 시작
-                          final timerController = Get.put(TimerController());
-                          timerController.startTimer(callback: () {
-                            postController.addPostList(
-                                timerController.getWriteDate(),
-                                timerController.getDuration());
-                            timerController.resetTimer();
-                            Get.back();
-                          });
-                          Get.to(() => const WriteDiaryScreen());
-                          if (k_DebugMode) {
-                            // ignore: avoid_print
-                            print("click timer");
+                          if (timerController.haveTime()) {
+                            timerController.startTimer(callback: () {
+                              postController.addPostList(
+                                  timerController.getWriteDate(),
+                                  timerController.getDuration());
+                              timerController.resetTimer();
+                              Get.back();
+                            });
+                            Get.to(() => const WriteDiaryScreen());
+                            if (k_DebugMode) {
+                              // ignore: avoid_print
+                              print("click timer");
+                            }
+                          } else {
+                            if (k_DebugMode) {
+                              // ignore: avoid_print
+                              print('남은 시간이 없습니다.');
+                            }
                           }
                         },
                       ),
