@@ -19,14 +19,6 @@ class TimerCompleteAlert {
     Get.back();
   }
 
-  _cancleAction() {
-    TimerController timerController = Get.find<TimerController>();
-    timerController.stopTimer();
-    Get.find<PostController>().resetWriteState();
-    Get.back();
-    Get.back();
-  }
-
   Future<dynamic> iosWriteCheckAlert(BuildContext context) {
     return showCupertinoDialog(
       context: context,
@@ -44,8 +36,6 @@ class TimerCompleteAlert {
             child: const Text(k_AlertNo),
             onPressed: _noAction,
           ),
-          CupertinoDialogAction(
-              child: const Text(k_AlertCancle), onPressed: _cancleAction),
         ],
       ),
     );
@@ -68,8 +58,6 @@ class TimerCompleteAlert {
             child: const Text(k_AlertNo),
             onPressed: _noAction,
           ),
-          TextButton(
-              child: const Text(k_AlertCancle), onPressed: _cancleAction),
         ],
       ),
     );
