@@ -39,11 +39,10 @@ class MainPeedBody extends StatelessWidget {
                       child: TimerWidget(
                         callback: () {
                           if (timerController.haveTime()) {
-                            timerController.startTimer(callback: () {
+                            timerController.startTimer(finishFunction: () {
                               postController.addPostList(
-                                  timerController.getWriteDate(),
-                                  timerController.getDuration());
-                              timerController.resetTimer();
+                                  writeDuration: timerController.getDuration());
+                              timerController.stopTimer();
                               Get.back();
                             });
                             Get.to(() => const WriteDiaryScreen());

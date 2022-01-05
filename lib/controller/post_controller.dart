@@ -79,9 +79,10 @@ class PostController extends GetxController {
   }
 
   // 현재 적은 내용을 저장합니다.
-  void addPostList(DateTime writeDate, int duration) {
+  void addPostList({required int writeDuration}) {
+    DateTime writeDate = DateTime.now();
     if (_checkTitleAndContentIsWrite()) {
-      Post temp = _makePostBasedCurrentWrite(writeDate, duration);
+      Post temp = _makePostBasedCurrentWrite(writeDate, writeDuration);
       String postIndexKey = _makePostIndexKey(writeDate);
       _postlist.removeLast();
       _postlist.add(temp);
@@ -98,8 +99,8 @@ class PostController extends GetxController {
   // 현재 날짜를 기준으로 키값을 만듭니다.
   String _makePostIndexKey(DateTime writeDate) {
     return (writeDate.year.toString() +
-        _addZero(writeDate.month) +
-        _addZero(writeDate.day));
+        _twoDigits(writeDate.month) +
+        _twoDigits(writeDate.day));
   }
 
   // 현재 쓴 내용을 객체로 변환합니다.
@@ -170,13 +171,8 @@ class PostController extends GetxController {
     _contextFocusController.requestFocus();
   }
 
-  //년월의 자릿수가 1이면 앞에 0을 붙여줍니다.
-  String _addZero(int num) {
-    if (num < 10) {
-      return "0$num";
-    }
-    return "$num";
-  }
+  // 숫자 포맷을 두자리로 한다.
+  String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
 
   // 오늘 적은 일기가 있는지 확인합니다.
   void _checkAndUpdateTodayWrite() {

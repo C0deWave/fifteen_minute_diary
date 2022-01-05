@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 class TimerCompleteAlert {
   _yesAction() {
     TimerController timerController = Get.find<TimerController>();
-    Get.find<PostController>().addPostList(
-        timerController.getWriteDate(), timerController.getDuration());
-    timerController.resetTimer();
+    Get.find<PostController>()
+        .addPostList(writeDuration: timerController.getDuration());
+    timerController.stopTimer();
     Get.back();
     Get.back();
   }
@@ -21,7 +21,7 @@ class TimerCompleteAlert {
 
   _cancleAction() {
     TimerController timerController = Get.find<TimerController>();
-    timerController.resetTimer();
+    timerController.stopTimer();
     Get.find<PostController>().resetWriteState();
     Get.back();
     Get.back();
