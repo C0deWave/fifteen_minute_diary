@@ -32,6 +32,8 @@ const k_TimerHerotag = "TimerHeroWidgetTest";
 // timer_controller
 // 일기 타이머의 시간 값 입니다.
 const k_TimerDuration = 15 * 60;
+// 1초 입니다.
+const k_OneSec = Duration(seconds: 1);
 
 //---------------------------------------------------
 // post_controller

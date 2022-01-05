@@ -4,129 +4,131 @@ import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:get/get.dart';
 
 class TimerController extends GetxController {
+  //----------------------------------------------------------------------
+  // 변수
+  // Singleton Instance 반환
   static final TimerController _controller = TimerController._internal();
+  // 로그 확인용 태그
+  final String _tag = 'timer_controller: ';
+  // 현재시간 확인용 String
+  RxString _time = "--:--".obs;
+  // 현재 남은시간
+  int _timerDuration = k_TimerDuration;
+  // 타이머 밑 subtext
+  RxString _subtext = "15분간 일기에 집중하세요".obs;
+  // Hive데이터 베이스
+  late HiveDataBase _postBox;
+  late DateTime _writeDate;
+  late Timer _timer;
+
+  //----------------------------------------------------------------------
+  // 함수
+  // 싱글톤 인스턴스 반환
+  factory TimerController() {
+    return _controller;
+  }
+
+  // init: 데이터 베이스에서 오늘일기를 확인하고 타이머 시간과 subtext를 정한다.
   TimerController._internal() {
-    postBox = HiveDataBase();
-    writeDate = DateTime.now();
-    var temp = postBox.getPost(writeDate.year.toString() +
-        addZero(writeDate.month) +
-        addZero(writeDate.day));
+    _postBox = HiveDataBase();
+    var temp = _postBox.getPost(_getTodayDiaryKey());
     if (temp != null) {
       if (k_DebugMode) {
-        // ignore: avoid_print
-        print("글이 생성되어 있습니다.");
+        print(_tag + "글이 생성되어 있습니다.");
       }
       _timerDuration = k_TimerDuration - temp.duration;
     } else {
       _timerDuration = k_TimerDuration;
     }
-    updateSubtext(_timerDuration);
-    time =
-        "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}"
-            .obs;
+    _updateSubtext();
+    _time = _getTimeString();
     update();
   }
-  factory TimerController() {
-    return _controller;
+
+  // 현재 시간을 반환환다.
+  DateTime getWriteDate() => _writeDate;
+  RxString getTimeText() => _time;
+  RxString getSubText() => _subtext;
+
+  // 현재 시간값을 업데이트 하는데 사용한다.
+  RxString _getTimeString() {
+    return "${_twoDigits(_timerDuration ~/ 60)}:${_twoDigits((_timerDuration % 60).toInt())}"
+        .obs;
   }
 
-  @override
-  onInit() {
-    print("컨트롤러 생성");
+  // 오늘날짜의 키를 반환한다.
+  String _getTodayDiaryKey() {
+    _writeDate = DateTime.now();
+    return _writeDate.year.toString() +
+        _twoDigits(_writeDate.month) +
+        _twoDigits(_writeDate.day);
   }
 
-  RxString time = "--:--".obs;
-  late int _timerDuration = k_TimerDuration;
-  // int _timerDuration = k_TimerDuration;
-  RxString subtext = "15분간 일기에 집중하세요".obs;
-  // RxString subtext = "Click me. and write diary".obs;
-
-  late HiveDataBase postBox;
-  late DateTime writeDate;
-  late Timer _timer;
-
-  DateTime getWriteDate() => writeDate;
+  // 글쓰는데 사용한 시간을 초단위로 반환환다.
   int getDuration() {
     return k_TimerDuration - _timerDuration;
   }
 
-  void startTimer({required Function callback}) {
-    subtext = "다 쓰거나 취소시 Click!!.".obs;
-    const oneSec = Duration(seconds: 1);
-    writeDate = DateTime.now();
-    if (k_DebugMode) {
-      // ignore: avoid_print
-      print("타이머 시작");
-    }
+  // 타이머를 시작한다. callback으로 0초가 되었을때 함수를 실행한다.
+  void startTimer({required Function finishFunction}) {
+    _subtext = "다 쓰거나 취소시 Click!!.".obs;
+    print(_tag + "타이머 시작");
     _timer = Timer.periodic(
-      oneSec,
+      k_OneSec,
       (Timer timer) async {
         if (_timerDuration <= 0) {
           timer.cancel();
-          callback();
+          finishFunction();
         } else {
-          updateTimer();
+          _updateTimer();
         }
       },
     );
   }
 
-  void resetTimer() {
-    if (k_DebugMode) {
-      // ignore: avoid_print
-      print('타이머 초기화');
-    }
+  // 타이머를 종료합니다.
+  void stopTimer() {
+    print(_tag + '타이머 초기화');
     _timer.cancel();
-    // _timerDuration = k_TimerDuration;
-    time =
-        "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}"
-            .obs;
-    subtext = "Click me. and write diary".obs;
+    _time = _getTimeString();
+    _updateSubtext();
   }
 
-  void updateTimer() async {
+  // 시간 값을 1초씩 빼고 time텍스트를 업데이트한다.
+  void _updateTimer() {
     _timerDuration -= 1;
-    // print("${_timer_duration}");
-    time =
-        "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}"
-            .obs;
+    _time = _getTimeString();
     update();
   }
 
-  String twoDigits(int n) => n >= 10 ? "$n" : "0$n";
+  // 숫자 포맷을 두자리로 한다.
+  String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
 
+  // 현재 시간값을 가져옵니다.
   String getCurrentTime() {
-    return "${twoDigits(_timerDuration ~/ 60)}:${twoDigits((_timerDuration % 60).toInt())}";
+    return _getTimeString().value;
   }
 
+  //남은 시간이 있는지 확인합니다.
   bool haveTime() {
-    if (_timerDuration > 0) {
-      return true;
+    return _timerDuration > 0;
+  }
+
+  // subtext를 조건에 맞게 업데이트 합니다.
+  void _updateSubtext() {
+    if (_timerDuration == k_TimerDuration) {
+      _subtext = "15분간 일기에 집중해 주세요!".obs;
+    } else if (_timerDuration == 0) {
+      _subtext = "시간을 다 써서 더이상 수정할 수 없습니다.".obs;
     } else {
-      return false;
+      _subtext = "남은 시간동안 수정할 수 있습니다.".obs;
     }
   }
 
+  // 소멸자
   @override
   void onClose() {
-    postBox.closeDatabase();
+    _postBox.closeDatabase();
     super.onClose();
-  }
-
-  String addZero(int num) {
-    if (num < 10) {
-      return "0$num";
-    }
-    return "$num";
-  }
-
-  void updateSubtext(int timerDuration) {
-    if (timerDuration == k_TimerDuration) {
-      subtext = "15분간 일기에 집중해 주세요!".obs;
-    } else if (timerDuration == 0) {
-      subtext = "시간을 다 써서 더이상 수정할 수 없습니다.".obs;
-    } else {
-      subtext = "남은 시간동안 수정할 수 있습니다.".obs;
-    }
   }
 }

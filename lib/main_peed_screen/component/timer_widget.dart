@@ -28,7 +28,7 @@ class TimerWidget extends StatelessWidget {
             children: [
               GetBuilder<TimerController>(builder: (_) {
                 return Text(
-                  "${timerController.time}",
+                  "${timerController.getTimeText()}",
                   style: const TextStyle(
                       fontSize: 60,
                       color: Colors.black,
@@ -38,7 +38,7 @@ class TimerWidget extends StatelessWidget {
               }),
               Obx(() {
                 return Text(
-                  "${timerController.subtext}",
+                  "${timerController.getSubText()}",
                   style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
