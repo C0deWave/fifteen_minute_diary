@@ -1,4 +1,3 @@
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../controller/post_controller.dart';
 
 class PhotoDialogWidget extends StatelessWidget {
+  final String _tag = 'PhotoDialogWidget: ';
   const PhotoDialogWidget({
     Key? key,
   }) : super(key: key);
@@ -126,10 +126,7 @@ class PhotoDialogWidget extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      if (k_DebugMode) {
-                        // ignore: avoid_print
-                        print("click");
-                      }
+                      debugPrint(_tag + "click");
                       Get.find<PostController>().deleteImage();
                       Get.back();
                     },

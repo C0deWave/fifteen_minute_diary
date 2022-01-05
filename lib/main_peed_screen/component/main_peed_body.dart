@@ -14,6 +14,7 @@ import 'package:get/route_manager.dart';
 import 'timer_widget.dart';
 
 class MainPeedBody extends StatelessWidget {
+  final String _tag = 'MainPeedBody: ';
   const MainPeedBody({Key? key}) : super(key: key);
 
   @override
@@ -46,15 +47,9 @@ class MainPeedBody extends StatelessWidget {
                               Get.back();
                             });
                             Get.to(() => const WriteDiaryScreen());
-                            if (k_DebugMode) {
-                              // ignore: avoid_print
-                              print("click timer");
-                            }
+                            debugPrint(_tag + "click timer");
                           } else {
-                            if (k_DebugMode) {
-                              // ignore: avoid_print
-                              print('남은 시간이 없습니다.');
-                            }
+                            debugPrint(_tag + '남은 시간이 없습니다.');
                           }
                         },
                       ),

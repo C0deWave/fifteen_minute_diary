@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ImageWidget extends StatelessWidget {
+  final String _tag = 'ImageWidget: ';
   const ImageWidget({Key? key}) : super(key: key);
 
   @override
@@ -15,10 +16,7 @@ class ImageWidget extends StatelessWidget {
       return controller.getIsUsedImage()
           ? GestureDetector(
               onTap: () {
-                if (k_DebugMode) {
-                  // ignore: avoid_print
-                  print("tab");
-                }
+                debugPrint(_tag + "tab");
                 Get.dialog(const PhotoDialogWidget());
               },
               child: Container(

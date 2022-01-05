@@ -9,10 +9,13 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:path_provider/path_provider.dart';
 import 'main_peed_screen/main_peed_screen.dart';
 
+const String _tag = 'main: ';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final document = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(document.path).then((value) => print("Hive init"));
+  await Hive.initFlutter(document.path)
+      .then((value) => debugPrint(_tag + "Hive init"));
   Hive.registerAdapter(PostAdapter());
   await Hive.openBox<Post>(k_PostBox);
   initializeDateFormatting().then((_) => runApp(const MyApp()));

@@ -7,6 +7,7 @@ part of 'post.dart';
 // **************************************************************************
 
 class PostAdapter extends TypeAdapter<Post> {
+  final String _tag = 'PostAdapter: ';
   late final Directory document;
   PostAdapter() {
     init();
@@ -23,10 +24,7 @@ class PostAdapter extends TypeAdapter<Post> {
 
     File temp = File("${document.path}/${fields[3].hashCode}");
     if (!temp.existsSync()) {
-      if (k_DebugMode) {
-        // ignore: avoid_print
-        print("이미지 생성");
-      }
+      debugPrint(_tag + "이미지 생성");
       temp.writeAsBytesSync(fields[2]);
     }
     return Post(
@@ -42,10 +40,7 @@ class PostAdapter extends TypeAdapter<Post> {
   void write(BinaryWriter writer, Post obj) {
     File temp = File("${document.path}/${obj.writeDate.hashCode}");
     if (!temp.existsSync()) {
-      if (k_DebugMode) {
-        // ignore: avoid_print
-        print("이미지 복사해서 저장");
-      }
+      debugPrint(_tag + "이미지 복사해서 저장");
       temp.writeAsBytesSync(obj.image!.readAsBytesSync());
     }
     writer
@@ -56,7 +51,6 @@ class PostAdapter extends TypeAdapter<Post> {
       ..write(obj.content)
       ..writeByte(2)
       ..write(obj.image!.readAsBytesSync())
-      // ..write("${document.path}/${obj.writeDate.hashCode}")
       ..writeByte(3)
       ..write(obj.writeDate)
       ..writeByte(4)
