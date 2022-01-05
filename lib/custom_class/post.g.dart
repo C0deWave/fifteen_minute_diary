@@ -46,7 +46,7 @@ class PostAdapter extends TypeAdapter<Post> {
         // ignore: avoid_print
         print("이미지 복사해서 저장");
       }
-      temp.writeAsBytesSync(obj.image.readAsBytesSync());
+      temp.writeAsBytesSync(obj.image!.readAsBytesSync());
     }
     writer
       ..writeByte(5)
@@ -55,7 +55,7 @@ class PostAdapter extends TypeAdapter<Post> {
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.image.readAsBytesSync())
+      ..write(obj.image!.readAsBytesSync())
       // ..write("${document.path}/${obj.writeDate.hashCode}")
       ..writeByte(3)
       ..write(obj.writeDate)

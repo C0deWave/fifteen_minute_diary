@@ -18,9 +18,9 @@ class Post extends HiveObject {
   @HiveField(1, defaultValue: "내용이 없습니다.")
   String content;
   @HiveField(2)
-  File image;
+  File? image;
   @HiveField(3)
-  DateTime writeDate;
+  DateTime? writeDate;
   @HiveField(4, defaultValue: 0)
   int duration;
 }
