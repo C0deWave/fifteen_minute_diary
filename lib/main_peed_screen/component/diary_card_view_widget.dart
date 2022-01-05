@@ -14,8 +14,8 @@ class DiaryCardViewWidget extends StatelessWidget {
 
   final String title;
   final String content;
-  final File image;
-  final DateTime writeDate;
+  final File? image;
+  final DateTime? writeDate;
   final int duration;
 
   @override
@@ -28,8 +28,10 @@ class DiaryCardViewWidget extends StatelessWidget {
             height: 20,
           ),
           Text(
-            formatDate(writeDate,
-                [yyyy, '년 ', m, '월 ', dd, "일 ", hh, ':', nn, '분에 작성']),
+            writeDate != null
+                ? formatDate(writeDate!,
+                    [yyyy, '년 ', m, '월 ', dd, "일 ", hh, ':', nn, '분에 작성'])
+                : '',
             style: const TextStyle(color: Colors.black),
           ),
           Expanded(
@@ -41,12 +43,16 @@ class DiaryCardViewWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        image: DecorationImage(
-                            image: FileImage(image), fit: BoxFit.fill)),
-                  ),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          image: (image != null)
+                              ? DecorationImage(
+                                  image: FileImage(image!), fit: BoxFit.fill)
+                              : const DecorationImage(
+                                  image: NetworkImage(
+                                      'https://t1.daumcdn.net/cfile/tistory/99F6FC465D4563E132'),
+                                  fit: BoxFit.fill))),
                   Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -92,15 +98,7 @@ class DiaryCardViewWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        duration >= 60
-                            ? Text(
-                                "${(duration ~/ 60)}분 ${duration % 60}초 동안 작성",
-                                style: const TextStyle(color: Colors.white),
-                              )
-                            : Text(
-                                "${duration % 60}초 동안 작성",
-                                style: const TextStyle(color: Colors.white),
-                              )
+                        showWriteDuration()
                       ],
                     ),
                   )
@@ -113,6 +111,24 @@ class DiaryCardViewWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Text showWriteDuration() {
+    if (duration >= 60) {
+      return Text(
+        "${(duration ~/ 60)}분 ${duration % 60}초 동안 작성",
+        style: const TextStyle(color: Colors.white),
+      );
+    } else if (duration == 0) {
+      return const Text(
+        "오늘 하루는 어땠나요?",
+        style: TextStyle(color: Colors.white),
+      );
+    }
+    return Text(
+      "${duration % 60}초 동안 작성",
+      style: const TextStyle(color: Colors.white),
     );
   }
 }

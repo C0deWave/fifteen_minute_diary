@@ -36,7 +36,13 @@ class HiveDataBase {
   }
 
   bool pushPostToHive(String key, Post value) {
-    _postBox.put(key, value);
+    var tempPost = _postBox.get(key);
+    if (tempPost != null) {
+      _postBox.delete(key);
+      _postBox.put(key, value);
+    } else {
+      _postBox.put(key, value);
+    }
     return true;
   }
 

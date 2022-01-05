@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'dart:io';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
@@ -9,6 +8,31 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostController extends GetxController {
+  static final PostController _controller = PostController._internal();
+  factory PostController() {
+    return _controller;
+  }
+  PostController._internal() {
+    postBox = HiveDataBase();
+    // Here you can fetch you product from server
+    if (k_DebugMode) {
+      print('postBox controller 주입');
+    }
+    for (var i = 0; i < postBox.getLength(); i++) {
+      var temp = postBox.getAtPost(i);
+      if (temp != null) {
+        postlist.add(temp);
+      }
+    }
+    // 저장소에서 꺼내온 일기를 시간순으로 정렬
+    postlist.sort((Post temp1, Post temp2) {
+      return temp1.writeDate != null
+          ? temp1.writeDate!.compareTo(temp2.writeDate ?? DateTime.now())
+          : 1;
+    });
+    checkTodayWrite();
+  }
+
   //쓴 일기를 추출하는데 사용합니다.
   var titleController = TextEditingController();
   var contextController = TextEditingController();
@@ -40,9 +64,10 @@ class PostController extends GetxController {
           image: File(selectedImage!.path),
           writeDate: writeDate,
           duration: duration);
-      var postIndexKey = (writeDate.year.toString() +
+      String postIndexKey = (writeDate.year.toString() +
           addZero(writeDate.month) +
           addZero(writeDate.day));
+      postlist.removeLast();
       postlist.add(temp);
       // await postBox.add(temp);
       postBox.pushPostToHive(postIndexKey, temp);
@@ -68,6 +93,7 @@ class PostController extends GetxController {
     contextController.clear();
     isUsedImage = false;
     selectedImage = null;
+    checkTodayWrite();
     update();
   }
 
@@ -112,26 +138,6 @@ class PostController extends GetxController {
   }
 
   @override
-  void onInit() async {
-    // Here you can fetch you product from server
-    if (k_DebugMode) {
-      print('postBox controller 주입');
-    }
-    postBox = HiveDataBase();
-    for (var i = 0; i < postBox.getLength(); i++) {
-      var temp = postBox.getAtPost(i);
-      if (temp != null) {
-        postlist.add(temp);
-      }
-    }
-    // 저장소에서 꺼내온 일기를 시간순으로 정렬
-    postlist.sort((Post temp1, Post temp2) {
-      return temp1.writeDate.compareTo(temp2.writeDate);
-    });
-    super.onInit();
-  }
-
-  @override
   void onClose() {
     postBox.closeDatabase();
     super.onClose();
@@ -142,6 +148,28 @@ class PostController extends GetxController {
       return "0$num";
     }
     return "$num";
+  }
+
+  void checkTodayWrite() {
+    DateTime temp1 = postlist.last.writeDate!;
+    DateTime temp2 = DateTime.now();
+    if (!(temp1.year == temp2.year &&
+        temp1.month == temp2.month &&
+        temp1.day == temp2.day)) {
+      postlist.add(Post(
+          title: "오늘 일기를 작성해 주세요",
+          content: "",
+          duration: 0,
+          writeDate: null,
+          image: null));
+    } else {
+      var todayWrite = postlist.last;
+      print("이미 글이 적혀 있습니다.");
+      titleController.text = todayWrite.title;
+      contextController.text = todayWrite.content;
+      selectedImage = XFile(todayWrite.image!.path);
+      isUsedImage = true;
+    }
   }
 }
 
