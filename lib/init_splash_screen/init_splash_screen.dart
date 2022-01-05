@@ -15,7 +15,7 @@ class InitSplashScreen extends StatefulWidget {
 class _InitSplashScreenState extends State<InitSplashScreen> {
   @override
   Widget build(BuildContext context) {
-    String tag = 'init_splash_screen:';
+    String _tag = 'init_splash_screen: ';
 
     // WillPopScope 는 backSwipe를 막아줍니다.
     return WillPopScope(
@@ -24,20 +24,14 @@ class _InitSplashScreenState extends State<InitSplashScreen> {
         animationDuration: 200,
         pages: listPagesViewModel,
         onDone: () async {
-          if (k_DebugMode) {
-            // ignore: avoid_print
-            print('$tag shared_preference 데이터 저장');
-          }
+          debugPrint(_tag + 'shared_preference 데이터 저장');
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(k_IsViewSplashViewKey, true);
           // Navigator.pop(context);
           Get.back();
         },
         onSkip: () async {
-          if (k_DebugMode) {
-            // ignore: avoid_print
-            print('$tag shared_preference 데이터 저장');
-          }
+          debugPrint(_tag + 'shared_preference 데이터 저장');
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool(k_IsViewSplashViewKey, true);
           // Navigator.pop(context);

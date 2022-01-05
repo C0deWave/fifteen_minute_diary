@@ -1,10 +1,12 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 // 여러군대에서 같은 키값으로 DB를 열수 없어서 싱글톤의 형태로 만듬
 class HiveDataBase {
   static final HiveDataBase _database = HiveDataBase._interval();
+  final String _tag = "HiveDatabase: ";
   late Box<Post> _postBox;
   int openstack = 0;
   factory HiveDataBase() {
@@ -16,10 +18,7 @@ class HiveDataBase {
 
   void openDatabase() {
     if (_postBox.isOpen == false) {
-      if (k_DebugMode) {
-        // ignore: avoid_print
-        print(openstack);
-      }
+      debugPrint(_tag + openstack.toString());
       _postBox = Hive.box(k_PostBox);
       openstack++;
     } else {

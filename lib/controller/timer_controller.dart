@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class TimerController extends GetxController {
@@ -33,9 +34,7 @@ class TimerController extends GetxController {
     _postBox = HiveDataBase();
     var temp = _postBox.getPost(_getTodayDiaryKey());
     if (temp != null) {
-      if (k_DebugMode) {
-        print(_tag + "글이 생성되어 있습니다.");
-      }
+      debugPrint(_tag + "글이 생성되어 있습니다.");
       _timerDuration = k_TimerDuration - temp.duration;
     } else {
       _timerDuration = k_TimerDuration;
@@ -72,7 +71,7 @@ class TimerController extends GetxController {
   // 타이머를 시작한다. callback으로 0초가 되었을때 함수를 실행한다.
   void startTimer({required Function finishFunction}) {
     _subtext = "다 쓰거나 취소시 Click!!.".obs;
-    print(_tag + "타이머 시작");
+    debugPrint(_tag + "타이머 시작");
     _timer = Timer.periodic(
       k_OneSec,
       (Timer timer) async {
@@ -88,7 +87,7 @@ class TimerController extends GetxController {
 
   // 타이머를 종료합니다.
   void stopTimer() {
-    print(_tag + '타이머 초기화');
+    debugPrint(_tag + '타이머 초기화');
     _timer.cancel();
     _time = _getTimeString();
     _updateSubtext();

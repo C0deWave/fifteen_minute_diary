@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
@@ -9,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'component/main_peed_body.dart';
 
 class MainPeedScreen extends StatelessWidget {
+  final String _tag = 'MainPeedScreen: ';
   const MainPeedScreen({Key? key}) : super(key: key);
 
   @override
@@ -55,9 +54,7 @@ class MainPeedScreen extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isViewSplash = prefs.getBool(k_IsViewSplashViewKey) ?? false;
     if (!isViewSplash) {
-      if (k_DebugMode) {
-        print('Splash이동');
-      }
+      debugPrint(_tag + 'Splash이동');
       Get.to(InitSplashScreen());
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));

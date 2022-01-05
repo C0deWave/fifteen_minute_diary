@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 
 //---------------------------------------------------
 // 전역 설정
-// 디버그 로그를 출력하게 함
-const k_DebugMode = true;
 //Hive Database의 Post내용을 담는 박스 키값입니다.
 const k_PostBox = 'testpostbox19';
 

@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 import 'dart:io';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
@@ -41,9 +40,7 @@ class PostController extends GetxController {
   // init의 역할을 한다.
   PostController._internal() {
     _postBox = HiveDataBase();
-    if (k_DebugMode) {
-      print(_tag + 'postBox controller 주입');
-    }
+    debugPrint(_tag + 'postBox controller 주입');
     _getPostlistFromPostbox();
     _sortPostlist();
     _checkAndUpdateTodayWrite();
@@ -87,10 +84,8 @@ class PostController extends GetxController {
       _postlist.removeLast();
       _postlist.add(temp);
       _postBox.pushPostToHive(postIndexKey, temp);
-      if (k_DebugMode) {
-        print(_tag + postIndexKey);
-        print(_tag + "postBox크기 ${_postBox.getLength()}");
-      }
+      debugPrint(
+          _tag + "postBox크기 ${_postBox.getLength()}\n키값: " + postIndexKey);
       resetWriteState();
       update();
     }
@@ -147,9 +142,7 @@ class PostController extends GetxController {
   //이미지 위젯 보여줄지 말지 상태 업데이트
   void changeImageWidgetStatus(bool status) {
     _isUsedImage = status;
-    if (k_DebugMode) {
-      print(_tag + "이미지 상태 업데이트");
-    }
+    debugPrint(_tag + "이미지 상태 업데이트");
     update();
   }
 
@@ -157,17 +150,13 @@ class PostController extends GetxController {
   void updateSelectImage(XFile? imageData) {
     if (imageData != null) {
       _selectedImage = imageData;
-      if (k_DebugMode) {
-        print(_tag + "이미지 데이터를 업로드 합니다.");
-      }
+      debugPrint(_tag + "이미지 데이터를 업로드 합니다.");
     }
   }
 
   // 재목에서 내용으로 포커스 전환
   void completeTitleWrite() {
-    if (k_DebugMode) {
-      print(_tag + "data");
-    }
+    debugPrint(_tag + "data");
     _contextFocusController.requestFocus();
   }
 
@@ -182,7 +171,7 @@ class PostController extends GetxController {
       _postlist.add(k_NotWritePost);
     } else {
       var todayWrite = _postlist.last;
-      print(_tag + "오늘 글을 적었습니다..");
+      debugPrint(_tag + "오늘 글을 적었습니다..");
       _titleController.text = todayWrite.title;
       _contextController.text = todayWrite.content;
       _selectedImage = XFile(todayWrite.image!.path);
