@@ -8,117 +8,156 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostController extends GetxController {
+  //--------------------------------------------------------------------
+  // 변수
+  // Singleton Instance
   static final PostController _controller = PostController._internal();
+  //쓴 일기의 내용을 추출하는데 사용합니다.
+  final _titleController = TextEditingController();
+  final _contextController = TextEditingController();
+  // 이미지를 선택했는지 확인하는 용도로 사용
+  bool _isUsedImage = false;
+  //인디케이터 확인용 코드
+  bool _isShowIndicator = false;
+  // 선택한 이미지 파일
+  late XFile? _selectedImage;
+  // 포커스 전환을 하는데 사용합니다.
+  final _titleFocusController = FocusNode();
+  final _contextFocusController = FocusNode();
+  //Post게시글 리스트
+  final List<Post> _postlist = [];
+  //Post list Hive 저장소
+  late HiveDataBase _postBox;
+  //로그 확인용 태그
+  final String _tag = 'post_controller: ';
+
+  //--------------------------------------------------------------------
+  // 함수
+  // getMethod
   factory PostController() {
     return _controller;
   }
+
+  // init의 역할을 한다.
   PostController._internal() {
-    postBox = HiveDataBase();
-    // Here you can fetch you product from server
+    _postBox = HiveDataBase();
     if (k_DebugMode) {
-      print('postBox controller 주입');
+      print(_tag + 'postBox controller 주입');
     }
-    for (var i = 0; i < postBox.getLength(); i++) {
-      var temp = postBox.getAtPost(i);
-      if (temp != null) {
-        postlist.add(temp);
-      }
-    }
-    // 저장소에서 꺼내온 일기를 시간순으로 정렬
-    postlist.sort((Post temp1, Post temp2) {
-      return temp1.writeDate != null
-          ? temp1.writeDate!.compareTo(temp2.writeDate ?? DateTime.now())
-          : 1;
-    });
-    checkTodayWrite();
+    _getPostlistFromPostbox();
+    _sortPostlist();
+    _checkAndUpdateTodayWrite();
   }
 
-  //쓴 일기를 추출하는데 사용합니다.
-  var titleController = TextEditingController();
-  var contextController = TextEditingController();
-  // 이미지를 선택했는지 확인하는 용도로 사용
-  bool isUsedImage = false;
-  //인디케이터 확인용 코드
-  bool isShowIndicator = false;
-  // 선택한 이미지 파일
-  late XFile? selectedImage;
-  // 포커스 전환을 하는데 사용합니다.
-  var titleFocusController = FocusNode();
-  var contextFocusController = FocusNode();
-  //Post게시글 리스트
-  List<Post> postlist = [];
-  //Post list Hive 저장소
-  late HiveDataBase postBox;
+  //GetMethod
+  TextEditingController getTitleController() => _titleController;
+  TextEditingController getContextController() => _contextController;
+  FocusNode getTitleFocusController() => _titleFocusController;
+  FocusNode getContextFocusController() => _contextFocusController;
+  List<Post> getPostlist() => _postlist;
+  XFile? getSelectedImage() => _selectedImage;
+  bool getIsUsedImage() => _isUsedImage;
+  bool getIsShowIndicator() => _isShowIndicator;
 
-  // getMethod
-  TextEditingController getTitleController() => titleController;
-  TextEditingController getContextController() => contextController;
-  FocusNode getTitleFocusController() => titleFocusController;
-  FocusNode getContextFocusController() => contextFocusController;
+  // Hive저장소에 있는 데이터를 리스트에 넣습니다.
+  void _getPostlistFromPostbox() {
+    for (var i = 0; i < _postBox.getLength(); i++) {
+      var temp = _postBox.getAtPost(i);
+      if (temp != null) {
+        _postlist.add(temp);
+      }
+    }
+  }
 
-  Future<void> addPostList(DateTime writeDate, int duration) async {
-    if (titleController.text.isNotEmpty && contextController.text.isNotEmpty) {
-      Post temp = Post(
-          title: titleController.text,
-          content: contextController.text,
-          image: File(selectedImage!.path),
-          writeDate: writeDate,
-          duration: duration);
-      String postIndexKey = (writeDate.year.toString() +
-          addZero(writeDate.month) +
-          addZero(writeDate.day));
-      postlist.removeLast();
-      postlist.add(temp);
-      // await postBox.add(temp);
-      postBox.pushPostToHive(postIndexKey, temp);
+  //Postlist의 내용을 시간순으로 정렬합니다.
+  void _sortPostlist() {
+    _postlist.sort((Post temp1, Post temp2) {
+      return temp1.writeDate != null
+          ? temp1.writeDate!.compareTo(temp2.writeDate ?? DateTime.now())
+          : k_SortRight;
+    });
+  }
+
+  // 현재 적은 내용을 저장합니다.
+  void addPostList(DateTime writeDate, int duration) {
+    if (_checkTitleAndContentIsWrite()) {
+      Post temp = _makePostBasedCurrentWrite(writeDate, duration);
+      String postIndexKey = _makePostIndexKey(writeDate);
+      _postlist.removeLast();
+      _postlist.add(temp);
+      _postBox.pushPostToHive(postIndexKey, temp);
       if (k_DebugMode) {
-        print(postIndexKey);
-        print("postBox크기 ${postBox.getLength()}");
+        print(_tag + postIndexKey);
+        print(_tag + "postBox크기 ${_postBox.getLength()}");
       }
       resetWriteState();
       update();
-      if (k_DebugMode) {
-        print("이미지가 저장되었습니다.");
-      }
     }
   }
 
+  // 현재 날짜를 기준으로 키값을 만듭니다.
+  String _makePostIndexKey(DateTime writeDate) {
+    return (writeDate.year.toString() +
+        _addZero(writeDate.month) +
+        _addZero(writeDate.day));
+  }
+
+  // 현재 쓴 내용을 객체로 변환합니다.
+  Post _makePostBasedCurrentWrite(DateTime writeDate, int duration) {
+    return Post(
+        title: _titleController.text,
+        content: _contextController.text,
+        image: File(_selectedImage!.path),
+        writeDate: writeDate,
+        duration: duration);
+  }
+
+  // 내용이 적혀 있는지 확인합니다.
+  bool _checkTitleAndContentIsWrite() {
+    return _titleController.text.isNotEmpty &&
+        _contextController.text.isNotEmpty;
+  }
+
+  // 인디케이터 상태를 변환합니다.
+  // 이미지 로딩을 기다릴때 사용합니다.
   void changePostIndicatorState(bool state) {
-    isShowIndicator = state;
+    _isShowIndicator = state;
     update();
   }
 
+  // 글을 초기 상태로 되돌립니다.
+  //TODO추후 제거예정 고려
   void resetWriteState() {
-    titleController.clear();
-    contextController.clear();
-    isUsedImage = false;
-    selectedImage = null;
-    checkTodayWrite();
+    _titleController.clear();
+    _contextController.clear();
+    _isUsedImage = false;
+    _selectedImage = null;
+    _checkAndUpdateTodayWrite();
     update();
   }
 
-  // 지정된 이미지를 삭제
+  // 지정된 이미지를 삭제합니다.
   void deleteImage() {
-    selectedImage = null;
-    isUsedImage = false;
+    _selectedImage = null;
+    _isUsedImage = false;
     update();
   }
 
-  //이미지 사용중으로 변경
+  //이미지 위젯 보여줄지 말지 상태 업데이트
   void changeImageWidgetStatus(bool status) {
-    isUsedImage = status;
+    _isUsedImage = status;
     if (k_DebugMode) {
-      print("이미지 상태 업데이트");
+      print(_tag + "이미지 상태 업데이트");
     }
     update();
   }
 
-  // 이미지 변경
+  // 선택한 이미지로 변경
   void updateSelectImage(XFile? imageData) {
     if (imageData != null) {
-      selectedImage = imageData;
+      _selectedImage = imageData;
       if (k_DebugMode) {
-        print("이미지 데이터를 업로드 합니다.");
+        print(_tag + "이미지 데이터를 업로드 합니다.");
       }
     }
   }
@@ -126,56 +165,45 @@ class PostController extends GetxController {
   // 재목에서 내용으로 포커스 전환
   void completeTitleWrite() {
     if (k_DebugMode) {
-      print("data");
+      print(_tag + "data");
     }
-    contextFocusController.requestFocus();
+    _contextFocusController.requestFocus();
   }
 
-  void completeContextWrite() {
-    if (k_DebugMode) {
-      print("complete");
-    }
-  }
-
-  @override
-  void onClose() {
-    postBox.closeDatabase();
-    super.onClose();
-  }
-
-  String addZero(int num) {
+  //년월의 자릿수가 1이면 앞에 0을 붙여줍니다.
+  String _addZero(int num) {
     if (num < 10) {
       return "0$num";
     }
     return "$num";
   }
 
-  void checkTodayWrite() {
-    DateTime temp1 = postlist.last.writeDate!;
-    DateTime temp2 = DateTime.now();
-    if (!(temp1.year == temp2.year &&
-        temp1.month == temp2.month &&
-        temp1.day == temp2.day)) {
-      postlist.add(Post(
-          title: "오늘 일기를 작성해 주세요",
-          content: "",
-          duration: 0,
-          writeDate: null,
-          image: null));
+  // 오늘 적은 일기가 있는지 확인합니다.
+  void _checkAndUpdateTodayWrite() {
+    DateTime lastPostDate = _postlist.last.writeDate!;
+    DateTime todayDate = DateTime.now();
+    if (!_checkDateIsSame(lastPostDate, todayDate)) {
+      _postlist.add(k_NotWritePost);
     } else {
-      var todayWrite = postlist.last;
-      print("이미 글이 적혀 있습니다.");
-      titleController.text = todayWrite.title;
-      contextController.text = todayWrite.content;
-      selectedImage = XFile(todayWrite.image!.path);
-      isUsedImage = true;
+      var todayWrite = _postlist.last;
+      print(_tag + "오늘 글을 적었습니다..");
+      _titleController.text = todayWrite.title;
+      _contextController.text = todayWrite.content;
+      _selectedImage = XFile(todayWrite.image!.path);
+      _isUsedImage = true;
     }
   }
-}
 
-class PostBinding implements Bindings {
+  bool _checkDateIsSame(DateTime date1, DateTime date2) {
+    return (date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day);
+  }
+
+  // 소멸자
   @override
-  void dependencies() {
-    Get.lazyPut(() => PostController());
+  void onClose() {
+    _postBox.closeDatabase();
+    super.onClose();
   }
 }

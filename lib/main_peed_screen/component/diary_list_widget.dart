@@ -17,7 +17,9 @@ class DiaryListWidget extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) => CarouselSlider(
-          items: postController.postlist.reversed
+          items: postController
+              .getPostlist()
+              .reversed
               .map((item) => DiaryCardViewWidget(
                   title: item.title,
                   content: item.content,

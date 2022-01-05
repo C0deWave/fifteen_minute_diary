@@ -1,12 +1,12 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:fifteen_minute_diary/custom_class/post_binder.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:path_provider/path_provider.dart';
-import 'controller/post_controller.dart';
 import 'main_peed_screen/main_peed_screen.dart';
 
 void main() async {
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/writepage',
             page: () => const WriteDiaryScreen(),
-            binding: PostBinding()),
+            binding: PostBinder()),
       ],
     );
   }
