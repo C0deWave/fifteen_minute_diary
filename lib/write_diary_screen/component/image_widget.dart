@@ -12,7 +12,7 @@ class ImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PostController>(builder: (controller) {
-      return controller.isUsedImage
+      return controller.getIsUsedImage()
           ? GestureDetector(
               onTap: () {
                 if (k_DebugMode) {
@@ -27,7 +27,8 @@ class ImageWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: FileImage(File(controller.selectedImage!.path))),
+                        image: FileImage(
+                            File(controller.getSelectedImage()!.path))),
                     borderRadius: BorderRadius.circular(15)),
               ),
             )

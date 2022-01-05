@@ -1,5 +1,6 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
+import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
 
 /*
@@ -31,6 +32,18 @@ const k_TimerHerotag = "TimerHeroWidgetTest";
 // timer_controller
 // 일기 타이머의 시간 값 입니다.
 const k_TimerDuration = 15 * 60;
+
+//---------------------------------------------------
+// post_controller
+// 시간값이 없는경우 항상 큰값으로 인정합니다.
+const k_SortRight = 1;
+// 일기를 쓰지 않았을 경우 생기는 탬플릿입니다.
+Post k_NotWritePost = Post(
+    title: "오늘 일기를 작성해 주세요",
+    content: "",
+    duration: 0,
+    writeDate: null,
+    image: null);
 
 //---------------------------------------------------
 // timer_complete_alert

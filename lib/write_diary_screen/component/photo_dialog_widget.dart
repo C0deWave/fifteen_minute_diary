@@ -140,7 +140,7 @@ class PhotoDialogWidget extends StatelessWidget {
         ),
       ),
       GetBuilder<PostController>(builder: (_) {
-        if (_.isShowIndicator) {
+        if (_.getIsShowIndicator()) {
           return Container(
               color: const Color(0x00000000),
               child: const Center(

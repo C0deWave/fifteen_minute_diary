@@ -12,9 +12,6 @@ class ContextTextFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: TextField(
           controller: controller.getContextController(),
-          onEditingComplete: () {
-            controller.completeContextWrite();
-          },
           focusNode: controller.getContextFocusController(),
           keyboardType: TextInputType.multiline,
           minLines: 7, //Normal textInputField will be displayed
