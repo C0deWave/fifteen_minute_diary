@@ -9,8 +9,8 @@ part of 'post.dart';
 class PostAdapter extends TypeAdapter<Post> {
   final String _tag = 'PostAdapter: ';
   late final Directory document;
-  PostAdapter() {
-    init();
+  PostAdapter({String? path}) {
+    init(path: path);
   }
   @override
   final int typeId = 1;
@@ -39,7 +39,7 @@ class PostAdapter extends TypeAdapter<Post> {
   @override
   void write(BinaryWriter writer, Post obj) {
     File temp = File("${document.path}/${obj.writeDate.hashCode}");
-    if (!temp.existsSync()) {
+    if (!temp.existsSync() && obj.image != null) {
       debugPrint(_tag + "이미지 복사해서 저장");
       temp.writeAsBytesSync(obj.image!.readAsBytesSync());
     }
@@ -50,7 +50,7 @@ class PostAdapter extends TypeAdapter<Post> {
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.image!.readAsBytesSync())
+      ..write(obj.image?.readAsBytesSync())
       ..writeByte(3)
       ..write(obj.writeDate)
       ..writeByte(4)
@@ -67,7 +67,11 @@ class PostAdapter extends TypeAdapter<Post> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 
-  void init() async {
-    document = await getApplicationDocumentsDirectory();
+  void init({String? path}) async {
+    if (path != null) {
+      document = Directory(path);
+    } else {
+      document = await getApplicationDocumentsDirectory();
+    }
   }
 }

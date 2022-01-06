@@ -76,14 +76,14 @@ class PostController extends GetxController {
   }
 
   // 현재 적은 내용을 저장합니다.
-  void addPostList({required int writeDuration}) {
+  void addPostList({required int writeDuration}) async {
     DateTime writeDate = DateTime.now();
     if (_checkTitleAndContentIsWrite()) {
       Post temp = _makePostBasedCurrentWrite(writeDate, writeDuration);
       String postIndexKey = _makePostIndexKey(writeDate);
       _postlist.removeLast();
       _postlist.add(temp);
-      _postBox.pushPostToHive(postIndexKey, temp);
+      await _postBox.pushPostToHive(postIndexKey, temp);
       debugPrint(
           _tag + "postBox크기 ${_postBox.getLength()}\n키값: " + postIndexKey);
       resetWriteState();
@@ -188,7 +188,7 @@ class PostController extends GetxController {
   // 소멸자
   @override
   void onClose() {
-    _postBox.closeDatabase();
+    // _postBox.closeDatabase();
     super.onClose();
   }
 }
