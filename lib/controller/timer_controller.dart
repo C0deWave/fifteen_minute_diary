@@ -127,7 +127,7 @@ class TimerController extends GetxController {
   // 소멸자
   @override
   void onClose() {
-    _postBox.closeDatabase();
+    // _postBox.closeDatabase();
     super.onClose();
   }
 }
