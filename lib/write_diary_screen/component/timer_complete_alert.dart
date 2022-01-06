@@ -25,7 +25,7 @@ class TimerCompleteAlert {
       builder: (context) => CupertinoAlertDialog(
         title: const Text(k_AlertTitle),
         content: Text(k_AlertContent1 +
-            Get.find<TimerController>().getCurrentTime() +
+            Get.find<TimerController>().getTimeText().value +
             k_AlertContent2),
         actions: <Widget>[
           CupertinoDialogAction(
@@ -47,7 +47,7 @@ class TimerCompleteAlert {
       builder: (context) => AlertDialog(
         title: const Text(k_AlertTitle),
         content: Text(k_AlertContent1 +
-            Get.find<TimerController>().getCurrentTime() +
+            Get.find<TimerController>().getTimeText().value +
             k_AlertContent2),
         actions: <Widget>[
           TextButton(
