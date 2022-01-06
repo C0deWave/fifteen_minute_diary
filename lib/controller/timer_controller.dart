@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 class TimerController extends GetxController {
   //----------------------------------------------------------------------
   // 변수
-  // Singleton Instance 반환
-  static final TimerController _controller = TimerController._internal();
   // 로그 확인용 태그
   final String _tag = 'timer_controller: ';
   // 현재시간 확인용 String
@@ -24,13 +22,9 @@ class TimerController extends GetxController {
 
   //----------------------------------------------------------------------
   // 함수
-  // 싱글톤 인스턴스 반환
-  factory TimerController() {
-    return _controller;
-  }
-
-  // init: 데이터 베이스에서 오늘일기를 확인하고 타이머 시간과 subtext를 정한다.
-  TimerController._internal() {
+  // 초기화 함수
+  @override
+  void onInit() {
     _postBox = HiveDataBase();
     var temp = _postBox.getPost(_getTodayDiaryKey());
     if (temp != null) {
@@ -42,6 +36,7 @@ class TimerController extends GetxController {
     _updateSubtext();
     _time = _getTimeString();
     update();
+    super.onInit();
   }
 
   // 현재 시간을 반환환다.
@@ -122,12 +117,5 @@ class TimerController extends GetxController {
     } else {
       _subtext = "남은 시간동안 수정할 수 있습니다.".obs;
     }
-  }
-
-  // 소멸자
-  @override
-  void onClose() {
-    // _postBox.closeDatabase();
-    super.onClose();
   }
 }

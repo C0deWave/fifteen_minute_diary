@@ -9,8 +9,6 @@ import 'package:image_picker/image_picker.dart';
 class PostController extends GetxController {
   //--------------------------------------------------------------------
   // 변수
-  // Singleton Instance
-  static final PostController _controller = PostController._internal();
   //쓴 일기의 내용을 추출하는데 사용합니다.
   final _titleController = TextEditingController();
   final _contextController = TextEditingController();
@@ -32,18 +30,15 @@ class PostController extends GetxController {
 
   //--------------------------------------------------------------------
   // 함수
-  // getMethod
-  factory PostController() {
-    return _controller;
-  }
-
-  // init의 역할을 한다.
-  PostController._internal() {
+  // 초기화 함수
+  @override
+  void onInit() {
     _postBox = HiveDataBase();
     debugPrint(_tag + 'postBox controller 주입');
     _getPostlistFromPostbox();
     _sortPostlist();
     _checkAndUpdateTodayWrite();
+    super.onInit();
   }
 
   //GetMethod
@@ -183,12 +178,5 @@ class PostController extends GetxController {
     return (date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day);
-  }
-
-  // 소멸자
-  @override
-  void onClose() {
-    // _postBox.closeDatabase();
-    super.onClose();
   }
 }
