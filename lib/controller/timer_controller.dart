@@ -14,10 +14,10 @@ class TimerController extends GetxController {
   // 현재 남은시간
   int _timerDuration = k_TimerDuration;
   // 타이머 밑 subtext
-  RxString _subtext = "15분간 일기에 집중하세요".obs;
+  RxString _subtext = "15분간 일기에 집중해 주세요!".obs;
   // Hive데이터 베이스
   late HiveDataBase _postBox;
-  late DateTime _writeDate;
+  DateTime _writeDate = DateTime.now();
   late Timer _timer;
 
   //----------------------------------------------------------------------
@@ -44,6 +44,11 @@ class TimerController extends GetxController {
   RxString getTimeText() => _time;
   RxString getSubText() => _subtext;
 
+  // 글쓰는데 사용한 시간을 초단위로 반환환다.
+  int getDuration() {
+    return k_TimerDuration - _timerDuration;
+  }
+
   // 현재 시간값을 업데이트 하는데 사용한다.
   RxString _getTimeString() {
     return "${_twoDigits(_timerDuration ~/ 60)}:${_twoDigits((_timerDuration % 60).toInt())}"
@@ -56,11 +61,6 @@ class TimerController extends GetxController {
     return _writeDate.year.toString() +
         _twoDigits(_writeDate.month) +
         _twoDigits(_writeDate.day);
-  }
-
-  // 글쓰는데 사용한 시간을 초단위로 반환환다.
-  int getDuration() {
-    return k_TimerDuration - _timerDuration;
   }
 
   // 타이머를 시작한다. callback으로 0초가 되었을때 함수를 실행한다.
@@ -97,11 +97,6 @@ class TimerController extends GetxController {
 
   // 숫자 포맷을 두자리로 한다.
   String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
-
-  // 현재 시간값을 가져옵니다.
-  String getCurrentTime() {
-    return _getTimeString().value;
-  }
 
   //남은 시간이 있는지 확인합니다.
   bool haveTime() {
