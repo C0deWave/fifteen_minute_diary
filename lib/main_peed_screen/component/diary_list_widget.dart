@@ -7,32 +7,32 @@ import 'package:get/get.dart';
 class DiaryListWidget extends StatelessWidget {
   DiaryListWidget({
     Key? key,
-    required this.postController,
   }) : super(key: key);
-
-  final PostController postController;
 
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => CarouselSlider(
-          items: postController
-              .getPostlist()
-              .reversed
-              .map((item) => DiaryCardViewWidget(
-                  title: item.title,
-                  content: item.content,
-                  image: item.image,
-                  writeDate: item.writeDate,
-                  duration: item.duration))
-              .toList(),
-          options: CarouselOptions(
-            enableInfiniteScroll: false,
-            height: Get.height * 0.83,
-            viewportFraction: 0.90,
-          ),
-        ),
+        (context, index) => GetBuilder<PostController>(
+            init: PostController(),
+            builder: (_controller) {
+              return CarouselSlider.builder(
+                itemBuilder: (BuildContext context, int index, int a) =>
+                    DiaryCardViewWidget(
+                        title: _controller.getPostlist()[index].title,
+                        content: _controller.getPostlist()[index].content,
+                        image: _controller.getPostlist()[index].image,
+                        writeDate: _controller.getPostlist()[index].writeDate,
+                        duration: _controller.getPostlist()[index].duration),
+                itemCount: _controller.getPostlist().length,
+                options: CarouselOptions(
+                  autoPlay: false,
+                  enableInfiniteScroll: false,
+                  height: Get.height * 0.83,
+                  viewportFraction: 0.90,
+                ),
+              );
+            }),
         childCount: 1,
       ),
     );
