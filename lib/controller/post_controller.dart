@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 
 class PostController extends GetxController {
   //--------------------------------------------------------------------
@@ -17,7 +20,7 @@ class PostController extends GetxController {
   //인디케이터 확인용 코드
   bool _isShowIndicator = false;
   // 선택한 이미지 파일
-  late XFile? _selectedImage;
+  XFile? _selectedImage;
   // 포커스 전환을 하는데 사용합니다.
   final _titleFocusController = FocusNode();
   final _contextFocusController = FocusNode();
@@ -37,7 +40,7 @@ class PostController extends GetxController {
     debugPrint(_tag + 'postBox controller 주입');
     _getPostlistFromPostbox();
     _sortPostlist();
-    _checkAndUpdateTodayWrite();
+    _checkTodayWrite();
     super.onInit();
   }
 
@@ -74,7 +77,7 @@ class PostController extends GetxController {
   void addPostList({required int writeDuration}) async {
     DateTime writeDate = DateTime.now();
     if (_checkTitleAndContentIsWrite()) {
-      Post temp = _makePostBasedCurrentWrite(writeDate, writeDuration);
+      Post temp = await _makePostBasedCurrentWrite(writeDate, writeDuration);
       String postIndexKey = _makePostIndexKey(writeDate);
       _postlist.removeLast();
       _postlist.add(temp);
@@ -94,13 +97,30 @@ class PostController extends GetxController {
   }
 
   // 현재 쓴 내용을 객체로 변환합니다.
-  Post _makePostBasedCurrentWrite(DateTime writeDate, int duration) {
+  Future<Post> _makePostBasedCurrentWrite(
+      DateTime writeDate, int duration) async {
+    int tempImage = Random(DateTime.now().hashCode).nextInt(3) + 1;
+    print('image/$tempImage.jpg');
     return Post(
         title: _titleController.text,
         content: _contextController.text,
-        image: File(_selectedImage!.path),
+        image: _selectedImage != null
+            ? File(_selectedImage!.path)
+            : await _getImageFileFromAssets(
+                'lib/assets/image/default_writing_image/image$tempImage.jpg'),
         writeDate: writeDate,
         duration: duration);
+  }
+
+  //에셋에서 이미지를 불러옵니다.
+  Future<File> _getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load(path);
+
+    final file = File('${(await getTemporaryDirectory()).path}/test.jpg');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
   }
 
   // 내용이 적혀 있는지 확인합니다.
@@ -123,7 +143,7 @@ class PostController extends GetxController {
     _contextController.clear();
     _isUsedImage = false;
     _selectedImage = null;
-    _checkAndUpdateTodayWrite();
+    _checkTodayWrite();
     update();
   }
 
@@ -159,19 +179,29 @@ class PostController extends GetxController {
   String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
 
   // 오늘 적은 일기가 있는지 확인합니다.
-  void _checkAndUpdateTodayWrite() {
-    DateTime lastPostDate = _postlist.last.writeDate!;
+  void _checkTodayWrite() {
+    DateTime? lastPostDate;
+    if (_postlist.isEmpty) {
+      lastPostDate = DateTime(1997);
+    } else {
+      lastPostDate = _postlist.last.writeDate;
+    }
     DateTime todayDate = DateTime.now();
-    if (!_checkDateIsSame(lastPostDate, todayDate)) {
+    if (!_checkDateIsSame(lastPostDate!, todayDate)) {
       _postlist.add(k_NotWritePost);
     } else {
-      var todayWrite = _postlist.last;
-      debugPrint(_tag + "오늘 글을 적었습니다..");
-      _titleController.text = todayWrite.title;
-      _contextController.text = todayWrite.content;
-      _selectedImage = XFile(todayWrite.image!.path);
-      _isUsedImage = true;
+      _updateWriteScreenContent();
     }
+  }
+
+  // 오늘 적은일기가 있다면 컨트롤러의 내용을 업데이트 합니다.
+  void _updateWriteScreenContent() {
+    var todayWrite = _postlist.last;
+    debugPrint(_tag + "오늘 글을 적었습니다..");
+    _titleController.text = todayWrite.title;
+    _contextController.text = todayWrite.content;
+    _selectedImage = XFile(todayWrite.image!.path);
+    _isUsedImage = true;
   }
 
   bool _checkDateIsSame(DateTime date1, DateTime date2) {

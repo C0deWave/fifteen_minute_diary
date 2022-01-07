@@ -18,7 +18,7 @@ var listPagesViewModel = <PageViewModel>[
               shape: k_InitSplashImageShape,
               image: DecorationImage(
                 image: Svg(
-                    "asset/image/init_splash_screen/init1page_notebook.svg"),
+                    "lib/assets/image/init_splash_screen/init1page_notebook.svg"),
               )),
         )),
       ),
@@ -34,7 +34,8 @@ var listPagesViewModel = <PageViewModel>[
             shape: k_InitSplashImageShape,
             color: k_InitSplashBackgroundImageColor,
             image: DecorationImage(
-              image: Svg("asset/image/init_splash_screen/init3page_notify.svg"),
+              image: Svg(
+                  "lib/assets/image/init_splash_screen/init3page_notify.svg"),
             )),
       )),
     ),
@@ -49,8 +50,8 @@ var listPagesViewModel = <PageViewModel>[
             color: k_InitSplashBackgroundImageColor,
             shape: k_InitSplashImageShape,
             image: DecorationImage(
-              image:
-                  Svg("asset/image/init_splash_screen/init2page_camping.svg"),
+              image: Svg(
+                  "lib/assets/image/init_splash_screen/init2page_camping.svg"),
             )),
       )),
     ),
