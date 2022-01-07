@@ -54,10 +54,10 @@ class HiveDataBase {
     try {
       var tempPost = _postBox.get(key);
       if (tempPost != null) {
-        _postBox.delete(key);
-        _postBox.put(key, value);
+        await _postBox.delete(key);
+        await _postBox.put(key, value);
       } else {
-        _postBox.put(key, value);
+        await _postBox.put(key, value);
       }
       return true;
     } on Exception catch (e) {
