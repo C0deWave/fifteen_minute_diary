@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:file/memory.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,12 +58,17 @@ class PostController extends GetxController {
 
   // Hive저장소에 있는 데이터를 리스트에 넣습니다.
   void _getPostlistFromPostbox() {
+    debugPrint(_tag + "저장소에서 글을 불러옵니다.");
+    _postlist.clear();
     for (var i = 0; i < _postBox.getLength(); i++) {
       var temp = _postBox.getAtPost(i);
       if (temp != null) {
         _postlist.add(temp);
       }
     }
+    debugPrint(
+        "postlist: ${_postlist.length} postBox: ${_postBox.getLength()}");
+    update();
   }
 
   //Postlist의 내용을 시간순으로 정렬합니다.
@@ -79,9 +86,8 @@ class PostController extends GetxController {
     if (_checkTitleAndContentIsWrite()) {
       Post temp = await _makePostBasedCurrentWrite(writeDate, writeDuration);
       String postIndexKey = _makePostIndexKey(writeDate);
-      _postlist.removeLast();
-      _postlist.add(temp);
       await _postBox.pushPostToHive(postIndexKey, temp);
+      _getPostlistFromPostbox();
       debugPrint(
           _tag + "postBox크기 ${_postBox.getLength()}\n키값: " + postIndexKey);
       resetWriteState();
@@ -100,11 +106,11 @@ class PostController extends GetxController {
   Future<Post> _makePostBasedCurrentWrite(
       DateTime writeDate, int duration) async {
     int tempImage = Random(DateTime.now().hashCode).nextInt(3) + 1;
-    print('image/$tempImage.jpg');
+    debugPrint(_tag + '파일명 image/$tempImage.jpg');
     return Post(
         title: _titleController.text,
         content: _contextController.text,
-        image: _selectedImage != null
+        image: _isUsedImage == true
             ? File(_selectedImage!.path)
             : await _getImageFileFromAssets(
                 'lib/assets/image/default_writing_image/image$tempImage.jpg'),
@@ -115,18 +121,23 @@ class PostController extends GetxController {
   //에셋에서 이미지를 불러옵니다.
   Future<File> _getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load(path);
-
-    final file = File('${(await getTemporaryDirectory()).path}/test.jpg');
+    debugPrint('임시파일 생성');
+    final file = File(
+        '${(await getTemporaryDirectory()).path}/test${path.hashCode}.jpg');
     await file.writeAsBytes(byteData.buffer
         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
     return file;
   }
 
   // 내용이 적혀 있는지 확인합니다.
   bool _checkTitleAndContentIsWrite() {
-    return _titleController.text.isNotEmpty &&
-        _contextController.text.isNotEmpty;
+    if (_titleController.text.isNotEmpty &&
+        _contextController.text.isNotEmpty) {
+      return true;
+    } else {
+      debugPrint("글을 적지 않았습니다.");
+      return false;
+    }
   }
 
   // 인디케이터 상태를 변환합니다.
