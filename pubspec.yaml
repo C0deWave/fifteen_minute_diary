@@ -57,4 +57,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - asset/image/init_splash_screen/
+    - lib/assets/image/init_splash_screen/
+    - lib/assets/image/default_writing_image/
