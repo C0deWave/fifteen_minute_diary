@@ -68,7 +68,7 @@ class MainPeedBody extends StatelessWidget {
                   builder: (_) {
                     if (tabbarController.currentState ==
                         TabbarState.diaryState) {
-                      return DiaryListWidget(postController: postController);
+                      return DiaryListWidget();
                     } else {
                       return const CalenderWidget();
                     }
