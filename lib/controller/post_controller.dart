@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
-import 'package:file/memory.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,7 +79,7 @@ class PostController extends GetxController {
   }
 
   // 현재 적은 내용을 저장합니다.
-  void addPostList({required int writeDuration}) async {
+  Future<void> addPostList({required int writeDuration}) async {
     DateTime writeDate = DateTime.now();
     if (_checkTitleAndContentIsWrite()) {
       Post temp = await _makePostBasedCurrentWrite(writeDate, writeDuration);
@@ -177,6 +175,8 @@ class PostController extends GetxController {
     if (imageData != null) {
       _selectedImage = imageData;
       debugPrint(_tag + "이미지 데이터를 업로드 합니다.");
+    } else {
+      debugPrint('선택한 이미지가 없습니다.');
     }
   }
 
@@ -199,6 +199,7 @@ class PostController extends GetxController {
     }
     DateTime todayDate = DateTime.now();
     if (!_checkDateIsSame(lastPostDate!, todayDate)) {
+      debugPrint('조커 카드 추가');
       _postlist.add(k_NotWritePost);
     } else {
       _updateWriteScreenContent();
