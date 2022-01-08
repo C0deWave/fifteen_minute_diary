@@ -8,13 +8,37 @@ class CalenderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
-            (content, i) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: TableCalendar(
-                    locale: 'ko_KR',
-                    firstDay: DateTime.utc(2019, 10, 16),
-                    lastDay: DateTime.utc(2030, 3, 14),
-                    focusedDay: DateTime.now(),
+            (content, i) => Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TableCalendar(
+                          headerStyle: const HeaderStyle(
+                            headerMargin: EdgeInsets.only(
+                                left: 40, top: 10, right: 40, bottom: 10),
+                            titleCentered: true,
+                            formatButtonVisible: false,
+                            leftChevronIcon: Icon(Icons.arrow_left),
+                            rightChevronIcon: Icon(Icons.arrow_right),
+                            titleTextStyle: TextStyle(fontSize: 17.0),
+                          ),
+                          calendarStyle: CalendarStyle(
+                            outsideDaysVisible: true,
+                            weekendTextStyle:
+                                TextStyle().copyWith(color: Colors.red),
+                            holidayTextStyle:
+                                TextStyle().copyWith(color: Colors.blue[800]),
+                          ),
+                          locale: 'ko_KR',
+                          firstDay: DateTime.utc(2019, 10, 16),
+                          lastDay: DateTime.utc(2030, 3, 14),
+                          focusedDay: DateTime.now(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
             childCount: 1));

@@ -22,63 +22,70 @@ class MainPeedBody extends StatelessWidget {
     var postController = Get.put(PostController());
     var tabbarController = Get.put(TabbarController());
     final timerController = Get.put(TimerController());
-    return Column(children: [
-      Expanded(
-        child: CustomScrollView(
-          // shrinkWrap: true,
-          slivers: [
-            SliverStickyHeader(
-              header: Container(),
-              //타이머
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, i) => Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Hero(
-                      tag: k_TimerHerotag,
-                      child: TimerWidget(
-                        callback: () {
-                          if (timerController.haveTime()) {
-                            timerController.startTimer(finishFunction: () {
-                              postController.addPostList(
-                                  writeDuration: timerController.getDuration());
-                              timerController.stopTimer();
-                              Get.back();
-                            });
-                            Get.to(() => const WriteDiaryScreen());
-                            debugPrint(_tag + "click timer");
-                          } else {
-                            debugPrint(_tag + '남은 시간이 없습니다.');
-                          }
-                        },
+    return Container(
+      color: Colors.white,
+      child: Column(children: [
+        Expanded(
+          child: CustomScrollView(
+            // shrinkWrap: true,
+            slivers: [
+              SliverStickyHeader(
+                header: Container(),
+                //타이머
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, i) => Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Hero(
+                          tag: k_TimerHerotag,
+                          child: TimerWidget(
+                            callback: () {
+                              if (timerController.haveTime()) {
+                                timerController.startTimer(finishFunction: () {
+                                  postController.addPostList(
+                                      writeDuration:
+                                          timerController.getDuration());
+                                  timerController.stopTimer();
+                                  Get.back();
+                                });
+                                Get.to(() => const WriteDiaryScreen());
+                                debugPrint(_tag + "click timer");
+                              } else {
+                                debugPrint(_tag + '남은 시간이 없습니다.');
+                              }
+                            },
+                          ),
+                        ),
                       ),
                     ),
+                    childCount: 1,
                   ),
-                  childCount: 1,
                 ),
               ),
-            ),
-            //일기 리스트
-            GetBuilder<PostController>(builder: (_) {
-              return SliverStickyHeader(
-                header: TabbarWidget(),
-                sliver: GetBuilder<TabbarController>(
-                  init: TabbarController(),
-                  builder: (_) {
-                    if (tabbarController.currentState ==
-                        TabbarState.diaryState) {
-                      return DiaryListWidget();
-                    } else {
-                      return const CalenderWidget();
-                    }
-                  },
-                ),
-              );
-            })
-          ],
-        ),
-      )
-    ]);
+              //일기 리스트
+              GetBuilder<PostController>(builder: (_) {
+                return SliverStickyHeader(
+                  header: TabbarWidget(),
+                  sliver: GetBuilder<TabbarController>(
+                    init: TabbarController(),
+                    builder: (_) {
+                      if (tabbarController.currentState ==
+                          TabbarState.diaryState) {
+                        return DiaryListWidget();
+                      } else {
+                        return const CalenderWidget();
+                      }
+                    },
+                  ),
+                );
+              })
+            ],
+          ),
+        )
+      ]),
+    );
   }
 }
