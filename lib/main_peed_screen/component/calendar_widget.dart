@@ -1,4 +1,7 @@
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatelessWidget {
@@ -15,28 +18,37 @@ class CalenderWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        TableCalendar(
-                          headerStyle: const HeaderStyle(
-                            headerMargin: EdgeInsets.only(
-                                left: 40, top: 10, right: 40, bottom: 10),
-                            titleCentered: true,
-                            formatButtonVisible: false,
-                            leftChevronIcon: Icon(Icons.arrow_left),
-                            rightChevronIcon: Icon(Icons.arrow_right),
-                            titleTextStyle: TextStyle(fontSize: 17.0),
-                          ),
-                          calendarStyle: CalendarStyle(
-                            outsideDaysVisible: true,
-                            weekendTextStyle:
-                                TextStyle().copyWith(color: Colors.red),
-                            holidayTextStyle:
-                                TextStyle().copyWith(color: Colors.blue[800]),
-                          ),
-                          locale: 'ko_KR',
-                          firstDay: DateTime.utc(2019, 10, 16),
-                          lastDay: DateTime.utc(2030, 3, 14),
-                          focusedDay: DateTime.now(),
-                        ),
+                        GetBuilder<CalendarController>(
+                            init: CalendarController(),
+                            builder: (calenderController) {
+                              return TableCalendar(
+                                  calendarBuilders:
+                                      calenderController.getCalendarBuilder(),
+                                  onPageChanged: (focusedDay) =>
+                                      calenderController
+                                          .onDaySelected(focusedDay),
+                                  onDaySelected: (seletedDay, focusday) =>
+                                      calenderController
+                                          .onDaySelected(seletedDay),
+                                  headerStyle:
+                                      calenderController.getHeaderStyle(),
+                                  calendarStyle:
+                                      calenderController.getCalendarStyle(),
+                                  locale: 'ko_KR',
+                                  firstDay: DateTime.utc(2019, 10, 16),
+                                  lastDay: DateTime.utc(2030, 3, 14),
+                                  eventLoader: (data) =>
+                                      calenderController.getEventLoader(data),
+                                  focusedDay: calenderController.getFocusDay(),
+                                  holidayPredicate: (date) =>
+                                      calenderController.isHoliday(date),
+                                  selectedDayPredicate: (DateTime date) {
+                                    return isSameDay(
+                                        calenderController.getFocusDay(), date);
+                                  }
+                                  // focusedDay: DateTime.utc(2022, 1, 15),
+                                  );
+                            }),
                       ],
                     ),
                   ),
