@@ -16,15 +16,20 @@ class DiaryListWidget extends StatelessWidget {
         (context, index) => GetBuilder<PostController>(
             init: PostController(),
             builder: (_controller) {
+              var length = _controller.getPostlist().length - 1;
               return CarouselSlider.builder(
-                itemBuilder: (BuildContext context, int index, int a) =>
-                    DiaryCardViewWidget(
-                        title: _controller.getPostlist()[index].title,
-                        content: _controller.getPostlist()[index].content,
-                        image: _controller.getPostlist()[index].image,
-                        writeDate: _controller.getPostlist()[index].writeDate,
-                        duration: _controller.getPostlist()[index].duration),
-                itemCount: _controller.getPostlist().length,
+                itemBuilder: (BuildContext context, int index, int a) {
+                  return DiaryCardViewWidget(
+                      title: _controller.getPostlist()[length - index].title,
+                      content:
+                          _controller.getPostlist()[length - index].content,
+                      image: _controller.getPostlist()[length - index].image,
+                      writeDate:
+                          _controller.getPostlist()[length - index].writeDate,
+                      duration:
+                          _controller.getPostlist()[length - index].duration);
+                },
+                itemCount: length + 1,
                 options: CarouselOptions(
                   autoPlay: false,
                   enableInfiniteScroll: false,
