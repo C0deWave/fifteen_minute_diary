@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 //---------------------------------------------------
 // 전역 설정
 //Hive Database의 Post내용을 담는 박스 키값입니다.
-const k_PostBox = 'testpostbox24';
+const k_PostBox = 'testpostbox29';
 
 //---------------------------------------------------
 // init_splash_screen
 // 처음 앱을 실행했는지 확인하기 위한 Shared_preference의 키값입니다.
-const k_IsViewSplashViewKey = "testIsViewSplashView22";
+const k_IsViewSplashViewKey = "testIsViewSplashView27";
 // splash 화면의 배경입니다.
 const k_InitSplashBackgroundImageColor = Colors.white12;
 // splash 이미지의 모양입니다. circle로 설정하면 원으로 바뀝니다.
