@@ -17,24 +17,27 @@ class DiaryListWidget extends StatelessWidget {
             init: PostController(),
             builder: (_controller) {
               var length = _controller.getPostlist().length - 1;
-              return CarouselSlider.builder(
-                itemBuilder: (BuildContext context, int index, int a) {
-                  return DiaryCardViewWidget(
-                      title: _controller.getPostlist()[length - index].title,
-                      content:
-                          _controller.getPostlist()[length - index].content,
-                      image: _controller.getPostlist()[length - index].image,
-                      writeDate:
-                          _controller.getPostlist()[length - index].writeDate,
-                      duration:
-                          _controller.getPostlist()[length - index].duration);
-                },
-                itemCount: length + 1,
-                options: CarouselOptions(
-                  autoPlay: false,
-                  enableInfiniteScroll: false,
-                  height: Get.height * 0.83,
-                  viewportFraction: 0.90,
+              return Container(
+                color: Colors.white,
+                child: CarouselSlider.builder(
+                  itemBuilder: (BuildContext context, int index, int a) {
+                    return DiaryCardViewWidget(
+                        title: _controller.getPostlist()[length - index].title,
+                        content:
+                            _controller.getPostlist()[length - index].content,
+                        image: _controller.getPostlist()[length - index].image,
+                        writeDate:
+                            _controller.getPostlist()[length - index].writeDate,
+                        duration:
+                            _controller.getPostlist()[length - index].duration);
+                  },
+                  itemCount: length + 1,
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    enableInfiniteScroll: false,
+                    height: Get.height * 0.83,
+                    viewportFraction: 0.90,
+                  ),
                 ),
               );
             }),
