@@ -9,6 +9,7 @@ import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.da
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
@@ -46,16 +47,20 @@ class MainPeedBody extends StatelessWidget {
                           child: TimerWidget(
                             callback: () {
                               if (timerController.haveTime()) {
-                                timerController.startTimer(finishFunction: () {
-                                  postController.addPostList(
-                                      writeDuration:
-                                          timerController.getDuration());
-                                  timerController.stopTimer();
-                                  Get.back();
-                                });
+                                timerController.startTimer(
+                                    finishFunction: () {
+                                      postController.addPostList(
+                                          writeDuration:
+                                              timerController.getDuration());
+                                      timerController.stopTimer();
+                                      Get.back();
+                                    },
+                                    remain1MinuteFunction:
+                                        _show1MinuteRemainToast);
                                 Get.to(() => const WriteDiaryScreen());
                                 debugPrint(_tag + "click timer");
                               } else {
+                                _showNotHaveRemainTimeToast();
                                 debugPrint(_tag + '남은 시간이 없습니다.');
                               }
                             },
@@ -89,5 +94,29 @@ class MainPeedBody extends StatelessWidget {
         )
       ]),
     );
+  }
+
+  void _show1MinuteRemainToast() {
+    debugPrint('show Toast Message');
+    Fluttertoast.showToast(
+        msg: "1분 남았습니다.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey.shade800,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  void _showNotHaveRemainTimeToast() {
+    debugPrint('show Toast Message');
+    Fluttertoast.showToast(
+        msg: "남은 시간이 없습니다.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey.shade800,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
