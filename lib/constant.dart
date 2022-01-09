@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 //Hive Database의 Post내용을 담는 박스 키값입니다.
 const k_PostBox = 'testpostbox29';
 
+const k_TimerTotalDuration = 15 * 60;
+
 //---------------------------------------------------
 // init_splash_screen
 // 처음 앱을 실행했는지 확인하기 위한 Shared_preference의 키값입니다.
@@ -28,8 +30,6 @@ const k_TimerHerotag = "TimerHeroWidgetTest";
 
 //---------------------------------------------------
 // timer_controller
-// 일기 타이머의 시간 값 입니다.
-const k_TimerDuration = 15 * 60;
 // 1초 입니다.
 const k_OneSec = Duration(seconds: 1);
 
