@@ -49,7 +49,8 @@ void main() {
     // 10초 뒤에 정지를 했을때 10초가 빠졌는지 확인합니다.
     test('check timer duration 3 second', () async {
       var timerController = Get.put(TimerController(), tag: "2");
-      timerController.startTimer(finishFunction: () {});
+      timerController.startTimer(
+          finishFunction: () {}, remain1MinuteFunction: () {});
       await Future.delayed(const Duration(seconds: 3, milliseconds: 500), () {
         timerController.stopTimer();
       });
@@ -62,13 +63,15 @@ void main() {
     // 남은시간에서 타이머가 다시 시작되는지 확인합니다.
     test('check timer reload time', () async {
       var timerController = Get.put(TimerController(), tag: "3");
-      timerController.startTimer(finishFunction: () {});
+      timerController.startTimer(
+          finishFunction: () {}, remain1MinuteFunction: () {});
       await Future.delayed(const Duration(seconds: 3, milliseconds: 500), () {
         timerController.stopTimer();
       });
       expect(3, timerController.getDuration());
       expect("14:57", timerController.getTimeText().value);
-      timerController.startTimer(finishFunction: () {});
+      timerController.startTimer(
+          finishFunction: () {}, remain1MinuteFunction: () {});
       await Future.delayed(const Duration(seconds: 3, milliseconds: 500), () {
         timerController.stopTimer();
       });
@@ -84,12 +87,14 @@ void main() {
       String writing = "남은 시간동안 수정할 수 있습니다.";
       String notHaveTime = "시간을 다 써서 더이상 수정할 수 없습니다.";
       expect(notWrite, timerController.getSubText().value);
-      timerController.startTimer(finishFunction: () {});
+      timerController.startTimer(
+          finishFunction: () {}, remain1MinuteFunction: () {});
       await Future.delayed(const Duration(seconds: 3, milliseconds: 500), () {
         timerController.stopTimer();
       });
       expect(writing, timerController.getSubText().value);
-      timerController.startTimer(finishFunction: () {});
+      timerController.startTimer(
+          finishFunction: () {}, remain1MinuteFunction: () {});
       await Future.delayed(
           const Duration(minutes: 14, seconds: 57, milliseconds: 500), () {
         timerController.stopTimer();
