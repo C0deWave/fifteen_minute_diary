@@ -68,9 +68,13 @@ class CalendarController extends GetxController {
   // 선택한 날짜 디자인
   Widget _getSelectedBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
+    DateTime nowDate = DateTime.now();
     return _getDefaultCalendarItem(date,
         boxDecoration: _getDefaultBoxDecoration(date).copyWith(
-            border: Border.all(width: 2, color: Colors.green.shade700)));
+            border: Border.all(
+                width: 3,
+                color: _getHolidayColors(
+                    DateTime.utc(nowDate.year, nowDate.month, nowDate.day)))));
   }
 
   // 가본 일자 디자인
