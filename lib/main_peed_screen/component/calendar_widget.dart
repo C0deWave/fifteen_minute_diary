@@ -1,7 +1,6 @@
 import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatelessWidget {
@@ -21,6 +20,7 @@ class CalenderWidget extends StatelessWidget {
                         GetBuilder<CalendarController>(
                             // init: CalendarController(),
                             builder: (calenderController) {
+                          calenderController.updateCalenderPostlist();
                           return TableCalendar(
                               calendarBuilders:
                                   calenderController.getCalendarBuilder(),
