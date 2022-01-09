@@ -12,7 +12,7 @@ class TimerController extends GetxController {
   // 현재시간 확인용 String
   RxString _time = "--:--".obs;
   // 현재 남은시간
-  int _timerDuration = k_TimerDuration;
+  int _timerDuration = k_TimerTotalDuration;
   // 타이머 밑 subtext
   RxString _subtext = "15분간 일기에 집중해 주세요!".obs;
   // Hive데이터 베이스
@@ -29,9 +29,9 @@ class TimerController extends GetxController {
     var temp = _postBox.getPost(_getTodayDiaryKey());
     if (temp != null) {
       debugPrint(_tag + "글이 생성되어 있습니다.");
-      _timerDuration = k_TimerDuration - temp.duration;
+      _timerDuration = k_TimerTotalDuration - temp.duration;
     } else {
-      _timerDuration = k_TimerDuration;
+      _timerDuration = k_TimerTotalDuration;
     }
     _updateSubtext();
     _time = _getTimeString();
@@ -46,7 +46,7 @@ class TimerController extends GetxController {
 
   // 글쓰는데 사용한 시간을 초단위로 반환환다.
   int getDuration() {
-    return k_TimerDuration - _timerDuration;
+    return k_TimerTotalDuration - _timerDuration;
   }
 
   // 현재 시간값을 업데이트 하는데 사용한다.
@@ -105,7 +105,7 @@ class TimerController extends GetxController {
 
   // subtext를 조건에 맞게 업데이트 합니다.
   void _updateSubtext() {
-    if (_timerDuration == k_TimerDuration) {
+    if (_timerDuration == k_TimerTotalDuration) {
       _subtext = "15분간 일기에 집중해 주세요!".obs;
     } else if (_timerDuration == 0) {
       _subtext = "시간을 다 써서 더이상 수정할 수 없습니다.".obs;
