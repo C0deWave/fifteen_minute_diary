@@ -1,4 +1,3 @@
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,6 @@ class CalendarController extends GetxController {
   // CalendatBuilder를 반환
   CalendarBuilders getCalendarBuilder() => CalendarBuilders(
       dowBuilder: _getdoWBuilder,
-      todayBuilder: _getTodayBuilder,
       selectedBuilder: _getSelectedBuilder,
       // disabledBuilder: _getDisableBuilder
       holidayBuilder: _getHolidayBuilder,
@@ -52,14 +50,36 @@ class CalendarController extends GetxController {
   //특별한 날 표시
   Widget _getHolidayBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
+    return _getDefaultCalendarItem(date);
+  }
+
+  // 일반적인 요일들 주말 : 빨강
+  Widget _getDefaultBuilder(
+      BuildContext context, DateTime date, DateTime olderDate) {
+    return _getDefaultCalendarItem(date);
+  }
+
+  // 저번달 다음달 날짜들 표시 안함
+  Widget _getOutsideBuilder(
+      BuildContext context, DateTime date, DateTime olderDate) {
+    return Container();
+  }
+
+  // 선택한 날짜 디자인
+  Widget _getSelectedBuilder(
+      BuildContext context, DateTime date, DateTime olderDate) {
+    return _getDefaultCalendarItem(date,
+        boxDecoration: _getDefaultBoxDecoration(date).copyWith(
+            border: Border.all(width: 2, color: Colors.green.shade700)));
+  }
+
+  // 가본 일자 디자인
+  Widget _getDefaultCalendarItem(DateTime date,
+      {BoxDecoration? boxDecoration}) {
     return Padding(
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(1),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: _getHolidayColors(date),
-          // color: Colors.green.shade100,
-        ),
+        decoration: boxDecoration ?? _getDefaultBoxDecoration(date),
         child: Center(
             child: Text(date.day.toString(),
                 style: (date.weekday == DateTime.sunday ||
@@ -70,52 +90,11 @@ class CalendarController extends GetxController {
     );
   }
 
-  // 일반적인 요일들 주말 : 빨강
-  Widget _getDefaultBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    return Center(
-        child: Text(date.day.toString(),
-            style: (date.weekday == DateTime.sunday ||
-                    date.weekday == DateTime.saturday)
-                ? const TextStyle(color: Colors.red)
-                : const TextStyle(color: Colors.black)));
-  }
-
-  // 저번달 다음달 날짜들
-  Widget _getOutsideBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    return Container();
-  }
-
-  // 뭔지 모름
-  Widget _getDisableBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    return Container();
-  }
-
-  //오늘 날짜 디자인
-  Widget _getTodayBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    final text = DateFormat.E('ko_KR').format(date);
-    return Center(
-        child: Text(text,
-            style: (date.weekday == DateTime.sunday ||
-                    date.weekday == DateTime.saturday)
-                ? const TextStyle(color: Colors.red)
-                : const TextStyle(color: Colors.black)));
-  }
-
-  // 선택한 날짜 디자인
-  Widget _getSelectedBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-      child: Center(
-          child: Text(date.day.toString(),
-              style: (date.weekday == DateTime.sunday ||
-                      date.weekday == DateTime.saturday)
-                  ? const TextStyle(color: Colors.red)
-                  : const TextStyle(color: Colors.black))),
+  // 기본 BoxDecoration
+  BoxDecoration _getDefaultBoxDecoration(date) {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(8),
+      color: _getHolidayColors(date),
     );
   }
 
@@ -163,19 +142,16 @@ class CalendarController extends GetxController {
     update();
   }
 
-  // 선택한 일자를 업데이트 합니다.
+  // focusDay를 선택한 일자로 업데이트 합니다.
   onDaySelected(DateTime seletedDay) {
     _focusDay = seletedDay;
     debugPrint(_tag + "onDaySelected" + _focusDay.toString());
     update();
   }
 
-  // 해당 날짜에 이벤트가 있는지 확인합니다.
+  // 해당 날짜에 이벤트가 있는지 확인합니다. 사용X
   getEventLoader(var date) {
     List<dynamic> temp = [];
-    // if (_dateTime.contains(date as DateTime)) {
-    //   temp.add(Text("data"));
-    // }
     return temp;
   }
 
@@ -204,6 +180,7 @@ class CalendarController extends GetxController {
     return Colors.white;
   }
 
+  // 작성글 리스트에서 해당 일자가 있는지 확인한다.
   Post? _getPostofDate(DateTime date) {
     for (var i = 0; i < _postlist.length; i++) {
       DateTime temp = _postlist[i].writeDate!;
