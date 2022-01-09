@@ -1,4 +1,5 @@
 import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
@@ -22,6 +23,7 @@ class MainPeedBody extends StatelessWidget {
     var postController = Get.put(PostController());
     var tabbarController = Get.put(TabbarController());
     final timerController = Get.put(TimerController());
+    Get.put(CalendarController());
     return Container(
       color: Colors.white,
       child: Column(children: [

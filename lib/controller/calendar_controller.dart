@@ -1,3 +1,4 @@
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
@@ -51,14 +52,21 @@ class CalendarController extends GetxController {
   //특별한 날 표시
   Widget _getHolidayBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.green.shade100),
-      child: Center(
-          child: Text(date.day.toString(),
-              style: (date.weekday == DateTime.sunday ||
-                      date.weekday == DateTime.saturday)
-                  ? const TextStyle(color: Colors.red)
-                  : const TextStyle(color: Colors.black))),
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: _getHolidayColors(date),
+          // color: Colors.green.shade100,
+        ),
+        child: Center(
+            child: Text(date.day.toString(),
+                style: (date.weekday == DateTime.sunday ||
+                        date.weekday == DateTime.saturday)
+                    ? const TextStyle(color: Colors.red)
+                    : const TextStyle(color: Colors.black))),
+      ),
     );
   }
 
@@ -149,6 +157,12 @@ class CalendarController extends GetxController {
     return temp;
   }
 
+  // 캘린더로 탭 전환을 할때 게시글 목록을 업데이트 해줍니다.
+  void updateCalenderPostlist() {
+    _postlist = _getPostlistFromPostbox();
+    update();
+  }
+
   // 선택한 일자를 업데이트 합니다.
   onDaySelected(DateTime seletedDay) {
     _focusDay = seletedDay;
@@ -176,4 +190,31 @@ class CalendarController extends GetxController {
 
   // 캘린더 스타일을 받습니다. 오늘날짜 표시 제거
   getCalendarStyle() => const CalendarStyle(isTodayHighlighted: false);
+
+  // 작성 시간동안 색상을 반환해 줍니다.
+  Color _getHolidayColors(DateTime date) {
+    Post? post = _getPostofDate(date);
+    if (post != null) {
+      int duration = ((post.duration / (60 * 15)) * 255).toInt() + 80;
+      if (duration > 255) {
+        duration = 255;
+      }
+      return Color.fromARGB(duration, 49, 139, 49);
+    }
+    return Colors.white;
+  }
+
+  Post? _getPostofDate(DateTime date) {
+    for (var i = 0; i < _postlist.length; i++) {
+      DateTime temp = _postlist[i].writeDate!;
+      if (temp.year == date.year &&
+          temp.month == date.month &&
+          temp.day == date.day) {
+        debugPrint('글을 찾았습니다.' + date.month.toString() + date.day.toString());
+        debugPrint(_postlist[i].duration.toString());
+        return _postlist[i];
+      }
+    }
+    return null;
+  }
 }
