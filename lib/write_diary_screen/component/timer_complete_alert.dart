@@ -1,4 +1,5 @@
 import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,9 @@ class TimerCompleteAlert {
   _yesAction() {
     TimerController timerController = Get.find<TimerController>();
     Get.find<PostController>()
-        .addPostList(writeDuration: timerController.getDuration());
+        .addPostList(writeDuration: timerController.getDuration())
+        .then(
+            (value) => Get.find<CalendarController>().updateCalenderPostlist());
     timerController.stopTimer();
     Get.back();
     Get.back();

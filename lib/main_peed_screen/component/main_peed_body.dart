@@ -49,9 +49,13 @@ class MainPeedBody extends StatelessWidget {
                               if (timerController.haveTime()) {
                                 timerController.startTimer(
                                     finishFunction: () {
-                                      postController.addPostList(
-                                          writeDuration:
-                                              timerController.getDuration());
+                                      postController
+                                          .addPostList(
+                                              writeDuration:
+                                                  timerController.getDuration())
+                                          .then((value) =>
+                                              Get.find<CalendarController>()
+                                                  .updateCalenderPostlist());
                                       timerController.stopTimer();
                                       Get.back();
                                     },
