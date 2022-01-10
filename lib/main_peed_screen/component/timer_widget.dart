@@ -13,11 +13,12 @@ class TimerWidget extends StatelessWidget {
         callback();
       },
       child: Container(
-        height: 100,
+        height: 110,
         // height: Get.height / 7,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(11),
-            color: Colors.grey.shade300),
+            color: Color.fromARGB(255, 39, 88, 59),
+            border: Border.all(width: 6)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -30,18 +31,19 @@ class TimerWidget extends StatelessWidget {
                 return Text(
                   "${timerController.getTimeText()}",
                   style: const TextStyle(
-                      fontSize: 60,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      decoration: TextDecoration.none),
+                      fontSize: 62,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.none,
+                      fontFamily: 'Alarm_clock'),
                 );
               }),
               Obx(() {
                 return Text(
                   "${timerController.getSubText()}",
                   style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                      fontSize: 14,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal,
                       decoration: TextDecoration.none),
                 );
