@@ -48,6 +48,8 @@ dependencies:
   carousel_slider: ^4.0.0
   # Toast메세지 사용
   fluttertoast: ^8.0.8
+  # 로그인 버튼 구현
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -61,3 +63,4 @@ flutter:
   assets:
     - lib/assets/image/init_splash_screen/
     - lib/assets/image/default_writing_image/
+    - lib/assets/image/main_drawer_image/

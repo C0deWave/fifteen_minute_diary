@@ -2,6 +2,7 @@ import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'component/main_peed_body.dart';
@@ -19,29 +20,48 @@ class MainPeedScreen extends StatelessWidget {
       // ignore: todo
       //TODO 사이드바 추후 개선하기
       drawer: Drawer(
-        backgroundColor: Colors.green,
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
+        backgroundColor: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const SizedBox(
-              height: 80,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+            Column(
+              children: [
+                SizedBox(
+                  height: 80,
+                  child: DrawerHeader(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Container(),
+                  ),
                 ),
-                child: SafeArea(child: Text('사이드바 입니다.')),
-              ),
+                CircleAvatar(
+                  radius: 85,
+                  child: Image.asset(
+                      'lib/assets/image/main_drawer_image/user.png'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Center(child: Text("로그인을 해주세요")),
+                const SizedBox(height: 15),
+              ],
             ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+            Column(
+              children: [
+                SignInButton(
+                  Buttons.AppleDark,
+                  onPressed: () {},
+                ),
+                SignInButton(
+                  Buttons.GoogleDark,
+                  onPressed: () {},
+                ),
+                SignInButton(
+                  Buttons.GitHub,
+                  onPressed: () {},
+                ),
+              ],
             ),
           ],
         ),
