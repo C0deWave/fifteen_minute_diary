@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "904784490217",
+    "project_id": "fifteen-minute-app",
+    "storage_bucket": "fifteen-minute-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904784490217:android:cc76a27e928bc64224ca78",
+        "android_client_info": {
+          "package_name": "com.nice.fifteen_minute_diary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904784490217-mldpouseju5g1bnhp6eb1gunpihgqub0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nice.fifteen_minute_diary",
+            "certificate_hash": "7692683ee8db55faf255aa345a8c618a0303c491"
+          }
+        },
+        {
+          "client_id": "904784490217-31e7vd12ikmulf09n5emb4lr1iv5i63h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgFdqneoZ5SwR44PHhegfup-mn_1tvcmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904784490217-31e7vd12ikmulf09n5emb4lr1iv5i63h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "904784490217-0ecjqsu8qigf01ndsm2m7g28uarh03oj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nice.fifteenMinuteDiary"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -50,6 +50,12 @@ dependencies:
   fluttertoast: ^8.0.8
   # 로그인 버튼 구현
   flutter_signin_button: ^2.0.0
+  # 파이어베이스 코어
+  firebase_core: ^1.11.0
+  #파이어 베이스 로그인 인증
+  firebase_auth: ^3.3.5
+  # 구글 로그인 인증
+  google_sign_in: ^5.2.1
 
 dev_dependencies:
   flutter_test:
