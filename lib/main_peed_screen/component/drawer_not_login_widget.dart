@@ -26,7 +26,7 @@ class DrawerNotLoginWidget extends StatelessWidget {
           Column(
             children: [
               CircleAvatar(
-                radius: 85,
+                radius: 65,
                 child:
                     Image.asset('lib/assets/image/main_drawer_image/user.png'),
               ),
@@ -59,7 +59,10 @@ class DrawerNotLoginWidget extends StatelessWidget {
               ),
               SignInButton(
                 Buttons.GitHub,
-                onPressed: () {},
+                onPressed: () async {
+                  FirebaseService service = new FirebaseService();
+                  await service.signInwithGithub();
+                },
               ),
             ],
           ),

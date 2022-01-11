@@ -56,6 +56,12 @@ dependencies:
   firebase_auth: ^3.3.5
   # 구글 로그인 인증
   google_sign_in: ^5.2.1
+  # 애플 로그인 인증
+  sign_in_with_apple: ^3.3.0
+  # Github 로그인을 위한 웹 인증
+  flutter_web_auth: ^0.4.0
+  # 토큰값 인증을 위한 http연동
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -70,3 +76,8 @@ flutter:
     - lib/assets/image/init_splash_screen/
     - lib/assets/image/default_writing_image/
     - lib/assets/image/main_drawer_image/
+
+  fonts:
+    - family: Alarm_clock
+      fonts:
+        - asset: lib/assets/font/alarm_clock.ttf
