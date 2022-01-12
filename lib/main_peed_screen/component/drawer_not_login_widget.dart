@@ -1,6 +1,8 @@
+import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -52,16 +54,27 @@ class DrawerNotLoginWidget extends StatelessWidget {
               SignInButton(
                 Buttons.GoogleDark,
                 onPressed: () async {
-                  print('구글 로그인을 연동합니다.');
-                  FirebaseService service = new FirebaseService();
-                  await service.signInwithGoogle();
+                  Get.find<CustomDrawerController>().setIsShowIndicator(true);
+                  try {
+                    FirebaseService service = new FirebaseService();
+                    await service.signInwithGoogle();
+                  } finally {
+                    Get.find<CustomDrawerController>()
+                        .setIsShowIndicator(false);
+                  }
                 },
               ),
               SignInButton(
                 Buttons.GitHub,
                 onPressed: () async {
-                  FirebaseService service = new FirebaseService();
-                  await service.signInwithGithub();
+                  Get.find<CustomDrawerController>().setIsShowIndicator(true);
+                  try {
+                    FirebaseService service = new FirebaseService();
+                    await service.signInwithGithub();
+                  } finally {
+                    Get.find<CustomDrawerController>()
+                        .setIsShowIndicator(false);
+                  }
                 },
               ),
             ],
