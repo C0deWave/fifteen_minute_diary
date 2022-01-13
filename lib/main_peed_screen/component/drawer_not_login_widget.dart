@@ -64,19 +64,19 @@ class DrawerNotLoginWidget extends StatelessWidget {
                   }
                 },
               ),
-              SignInButton(
-                Buttons.GitHub,
-                onPressed: () async {
-                  Get.find<CustomDrawerController>().setIsShowIndicator(true);
-                  try {
-                    FirebaseService service = new FirebaseService();
-                    await service.signInwithGithub();
-                  } finally {
-                    Get.find<CustomDrawerController>()
-                        .setIsShowIndicator(false);
-                  }
-                },
-              ),
+              // SignInButton(
+              //   Buttons.GitHub,
+              //   onPressed: () async {
+              //     Get.find<CustomDrawerController>().setIsShowIndicator(true);
+              //     try {
+              //       FirebaseService service = new FirebaseService();
+              //       await service.signInwithGithub();
+              //     } finally {
+              //       Get.find<CustomDrawerController>()
+              //           .setIsShowIndicator(false);
+              //     }
+              //   },
+              // ),
             ],
           ),
         ],
