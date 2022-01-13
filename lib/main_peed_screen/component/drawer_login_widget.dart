@@ -12,6 +12,7 @@ class DrawerLoginWidget extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
               children: [
@@ -25,6 +26,23 @@ class DrawerLoginWidget extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    print('버튼 입력');
+                  },
+                  child: Text('데이터 업로드'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    print('버튼 입력');
+                  },
+                  child: Text('데이터 다운로드'),
+                )
               ],
             ),
             TextButton(
