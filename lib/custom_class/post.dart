@@ -14,13 +14,33 @@ class Post extends HiveObject {
       required this.writeDate,
       required this.duration});
   @HiveField(0, defaultValue: "제목이 없습니다.")
-  String title;
+  late String title;
   @HiveField(1, defaultValue: "내용이 없습니다.")
-  String content;
+  late String content;
   @HiveField(2)
   File? image;
   @HiveField(3)
   DateTime? writeDate;
   @HiveField(4, defaultValue: 0)
-  int duration;
+  late int duration;
+
+  Post.fromJson(Map<String, dynamic> json) {
+    // File temp = File("/${json['writeDate'].hashCode}");
+    // temp.writeAsStringSync(json['image']);
+    Post(
+      title: json['title'] ?? "",
+      content: json['content'] ?? "",
+      image: null,
+      writeDate: json['writeDate'] as DateTime?,
+      duration: json['duration'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'content': content,
+        'image': null,
+        'writeDate': writeDate,
+        'duration': duration,
+      };
 }

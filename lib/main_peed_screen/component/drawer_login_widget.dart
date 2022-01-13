@@ -1,5 +1,10 @@
+import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
+import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DrawerLoginWidget extends StatelessWidget {
   DrawerLoginWidget({Key? key, required this.snapshot}) : super(key: key);
@@ -8,6 +13,7 @@ class DrawerLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseService firebaseService = FirebaseService();
     return Drawer(
       child: SafeArea(
         child: Column(
@@ -33,7 +39,10 @@ class DrawerLoginWidget extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    print('버튼 입력');
+                    print('업로드 버튼 입력');
+                    Map<String, dynamic> list =
+                        Get.find<PostController>().getPostlistJson();
+                    firebaseService.uploadDateToFireStore(list);
                   },
                   child: Text('데이터 업로드'),
                 ),
