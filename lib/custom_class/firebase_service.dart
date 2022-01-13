@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -57,6 +59,14 @@ class FirebaseService {
       throw e;
     }
     return null;
+  }
+
+  //데이터를 업로드 합니다.
+  void uploadDateToFireStore(Map<String, dynamic> list) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    users.add(list);
+    print('업로드 완료');
   }
 
   // 로그아웃을 구현합니다.

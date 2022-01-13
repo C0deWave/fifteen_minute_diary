@@ -62,6 +62,8 @@ dependencies:
   flutter_web_auth: ^0.4.0
   # 토큰값 인증을 위한 http연동
   http: ^0.13.4
+  # 파이어베이스 파이어스토어
+  cloud_firestore: ^3.1.6
 
 dev_dependencies:
   flutter_test:

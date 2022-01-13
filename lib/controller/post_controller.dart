@@ -53,6 +53,14 @@ class PostController extends GetxController {
   XFile? getSelectedImage() => _selectedImage;
   bool getIsUsedImage() => _isUsedImage;
   bool getIsShowIndicator() => _isShowIndicator;
+  Map<String, dynamic> getPostlistJson() {
+    var postList = getPostlist();
+    List<Map<String, dynamic>> jsondata = [];
+    for (var i = 0; i < postList.length; i++) {
+      jsondata.add(postList[i].toJson());
+    }
+    return {"data": jsondata};
+  }
 
   // Hive저장소에 있는 데이터를 리스트에 넣습니다.
   void _getPostlistFromPostbox() {

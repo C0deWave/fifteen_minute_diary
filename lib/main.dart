@@ -14,7 +14,7 @@ const String _tag = 'main: ';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  Firebase.initializeApp();
   final document = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(document.path)
       .then((value) => debugPrint(_tag + "Hive init"));
