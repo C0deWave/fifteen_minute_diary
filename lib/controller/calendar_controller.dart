@@ -81,7 +81,7 @@ class CalendarController extends GetxController {
   Widget _getDefaultCalendarItem(DateTime date,
       {BoxDecoration? boxDecoration}) {
     return Padding(
-      padding: const EdgeInsets.all(1),
+      padding: const EdgeInsets.all(2.5),
       child: Container(
         decoration: boxDecoration ?? _getDefaultBoxDecoration(date),
         child: Center(
