@@ -64,6 +64,8 @@ dependencies:
   http: ^0.13.4
   # 파이어베이스 파이어스토어
   cloud_firestore: ^3.1.6
+  # 파이어베이스 저장소
+  firebase_storage: ^10.2.5
 
 dev_dependencies:
   flutter_test:

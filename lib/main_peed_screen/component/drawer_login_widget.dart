@@ -38,10 +38,10 @@ class DrawerLoginWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     print('업로드 버튼 입력');
                     Map<String, dynamic> list =
-                        Get.find<PostController>().getPostlistJson();
+                        await Get.find<PostController>().getPostlistJson();
                     firebaseService.uploadDateToFireStore(list);
                   },
                   child: Text('데이터 업로드'),

@@ -361,12 +361,19 @@ PODS:
   - Firebase/Firestore (8.10.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.10.0)
+  - Firebase/Storage (8.10.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.10.0)
   - firebase_auth (3.3.5):
     - Firebase/Auth (= 8.10.0)
     - firebase_core
     - Flutter
   - firebase_core (1.11.0):
     - Firebase/CoreOnly (= 8.10.0)
+    - Flutter
+  - firebase_storage (10.2.5):
+    - Firebase/Storage (= 8.10.0)
+    - firebase_core
     - Flutter
   - FirebaseAuth (8.10.0):
     - FirebaseCore (~> 8.0)
@@ -395,6 +402,9 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
+  - FirebaseStorage (8.10.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
   - flutter_web_auth (0.4.0):
     - Flutter
@@ -476,6 +486,7 @@ DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -495,6 +506,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseStorage
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
@@ -514,6 +526,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_storage:
+    :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
   flutter_web_auth:
@@ -539,10 +553,12 @@ SPEC CHECKSUMS:
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   firebase_auth: 9d959bddc3b255ddfb67cf630a5bbb6186964356
   firebase_core: 2ca2d6cc8a11693e701b37126afae4800be5dbac
+  firebase_storage: 740e81d4bef3360d50447dda37da9b8914a2acc0
   FirebaseAuth: 59a2d2b933b5b79e18fb1e6ad230c6abdaa73d26
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
   FirebaseFirestore: 0e7321a508cc9de54316ec45400caba6b5719beb
+  FirebaseStorage: 815410224b548172c578f02554a86bbc8f817f50
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_web_auth: fd071763f61703882adbb2524f5cd5251883118c
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
