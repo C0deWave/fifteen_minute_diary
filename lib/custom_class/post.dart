@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -36,10 +37,10 @@ class Post extends HiveObject {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson({required String imageUrl}) => {
         'title': title,
         'content': content,
-        'image': null,
+        'image': imageUrl,
         'writeDate': writeDate,
         'duration': duration,
       };

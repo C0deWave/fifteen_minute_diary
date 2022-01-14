@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,13 +54,30 @@ class PostController extends GetxController {
   XFile? getSelectedImage() => _selectedImage;
   bool getIsUsedImage() => _isUsedImage;
   bool getIsShowIndicator() => _isShowIndicator;
-  Map<String, dynamic> getPostlistJson() {
+
+  //Json화한 게시글 리스트를 받습니다.
+  Future<Map<String, dynamic>> getPostlistJson() async {
     var postList = getPostlist();
     List<Map<String, dynamic>> jsondata = [];
     for (var i = 0; i < postList.length; i++) {
-      jsondata.add(postList[i].toJson());
+      String imageUrl = await uploadImageToFireStorage(postList[i].image);
+      jsondata.add(postList[i].toJson(imageUrl: imageUrl));
     }
     return {"data": jsondata};
+  }
+
+  // 이미지를 업로드 합니다.
+  Future<String> uploadImageToFireStorage(File? image) async {
+    if (image == null) {
+      return "";
+    } else {
+      var dataRef = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child('user_data1+${image.hashCode}.jpg');
+      await dataRef.putFile(image);
+      return dataRef.getDownloadURL();
+    }
   }
 
   // Hive저장소에 있는 데이터를 리스트에 넣습니다.
