@@ -99,9 +99,10 @@ class PostController extends GetxController {
 
   //Postlist의 내용을 시간순으로 정렬합니다.
   void _sortPostlist() {
+    debugPrint('시간순으로 정렬을 시도합니다.');
     _postlist.sort((Post temp1, Post temp2) {
-      return temp1.writeDate != null
-          ? temp1.writeDate!.compareTo(temp2.writeDate ?? DateTime.now())
+      return temp1.writeDate != null && temp2.writeDate != null
+          ? temp1.writeDate!.compareTo(temp2.writeDate!)
           : k_SortRight;
     });
   }
@@ -244,9 +245,28 @@ class PostController extends GetxController {
     _isUsedImage = true;
   }
 
+  // 년월일이 같은지 확인합니다.
   bool _checkDateIsSame(DateTime date1, DateTime date2) {
     return (date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day);
+  }
+
+  // 파이어베이스에서 Postlist를 불러와서 저장합니다.
+  void setPostlist(Map<String, dynamic> list) {
+    List<dynamic> data = list['data'];
+    _postlist.clear();
+    for (var item in data) {
+      _addPostFutureData(item);
+    }
+    update();
+  }
+
+  // 비동기로 Post객체를 추가합니다.
+  Future<void> _addPostFutureData(item) async {
+    Post postdata = await Post.fromJson(item);
+    _postlist.add(postdata);
+    _sortPostlist();
+    update();
   }
 }

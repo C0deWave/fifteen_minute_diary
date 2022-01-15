@@ -1,17 +1,15 @@
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
-import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class DrawerLoginWidget extends StatelessWidget {
-  DrawerLoginWidget({Key? key, required this.snapshot}) : super(key: key);
+  const DrawerLoginWidget({Key? key, required this.snapshot}) : super(key: key);
 
-  AsyncSnapshot<User?> snapshot;
+  final AsyncSnapshot<User?> snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class DrawerLoginWidget extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () async {
-                    print('업로드 버튼 입력');
+                    debugPrint('업로드 버튼 입력');
                     _show1MinuteRemainToast();
                     Get.find<CustomDrawerController>().setIsShowIndicator(true);
                     Map<String, dynamic> list =
@@ -51,13 +49,25 @@ class DrawerLoginWidget extends StatelessWidget {
                     Get.find<CustomDrawerController>()
                         .setIsShowIndicator(false);
                   },
-                  child: Text('데이터 업로드'),
+                  child: const Text('데이터 업로드'),
                 ),
                 MaterialButton(
-                  onPressed: () {
-                    print('버튼 입력');
+                  onPressed: () async {
+                    //TODO:: 데이터 다운로드 구현
+                    Get.find<CustomDrawerController>().setIsShowIndicator(true);
+                    debugPrint('다운로드 버튼 입력');
+                    // HiveDataBase().clearHiveDatabase();
+                    Map<String, dynamic>? list =
+                        await firebaseService.downloadDataToFireStore();
+                    if (list != null) {
+                      Get.find<PostController>().setPostlist(list);
+                    } else {
+                      debugPrint('백업 데이터가 없습니다.');
+                    }
+                    Get.find<CustomDrawerController>()
+                        .setIsShowIndicator(false);
                   },
-                  child: Text('데이터 다운로드'),
+                  child: const Text('데이터 다운로드'),
                 )
               ],
             ),
@@ -65,7 +75,7 @@ class DrawerLoginWidget extends StatelessWidget {
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
-              child: Text("로그아웃"),
+              child: const Text("로그아웃"),
             ),
           ],
         ),

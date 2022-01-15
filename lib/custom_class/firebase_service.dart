@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -55,30 +55,41 @@ class FirebaseService {
       );
       await _auth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      throw e;
+      debugPrint(e.message);
+      rethrow;
     }
     return null;
   }
 
   //데이터를 업로드 합니다.
-  void uploadDateToFireStore(Map<String, dynamic> list) {
+  Future<void> uploadDateToFireStore(Map<String, dynamic> list) async {
     String userUid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference users =
         FirebaseFirestore.instance.collection('usersBackupData');
+    await users.doc(userUid).delete();
     users.doc(userUid).set(list);
-    print('업로드 완료');
+    debugPrint('업로드 완료');
   }
-
-  // 데이터를 다운로드 합니다.
-  // Map<String, dynamic> downloadDataToFireStore() {
-
-  // }
 
   // 로그아웃을 구현합니다.
   Future<void> signOutFromGoogle() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+  }
+
+  // 파이어베이스에서 데이터를 다운받아 옵니다.
+  Future<Map<String, dynamic>?> downloadDataToFireStore() async {
+    debugPrint('데이터를 다운 받습니다.');
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('usersBackupData');
+    var data = await users.doc(userUid).get();
+    if (data.exists) {
+      debugPrint('data : ' + data.data().toString());
+      return data.data() as Map<String, dynamic>;
+    } else {
+      debugPrint('null 반환');
+      return null;
+    }
   }
 }
