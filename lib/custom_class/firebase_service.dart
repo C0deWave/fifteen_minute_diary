@@ -63,11 +63,18 @@ class FirebaseService {
 
   //데이터를 업로드 합니다.
   void uploadDateToFireStore(Map<String, dynamic> list) {
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-    users.add(list);
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('usersBackupData');
+    users.doc(userUid).set(list);
     print('업로드 완료');
   }
+
+  // 데이터를 다운로드 합니다.
+  // Map<String, dynamic> downloadDataToFireStore() {
+
+  // }
 
   // 로그아웃을 구현합니다.
   Future<void> signOutFromGoogle() async {

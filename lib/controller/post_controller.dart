@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,21 +61,22 @@ class PostController extends GetxController {
     var postList = getPostlist();
     List<Map<String, dynamic>> jsondata = [];
     for (var i = 0; i < postList.length; i++) {
-      String imageUrl = await uploadImageToFireStorage(postList[i].image);
+      String imageUrl = await _uploadImageToFireStorage(postList[i].image);
       jsondata.add(postList[i].toJson(imageUrl: imageUrl));
     }
     return {"data": jsondata};
   }
 
   // 이미지를 업로드 합니다.
-  Future<String> uploadImageToFireStorage(File? image) async {
+  Future<String> _uploadImageToFireStorage(File? image) async {
     if (image == null) {
       return "";
     } else {
+      String userUid = FirebaseAuth.instance.currentUser!.uid;
       var dataRef = FirebaseStorage.instance
           .ref()
           .child('user_image')
-          .child('user_data1+${image.hashCode}.jpg');
+          .child('${userUid}_${image.hashCode}.jpg');
       await dataRef.putFile(image);
       return dataRef.getDownloadURL();
     }
