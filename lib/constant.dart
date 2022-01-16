@@ -17,7 +17,7 @@ const k_TimerTotalDuration = 15 * 60;
 //---------------------------------------------------
 // init_splash_screen
 // 처음 앱을 실행했는지 확인하기 위한 Shared_preference의 키값입니다.
-const k_IsViewSplashViewKey = "testIsViewSplashView27";
+const k_IsViewSplashViewKey = "testIsViewSplashView28";
 // splash 화면의 배경입니다.
 const k_InitSplashBackgroundImageColor = Colors.white12;
 // splash 이미지의 모양입니다. circle로 설정하면 원으로 바뀝니다.
