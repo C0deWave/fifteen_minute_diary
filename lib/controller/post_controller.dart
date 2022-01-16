@@ -112,22 +112,14 @@ class PostController extends GetxController {
     DateTime writeDate = DateTime.now();
     if (_checkTitleAndContentIsWrite()) {
       Post temp = await _makePostBasedCurrentWrite(writeDate, writeDuration);
-      String postIndexKey = _makePostIndexKey(writeDate);
-      await _postBox.pushPostToHive(postIndexKey, temp);
+      await _postBox.pushPostToHive(temp);
       _getPostlistFromPostbox();
-      debugPrint(
-          _tag + "postBox크기 ${_postBox.getLength()}\n키값: " + postIndexKey);
       resetWriteState();
       update();
     }
   }
 
   // 현재 날짜를 기준으로 키값을 만듭니다.
-  String _makePostIndexKey(DateTime writeDate) {
-    return (writeDate.year.toString() +
-        _twoDigits(writeDate.month) +
-        _twoDigits(writeDate.day));
-  }
 
   // 현재 쓴 내용을 객체로 변환합니다.
   Future<Post> _makePostBasedCurrentWrite(
@@ -215,8 +207,8 @@ class PostController extends GetxController {
     _contextFocusController.requestFocus();
   }
 
-  // 숫자 포맷을 두자리로 한다.
-  String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
+  // // 숫자 포맷을 두자리로 한다.
+  // String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
 
   // 오늘 적은 일기가 있는지 확인합니다.
   void _checkTodayWrite() {
@@ -268,5 +260,6 @@ class PostController extends GetxController {
     _postlist.add(postdata);
     _sortPostlist();
     update();
+    HiveDataBase().pushPostToHive(postdata);
   }
 }

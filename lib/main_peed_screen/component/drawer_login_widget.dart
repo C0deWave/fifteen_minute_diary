@@ -1,6 +1,7 @@
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
+import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -53,10 +54,8 @@ class DrawerLoginWidget extends StatelessWidget {
                 ),
                 MaterialButton(
                   onPressed: () async {
-                    //TODO:: 데이터 다운로드 구현
                     Get.find<CustomDrawerController>().setIsShowIndicator(true);
-                    debugPrint('다운로드 버튼 입력');
-                    // HiveDataBase().clearHiveDatabase();
+                    await HiveDataBase().clearHiveDatabase();
                     Map<String, dynamic>? list =
                         await firebaseService.downloadDataToFireStore();
                     if (list != null) {
@@ -95,14 +94,3 @@ class DrawerLoginWidget extends StatelessWidget {
         fontSize: 16.0);
   }
 }
-
-
-          // Text("${snapshot.data?.displayName}님 환영합니다."),
-
-
-          // TextButton(
-          //   onPressed: () {
-          //     FirebaseAuth.instance.signOut();
-          //   },
-          //   child: Text("로그아웃"),
-          // ),
