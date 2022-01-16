@@ -55,8 +55,7 @@ void main() {
       String hiveIndexTestKey = "20200101";
 
       // push 테스트
-      expect(true,
-          await hiveDataBase.pushPostToHive(hiveIndexTestKey, k_NotWritePost));
+      expect(true, await hiveDataBase.pushPostToHive(k_NotWritePost));
       // get 테스트
       expect(k_NotWritePost, hiveDataBase.getPost(hiveIndexTestKey));
     });
@@ -70,14 +69,12 @@ void main() {
       // push 테스트
       expect(
           true,
-          await hiveDataBase.pushPostToHive(
-              hiveIndexTestKey,
-              Post(
-                  title: hiveIndexTestKey,
-                  content: "content",
-                  image: null,
-                  writeDate: null,
-                  duration: 0)));
+          await hiveDataBase.pushPostToHive(Post(
+              title: hiveIndexTestKey,
+              content: "content",
+              image: null,
+              writeDate: null,
+              duration: 0)));
       expect(length + 1, hiveDataBase.getLength());
     });
     //---------------------------------------------------------------------------
