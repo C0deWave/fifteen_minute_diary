@@ -72,7 +72,7 @@ void main() {
           await hiveDataBase.pushPostToHive(Post(
               title: hiveIndexTestKey,
               content: "content",
-              image: null,
+              imagelist: null,
               writeDate: null,
               duration: 0)));
       expect(length + 1, hiveDataBase.getLength());

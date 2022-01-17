@@ -22,15 +22,20 @@ class PostAdapter extends TypeAdapter<Post> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
 
-    File temp = File("${document.path}/${fields[3].hashCode}");
-    if (!temp.existsSync()) {
-      debugPrint(_tag + "이미지 생성");
-      temp.writeAsBytesSync(fields[2]);
+    List<File> imagelist = [];
+    for (var i = 0; i < fields[2]; i++) {
+      File temp = File("${document.path}/${fields[3].hashCode}$i");
+      if (!temp.existsSync()) {
+        debugPrint(_tag + "이미지 생성");
+        temp.writeAsBytesSync(fields[5 + i]);
+      }
+      imagelist.add(temp);
     }
+
     return Post(
       title: fields[0] == null ? '제목이 없습니다.' : fields[0] as String,
       content: fields[1] == null ? '내용이 없습니다.' : fields[1] as String,
-      image: temp,
+      imagelist: imagelist,
       writeDate: fields[3] as DateTime,
       duration: fields[4] == null ? 0 : fields[4] as int,
     );
@@ -38,23 +43,23 @@ class PostAdapter extends TypeAdapter<Post> {
 
   @override
   void write(BinaryWriter writer, Post obj) {
-    File temp = File("${document.path}/${obj.writeDate.hashCode}");
-    if (!temp.existsSync() && obj.image != null) {
-      debugPrint(_tag + "이미지 복사해서 저장");
-      temp.writeAsBytesSync(obj.image!.readAsBytesSync());
-    }
     writer
-      ..writeByte(5)
+      ..writeByte(5 + obj.imagelist!.length)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.image?.readAsBytesSync())
+      ..write(obj.imagelist!.length)
       ..writeByte(3)
       ..write(obj.writeDate)
       ..writeByte(4)
       ..write(obj.duration);
+    for (var i = 5; i < 5 + obj.imagelist!.length; i++) {
+      writer
+        ..writeByte(i)
+        ..write(obj.imagelist![i - 5].readAsBytesSync());
+    }
   }
 
   @override

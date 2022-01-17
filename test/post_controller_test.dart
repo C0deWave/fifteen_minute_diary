@@ -48,8 +48,9 @@ void main() {
       postController.getTitleController().text = "testTitle";
       postController.getContextController().text = "testContent";
       postController.changeImageWidgetStatus(true);
-      postController.updateSelectImage(XFile(
-          File("lib/assets/image/default_writing_image/image1.jpg").path));
+      postController.updateSelectImage([
+        XFile(File("lib/assets/image/default_writing_image/image1.jpg").path)
+      ]);
       await postController.addPostList(writeDuration: 10);
       expect(1, postController.getPostlist().length);
 

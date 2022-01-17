@@ -17,7 +17,7 @@ class BackCard extends StatelessWidget {
 
   final String title;
   final String content;
-  final File? image;
+  final List<File>? image;
   final DateTime? writeDate;
   final int duration;
 

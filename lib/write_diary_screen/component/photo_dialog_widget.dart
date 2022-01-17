@@ -52,12 +52,15 @@ class PhotoDialogWidget extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () async {
+                        List<XFile> imageList = [];
                         Get.find<PostController>()
                             .changePostIndicatorState(true);
                         final XFile? photo =
                             await _picker.pickImage(source: ImageSource.camera);
                         if (photo != null) {
-                          Get.find<PostController>().updateSelectImage(photo);
+                          imageList.add(photo);
+                          Get.find<PostController>()
+                              .updateSelectImage(imageList);
                           Get.find<PostController>()
                               .changeImageWidgetStatus(true);
                         }
@@ -90,10 +93,13 @@ class PhotoDialogWidget extends StatelessWidget {
                       onTap: () async {
                         Get.find<PostController>()
                             .changePostIndicatorState(true);
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                        if (image != null) {
-                          Get.find<PostController>().updateSelectImage(image);
+                        // final XFile? image = await _picker.pickImage(
+                        //     source: ImageSource.gallery);
+                        final List<XFile>? imageList =
+                            await _picker.pickMultiImage();
+                        if (imageList != null) {
+                          Get.find<PostController>()
+                              .updateSelectImage(imageList);
                           Get.find<PostController>()
                               .changeImageWidgetStatus(true);
                         }
