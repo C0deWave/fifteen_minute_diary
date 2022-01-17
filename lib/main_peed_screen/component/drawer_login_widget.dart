@@ -1,5 +1,7 @@
+import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,7 +61,10 @@ class DrawerLoginWidget extends StatelessWidget {
                     Map<String, dynamic>? list =
                         await firebaseService.downloadDataToFireStore();
                     if (list != null) {
-                      Get.find<PostController>().setPostlist(list);
+                      Get.find<PostController>().setPostlist(list, (duration) {
+                        Get.find<TimerController>().updateTimeFromLastPost(
+                            k_TimerTotalDuration - duration);
+                      });
                     } else {
                       debugPrint('백업 데이터가 없습니다.');
                     }

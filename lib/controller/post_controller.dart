@@ -245,20 +245,25 @@ class PostController extends GetxController {
   }
 
   // 파이어베이스에서 Postlist를 불러와서 저장합니다.
-  void setPostlist(Map<String, dynamic> list) {
+  void setPostlist(Map<String, dynamic> list, Function(int) addCallback) {
     List<dynamic> data = list['data'];
     _postlist.clear();
     for (var item in data) {
-      _addPostFutureData(item);
+      _addPostFutureData(item, addCallback);
     }
     update();
   }
 
   // 비동기로 Post객체를 추가합니다.
-  Future<void> _addPostFutureData(item) async {
+  Future<void> _addPostFutureData(item, Function(int) addCallback) async {
     Post postdata = await Post.fromJson(item);
     _postlist.add(postdata);
     _sortPostlist();
+    if (_postlist.last.writeDate != null &&
+        _checkDateIsSame(DateTime.now(), _postlist.last.writeDate!)) {
+      addCallback(_postlist.last.duration);
+      _updateWriteScreenContent();
+    }
     update();
     HiveDataBase().pushPostToHive(postdata);
   }
