@@ -22,10 +22,6 @@ class TimerWidget extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // ignore: todo
-            //TODO 타이머 기능 추가하기
-            // 메인 화면에서는 가만히 있다가
-            // 일기 화면으로 넘어가면 카운트 시작
             children: [
               GetBuilder<TimerController>(builder: (_) {
                 return Text(
