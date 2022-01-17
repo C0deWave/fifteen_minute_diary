@@ -40,7 +40,7 @@ class FrontCard extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
-                color: Color(0x35000000)),
+                color: Color.fromARGB(50, 0, 0, 0)),
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),

@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 class BackCard extends StatelessWidget {
   const BackCard({
@@ -22,63 +25,80 @@ class BackCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
+          borderRadius: BorderRadius.circular(15.0),
+          side: BorderSide(color: Colors.black, width: 0.2)),
       elevation: 1,
       child: Stack(
         children: [
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  image: (image != null)
-                      ? DecorationImage(
-                          image: FileImage(image!), fit: BoxFit.fill)
-                      : const DecorationImage(
-                          image: NetworkImage(
-                              'https://t1.daumcdn.net/cfile/tistory/99F6FC465D4563E132'),
-                          fit: BoxFit.fill))),
-          Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                color: Color(0x35000000)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          //내용
+          SingleChildScrollView(
+            controller:
+                Get.find<CardScrollController>().getChildScrollController(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    title.toString(),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                StaggeredGrid.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  axisDirection: AxisDirection.down,
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 4,
+                      mainAxisCellCount: 3,
+                      child:
+                          Container(color: Colors.red, child: Text("index: 0")),
                     ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          title.toString(),
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child:
+                          Container(color: Colors.red, child: Text("index: 1")),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child:
+                          Container(color: Colors.red, child: Text("index: 2")),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child:
+                          Container(color: Colors.red, child: Text("index: 3")),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      content,
-                      maxLines: 17,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Colors.white, fontSize: 25),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Colors.grey,
+                    height: 1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    content,
+                    // maxLines: 17,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
                   ),
                 ),
               ],
