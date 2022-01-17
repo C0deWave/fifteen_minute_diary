@@ -25,7 +25,8 @@ class DiaryListWidget extends StatelessWidget {
                         title: _controller.getPostlist()[length - index].title,
                         content:
                             _controller.getPostlist()[length - index].content,
-                        image: _controller.getPostlist()[length - index].image,
+                        imageList:
+                            _controller.getPostlist()[length - index].imagelist,
                         writeDate:
                             _controller.getPostlist()[length - index].writeDate,
                         duration:

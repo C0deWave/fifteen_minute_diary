@@ -22,7 +22,7 @@ class PostController extends GetxController {
   //인디케이터 확인용 코드
   bool _isShowIndicator = false;
   // 선택한 이미지 파일
-  XFile? _selectedImage;
+  List<XFile>? _selectedImageList;
   // 포커스 전환을 하는데 사용합니다.
   final _titleFocusController = FocusNode();
   final _contextFocusController = FocusNode();
@@ -52,7 +52,7 @@ class PostController extends GetxController {
   FocusNode getTitleFocusController() => _titleFocusController;
   FocusNode getContextFocusController() => _contextFocusController;
   List<Post> getPostlist() => _postlist;
-  XFile? getSelectedImage() => _selectedImage;
+  List<XFile>? getSelectedImageList() => _selectedImageList;
   bool getIsUsedImage() => _isUsedImage;
   bool getIsShowIndicator() => _isShowIndicator;
 
@@ -61,24 +61,29 @@ class PostController extends GetxController {
     var postList = getPostlist();
     List<Map<String, dynamic>> jsondata = [];
     for (var i = 0; i < postList.length; i++) {
-      String imageUrl = await _uploadImageToFireStorage(postList[i].image);
+      List<String> imageUrl =
+          await _uploadImageToFireStorage(postList[i].imagelist);
       jsondata.add(postList[i].toJson(imageUrl: imageUrl));
     }
     return {"data": jsondata};
   }
 
   // 이미지를 업로드 합니다.
-  Future<String> _uploadImageToFireStorage(File? image) async {
-    if (image == null) {
-      return "";
+  Future<List<String>> _uploadImageToFireStorage(List<File>? imageList) async {
+    if (imageList == null) {
+      return [""];
     } else {
       String userUid = FirebaseAuth.instance.currentUser!.uid;
-      var dataRef = FirebaseStorage.instance
-          .ref()
-          .child('user_image')
-          .child('${userUid}_${image.hashCode}.jpg');
-      await dataRef.putFile(image);
-      return dataRef.getDownloadURL();
+      List<String> urlList = [];
+      for (var i = 0; i < imageList.length; i++) {
+        var dataRef = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child('${userUid}_${imageList[i].hashCode}.jpg');
+        await dataRef.putFile(imageList[i]);
+        urlList.add(await dataRef.getDownloadURL());
+      }
+      return urlList;
     }
   }
 
@@ -119,8 +124,6 @@ class PostController extends GetxController {
     }
   }
 
-  // 현재 날짜를 기준으로 키값을 만듭니다.
-
   // 현재 쓴 내용을 객체로 변환합니다.
   Future<Post> _makePostBasedCurrentWrite(
       DateTime writeDate, int duration) async {
@@ -129,10 +132,12 @@ class PostController extends GetxController {
     return Post(
         title: _titleController.text,
         content: _contextController.text,
-        image: _isUsedImage == true
-            ? File(_selectedImage!.path)
-            : await _getImageFileFromAssets(
-                'lib/assets/image/default_writing_image/image$tempImage.jpg'),
+        imagelist: _isUsedImage == true
+            ? _selectedImageList!.map((e) => File(e.path)).toList()
+            : [
+                await _getImageFileFromAssets(
+                    'lib/assets/image/default_writing_image/image$tempImage.jpg')
+              ],
         writeDate: writeDate,
         duration: duration);
   }
@@ -172,14 +177,14 @@ class PostController extends GetxController {
     _titleController.clear();
     _contextController.clear();
     _isUsedImage = false;
-    _selectedImage = null;
+    _selectedImageList = null;
     _checkTodayWrite();
     update();
   }
 
   // 지정된 이미지를 삭제합니다.
   void deleteImage() {
-    _selectedImage = null;
+    _selectedImageList = null;
     _isUsedImage = false;
     update();
   }
@@ -192,9 +197,9 @@ class PostController extends GetxController {
   }
 
   // 선택한 이미지로 변경
-  void updateSelectImage(XFile? imageData) {
-    if (imageData != null) {
-      _selectedImage = imageData;
+  void updateSelectImage(List<XFile>? imageListData) {
+    if (imageListData != null) {
+      _selectedImageList = imageListData;
       debugPrint(_tag + "이미지 데이터를 업로드 합니다.");
     } else {
       debugPrint('선택한 이미지가 없습니다.');
@@ -233,7 +238,8 @@ class PostController extends GetxController {
     debugPrint(_tag + "오늘 글을 적었습니다..");
     _titleController.text = todayWrite.title;
     _contextController.text = todayWrite.content;
-    _selectedImage = XFile(todayWrite.image!.path);
+    _selectedImageList =
+        todayWrite.imagelist!.map((e) => XFile(e.path)).toList();
     _isUsedImage = true;
   }
 

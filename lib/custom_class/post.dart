@@ -14,7 +14,7 @@ class Post extends HiveObject {
   Post(
       {required this.title,
       required this.content,
-      required this.image,
+      required this.imagelist,
       required this.writeDate,
       required this.duration});
 
@@ -23,32 +23,36 @@ class Post extends HiveObject {
   @HiveField(1, defaultValue: "내용이 없습니다.")
   String content = 'empty';
   @HiveField(2)
-  File? image;
+  List<File>? imagelist;
   @HiveField(3)
   DateTime? writeDate;
   @HiveField(4, defaultValue: 0)
   int duration = 0;
 
   static Future<Post> fromJson(Map<String, dynamic> json) async {
-    var responseData = await http.get(Uri.parse(json['image']));
+    List<File> imagelist = [];
+    List<dynamic> urlList = json['image'] as List<dynamic>;
     Directory tempDir = await getTemporaryDirectory();
-    var uint8list = responseData.bodyBytes;
-    var buffer = uint8list.buffer;
-    ByteData byteData = ByteData.view(buffer);
-    File file = File('${tempDir.path}/${json["writeDate"]}');
-    file.writeAsBytesSync(
-        buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
+    for (var i = 0; i < urlList.length; i++) {
+      var responseData = await http.get(Uri.parse(urlList[i]));
+      var uint8list = responseData.bodyBytes;
+      var buffer = uint8list.buffer;
+      ByteData byteData = ByteData.view(buffer);
+      File file = File('${tempDir.path}/${json["writeDate"]}$i');
+      file.writeAsBytesSync(
+          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      imagelist.add(file);
+    }
     return Post(
       title: json['title'],
       content: json['content'],
-      image: file,
+      imagelist: imagelist,
       writeDate: (json['writeDate'] as Timestamp).toDate(),
       duration: json['duration'] as int,
     );
   }
 
-  Map<String, dynamic> toJson({required String imageUrl}) => {
+  Map<String, dynamic> toJson({required List<String> imageUrl}) => {
         'title': title,
         'content': content,
         'image': imageUrl,

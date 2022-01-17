@@ -10,14 +10,14 @@ class DiaryCardViewWidget extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
-    required this.image,
+    required this.imageList,
     required this.writeDate,
     required this.duration,
   }) : super(key: key);
 
   final String title;
   final String content;
-  final File? image;
+  final List<File>? imageList;
   final DateTime? writeDate;
   final int duration;
 
@@ -43,14 +43,14 @@ class DiaryCardViewWidget extends StatelessWidget {
                   title: title,
                   content: content,
                   duration: duration,
-                  image: image,
+                  image: imageList?[0],
                   writeDate: writeDate,
                 ),
                 back: BackCard(
                   title: title,
                   content: content,
                   duration: duration,
-                  image: image,
+                  image: imageList,
                   writeDate: writeDate,
                 )),
           ),
