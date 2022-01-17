@@ -122,4 +122,14 @@ class TimerController extends GetxController {
       _subtext = "남은 시간동안 수정할 수 있습니다.".obs;
     }
   }
+
+  // 시간값을 포스트 데이터에 맞추어 업데이트 합니다.
+  void updateTimeFromLastPost(int duration) {
+    if (duration != 0) {
+      _timerDuration = duration + 1;
+      _updateTimer();
+      _updateSubtext();
+      update();
+    }
+  }
 }
