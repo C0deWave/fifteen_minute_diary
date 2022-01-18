@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -10,14 +11,14 @@ class BackCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
-    required this.image,
+    required this.imagelist,
     required this.writeDate,
     required this.duration,
   }) : super(key: key);
 
   final String title;
   final String content;
-  final List<File>? image;
+  final List<File>? imagelist;
   final DateTime? writeDate;
   final int duration;
 
@@ -53,37 +54,9 @@ class BackCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                StaggeredGrid.count(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  axisDirection: AxisDirection.down,
-                  children: [
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 4,
-                      mainAxisCellCount: 3,
-                      child:
-                          Container(color: Colors.red, child: Text("index: 0")),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child:
-                          Container(color: Colors.red, child: Text("index: 1")),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child:
-                          Container(color: Colors.red, child: Text("index: 2")),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child:
-                          Container(color: Colors.red, child: Text("index: 3")),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: StaggeredImageView(imagelist: imagelist),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
