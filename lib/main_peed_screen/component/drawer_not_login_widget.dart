@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
@@ -49,14 +50,23 @@ class DrawerNotLoginWidget extends StatelessWidget {
             children: [
               SignInButton(
                 Buttons.AppleDark,
-                onPressed: () {},
+                onPressed: () async {
+                  Get.find<CustomDrawerController>().setIsShowIndicator(true);
+                  try {
+                    FirebaseService service = FirebaseService();
+                    await service.signWithApple();
+                  } finally {
+                    Get.find<CustomDrawerController>()
+                        .setIsShowIndicator(false);
+                  }
+                },
               ),
               SignInButton(
                 Buttons.GoogleDark,
                 onPressed: () async {
                   Get.find<CustomDrawerController>().setIsShowIndicator(true);
                   try {
-                    FirebaseService service = new FirebaseService();
+                    FirebaseService service = FirebaseService();
                     await service.signInwithGoogle();
                   } finally {
                     Get.find<CustomDrawerController>()

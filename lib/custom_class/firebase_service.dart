@@ -5,10 +5,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  //애플 로그인을 구현합니다.
+  Future<void> signWithApple() async {
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    var userName = appleCredential.givenName;
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      accessToken: appleCredential.authorizationCode,
+    );
+    await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    if (FirebaseAuth.instance.currentUser?.displayName == null) {
+      FirebaseAuth.instance.currentUser!.updateDisplayName(userName);
+    }
+  }
 
   // 깃허브 로그인을 합니다.
   Future<void> signInwithGithub() async {
