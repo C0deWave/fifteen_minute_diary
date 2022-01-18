@@ -1,6 +1,6 @@
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_login_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_not_login_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_login_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_not_login_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

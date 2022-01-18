@@ -1,6 +1,6 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

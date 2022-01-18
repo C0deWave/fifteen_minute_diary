@@ -26,7 +26,7 @@ class DrawerLoginWidget extends StatelessWidget {
             Column(
               children: [
                 CircleAvatar(
-                  radius: 85,
+                  radius: 65,
                   foregroundImage: (snapshot.data?.photoURL?.isEmpty != null)
                       ? NetworkImage("${snapshot.data?.photoURL}")
                       : Image.asset(
