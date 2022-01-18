@@ -1,5 +1,5 @@
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 

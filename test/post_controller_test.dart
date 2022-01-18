@@ -1,9 +1,8 @@
 import 'dart:io';
 import 'dart:math';
-
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
