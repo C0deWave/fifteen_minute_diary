@@ -132,7 +132,25 @@ class DrawerLoginWidget extends StatelessWidget {
                     },
                     child: const Text("로그아웃"),
                   ),
-                  const LicenseInfoWidget()
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      LicenseInfoWidget(),
+                      SizedBox(width: 10),
+                      MaterialButton(
+                        splashColor: Color.fromARGB(0, 255, 255, 255),
+                        highlightColor: Color.fromARGB(0, 255, 255, 255),
+                        onPressed: null,
+                        child: Text(
+                          'version: 1.0.0',
+                          style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                              decoration: TextDecoration.underline),
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
