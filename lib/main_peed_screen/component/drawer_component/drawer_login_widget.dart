@@ -4,6 +4,7 @@ import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/license_info_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -79,11 +80,17 @@ class DrawerLoginWidget extends StatelessWidget {
                 )
               ],
             ),
-            TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text("로그아웃"),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text("로그아웃"),
+                ),
+                const LicenseInfoWidget()
+              ],
             ),
           ],
         ),
