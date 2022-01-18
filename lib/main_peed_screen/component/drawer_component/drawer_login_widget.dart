@@ -19,78 +19,119 @@ class DrawerLoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseService firebaseService = FirebaseService();
     return Drawer(
+      backgroundColor: Colors.white,
       child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 65,
-                  foregroundImage: (snapshot.data?.photoURL?.isEmpty != null)
-                      ? NetworkImage("${snapshot.data?.photoURL}")
-                      : Image.asset(
-                              "lib/assets/image/main_drawer_image/user.png")
-                          .image,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                  child: CircleAvatar(
+                    radius: 43,
+                    foregroundImage: (snapshot.data?.photoURL?.isEmpty != null)
+                        ? NetworkImage("${snapshot.data?.photoURL}")
+                        : Image.asset(
+                                "lib/assets/image/main_drawer_image/user.png")
+                            .image,
+                  ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  "${snapshot.data?.displayName}님 환영합니다.",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Text(
+                    "${snapshot.data?.displayName}님 환영합니다.",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                MaterialButton(
-                  onPressed: () async {
-                    debugPrint('업로드 버튼 입력');
-                    _show1MinuteRemainToast();
-                    Get.find<CustomDrawerController>().setIsShowIndicator(true);
-                    Map<String, dynamic> list =
-                        await Get.find<PostController>().getPostlistJson();
-                    firebaseService.uploadDateToFireStore(list);
-
-                    Get.find<CustomDrawerController>()
-                        .setIsShowIndicator(false);
-                  },
-                  child: const Text('데이터 업로드'),
-                ),
-                MaterialButton(
-                  onPressed: () async {
-                    Get.find<CustomDrawerController>().setIsShowIndicator(true);
-                    await HiveDataBase().clearHiveDatabase();
-                    Map<String, dynamic>? list =
-                        await firebaseService.downloadDataToFireStore();
-                    if (list != null) {
-                      Get.find<PostController>().setPostlist(list, (duration) {
-                        Get.find<TimerController>().updateTimeFromLastPost(
-                            k_TimerTotalDuration - duration);
-                      });
-                    } else {
-                      debugPrint('백업 데이터가 없습니다.');
-                    }
-                    Get.find<CustomDrawerController>()
-                        .setIsShowIndicator(false);
-                  },
-                  child: const Text('데이터 다운로드'),
-                )
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DrawerListTile(
+                    icon: const Icon(Icons.question_mark),
+                    text: '일기주제 추천',
+                    clickFunction: () {
+                      debugPrint('일기주제 추천');
+                    },
+                  ),
+                  const underlineWidget(),
+                  DrawerListTile(
+                    icon: const Icon(Icons.upload),
+                    text: '데이터 업로드',
+                    clickFunction: () async {
+                      debugPrint('업로드 버튼 입력');
+                      _show1MinuteRemainToast();
+                      Get.find<CustomDrawerController>()
+                          .setIsShowIndicator(true);
+                      Map<String, dynamic> list =
+                          await Get.find<PostController>().getPostlistJson();
+                      firebaseService.uploadDateToFireStore(list);
+                      Get.find<CustomDrawerController>()
+                          .setIsShowIndicator(false);
+                    },
+                  ),
+                  const underlineWidget(),
+                  DrawerListTile(
+                    icon: const Icon(Icons.download),
+                    text: '데이터 다운로드',
+                    clickFunction: () async {
+                      Get.find<CustomDrawerController>()
+                          .setIsShowIndicator(true);
+                      await HiveDataBase().clearHiveDatabase();
+                      Map<String, dynamic>? list =
+                          await firebaseService.downloadDataToFireStore();
+                      if (list != null) {
+                        Get.find<PostController>().setPostlist(list,
+                            (duration) {
+                          Get.find<TimerController>().updateTimeFromLastPost(
+                              k_TimerTotalDuration - duration);
+                        });
+                      } else {
+                        debugPrint('백업 데이터가 없습니다.');
+                      }
+                      Get.find<CustomDrawerController>()
+                          .setIsShowIndicator(false);
+                    },
+                  ),
+                  const underlineWidget(),
+                  DrawerListTile(
+                    icon: const Icon(Icons.settings),
+                    text: '계정정보 변경',
+                    clickFunction: () {
+                      debugPrint('계정정보 변경');
+                    },
+                  ),
+                  const underlineWidget(),
+                  DrawerListTile(
+                    icon: const Icon(Icons.report),
+                    text: '버그 신고',
+                    clickFunction: () {
+                      debugPrint('버그신고');
+                    },
+                  ),
+                ],
+              ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  child: const Text("로그아웃"),
-                ),
-                const LicenseInfoWidget()
-              ],
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    child: const Text("로그아웃"),
+                  ),
+                  const LicenseInfoWidget()
+                ],
+              ),
             ),
           ],
         ),
@@ -108,5 +149,68 @@ class DrawerLoginWidget extends StatelessWidget {
         backgroundColor: Colors.grey.shade800,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+}
+
+class underlineWidget extends StatelessWidget {
+  const underlineWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        height: 1,
+        color: Colors.grey.shade400,
+      ),
+    );
+  }
+}
+
+class DrawerListTile extends StatelessWidget {
+  const DrawerListTile({
+    Key? key,
+    required this.clickFunction,
+    required this.icon,
+    required this.text,
+  }) : super(key: key);
+
+  final Function() clickFunction;
+  final Icon icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 1, color: Colors.white)),
+          child: MaterialButton(
+            onPressed: clickFunction,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                icon,
+                Expanded(
+                    child: Center(
+                        child: Text(
+                  text,
+                  style: const TextStyle(fontSize: 20),
+                ))),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
