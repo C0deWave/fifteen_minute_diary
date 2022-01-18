@@ -27,7 +27,11 @@ class DrawerLoginWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 85,
-                  foregroundImage: NetworkImage("${snapshot.data?.photoURL}"),
+                  foregroundImage: (snapshot.data?.photoURL?.isEmpty != null)
+                      ? NetworkImage("${snapshot.data?.photoURL}")
+                      : Image.asset(
+                              "lib/assets/image/main_drawer_image/user.png")
+                          .image,
                 ),
                 const SizedBox(height: 20),
                 Text(
