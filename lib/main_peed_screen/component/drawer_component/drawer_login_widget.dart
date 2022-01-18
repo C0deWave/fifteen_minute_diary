@@ -116,6 +116,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     text: '버그 신고',
                     clickFunction: () {
                       debugPrint('버그신고');
+                      Get.find<CustomDrawerController>().mailToDeveloper();
                     },
                   ),
                 ],
