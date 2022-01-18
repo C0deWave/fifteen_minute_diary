@@ -4,7 +4,9 @@ import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_list_tile.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/license_info_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/underline_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -61,7 +63,7 @@ class DrawerLoginWidget extends StatelessWidget {
                       debugPrint('일기주제 추천');
                     },
                   ),
-                  const underlineWidget(),
+                  const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.upload),
                     text: '데이터 업로드',
@@ -77,7 +79,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           .setIsShowIndicator(false);
                     },
                   ),
-                  const underlineWidget(),
+                  const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.download),
                     text: '데이터 다운로드',
@@ -100,7 +102,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           .setIsShowIndicator(false);
                     },
                   ),
-                  const underlineWidget(),
+                  const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.settings),
                     text: '계정정보 변경',
@@ -108,7 +110,7 @@ class DrawerLoginWidget extends StatelessWidget {
                       debugPrint('계정정보 변경');
                     },
                   ),
-                  const underlineWidget(),
+                  const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.report),
                     text: '버그 신고',
@@ -149,68 +151,5 @@ class DrawerLoginWidget extends StatelessWidget {
         backgroundColor: Colors.grey.shade800,
         textColor: Colors.white,
         fontSize: 16.0);
-  }
-}
-
-class underlineWidget extends StatelessWidget {
-  const underlineWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        height: 1,
-        color: Colors.grey.shade400,
-      ),
-    );
-  }
-}
-
-class DrawerListTile extends StatelessWidget {
-  const DrawerListTile({
-    Key? key,
-    required this.clickFunction,
-    required this.icon,
-    required this.text,
-  }) : super(key: key);
-
-  final Function() clickFunction;
-  final Icon icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(width: 1, color: Colors.white)),
-          child: MaterialButton(
-            onPressed: clickFunction,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                icon,
-                Expanded(
-                    child: Center(
-                        child: Text(
-                  text,
-                  style: const TextStyle(fontSize: 20),
-                ))),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
