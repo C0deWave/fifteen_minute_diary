@@ -28,6 +28,7 @@ class WriteDiaryScreen extends StatelessWidget {
               children: const [
                 HeroTimerWidget(),
                 ImageWidget(),
+                SizedBox(height: 6),
                 TitleTextFieldWidget(),
                 ContextTextFieldWidget(),
               ],

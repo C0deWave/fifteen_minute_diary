@@ -50,7 +50,7 @@ class DiaryCardViewWidget extends StatelessWidget {
                   title: title,
                   content: content,
                   duration: duration,
-                  image: imageList,
+                  imagelist: imageList,
                   writeDate: writeDate,
                 )),
           ),

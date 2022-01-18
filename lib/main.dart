@@ -1,6 +1,6 @@
-import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:fifteen_minute_diary/custom_class/post_binder.dart';
+import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
