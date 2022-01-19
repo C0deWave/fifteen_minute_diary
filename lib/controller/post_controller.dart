@@ -294,4 +294,27 @@ class PostController extends GetxController {
     update();
     HiveDataBase().pushPostToHive(postdata);
   }
+
+  // 일기를 리스트와 데이터베이스에서 삭제합니다.
+  void deletePostByWriteDate(DateTime? dateTime) async {
+    HiveDataBase hiveDataBase = HiveDataBase();
+    late Post tempData;
+    if (dateTime == null) {
+      debugPrint('시간값이 없습니다.');
+      return;
+    }
+    for (var i = 0; i < _postlist.length; i++) {
+      if (_postlist[i].writeDate != null &&
+          _checkDateIsSame(dateTime, _postlist[i].writeDate!)) {
+        tempData = _postlist[i];
+        _postlist.removeAt(i);
+        break;
+      }
+    }
+    await hiveDataBase.deletePostFromHive(tempData);
+    if (_postlist.length == 0) {
+      _postlist.add(k_NotWritePost);
+    }
+    update();
+  }
 }

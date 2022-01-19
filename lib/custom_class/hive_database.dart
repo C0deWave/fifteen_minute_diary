@@ -56,6 +56,18 @@ class HiveDataBase {
     }
   }
 
+  Future<bool> deletePostFromHive(Post postdata) async {
+    String key = _makePostIndexKey(postdata.writeDate ?? DateTime.now());
+    var tempPost = _postBox.get(key);
+    if (tempPost != null) {
+      await _postBox.delete(key);
+      return true;
+    } else {
+      debugPrint('해당 글이 없습니다.');
+      return false;
+    }
+  }
+
   // 포스트 객체에 맞는 키값을 만들어 낸다.
   String _makePostIndexKey(DateTime writeDate) {
     return (writeDate.year.toString() +
