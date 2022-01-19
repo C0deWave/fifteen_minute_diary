@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:image_picker/image_picker.dart';
-import 'component/photo_dialog_widget.dart';
 
 class WriteDiaryScreen extends StatelessWidget {
   const WriteDiaryScreen({Key? key}) : super(key: key);
