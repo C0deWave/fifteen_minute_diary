@@ -6,6 +6,7 @@ import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/diary_list_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,40 +41,45 @@ class MainPeedBody extends StatelessWidget {
                 //타이머
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, i) => Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: Hero(
-                          tag: k_TimerHerotag,
-                          child: TimerWidget(
-                            callback: () {
-                              if (timerController.haveTime()) {
-                                timerController.startTimer(
-                                    finishFunction: () {
-                                      postController
-                                          .addPostList(
-                                              writeDuration:
-                                                  timerController.getDuration())
-                                          .then((value) =>
-                                              Get.find<CalendarController>()
+                    (context, i) => Column(
+                      children: [
+                        mainPeedAppBar,
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Hero(
+                              tag: k_TimerHerotag,
+                              child: TimerWidget(
+                                callback: () {
+                                  if (timerController.haveTime()) {
+                                    timerController.startTimer(
+                                        finishFunction: () {
+                                          postController
+                                              .addPostList(
+                                                  writeDuration: timerController
+                                                      .getDuration())
+                                              .then((value) => Get.find<
+                                                      CalendarController>()
                                                   .updateCalenderPostlist());
-                                      timerController.stopTimer();
-                                      Get.back();
-                                    },
-                                    remain1MinuteFunction:
-                                        _show1MinuteRemainToast);
-                                Get.to(() => const WriteDiaryScreen());
-                                debugPrint(_tag + "click timer");
-                              } else {
-                                _showNotHaveRemainTimeToast();
-                                debugPrint(_tag + '남은 시간이 없습니다.');
-                              }
-                            },
+                                          timerController.stopTimer();
+                                          Get.back();
+                                        },
+                                        remain1MinuteFunction:
+                                            _show1MinuteRemainToast);
+                                    Get.to(() => const WriteDiaryScreen());
+                                    debugPrint(_tag + "click timer");
+                                  } else {
+                                    _showNotHaveRemainTimeToast();
+                                    debugPrint(_tag + '남은 시간이 없습니다.');
+                                  }
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                     childCount: 1,
                   ),
