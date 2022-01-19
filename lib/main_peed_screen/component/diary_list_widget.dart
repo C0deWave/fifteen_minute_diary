@@ -22,15 +22,18 @@ class DiaryListWidget extends StatelessWidget {
                 child: CarouselSlider.builder(
                   itemBuilder: (BuildContext context, int index, int a) {
                     return DiaryCardViewWidget(
-                        title: _controller.getPostlist()[length - index].title,
-                        content:
-                            _controller.getPostlist()[length - index].content,
-                        imageList:
-                            _controller.getPostlist()[length - index].imagelist,
-                        writeDate:
-                            _controller.getPostlist()[length - index].writeDate,
-                        duration:
-                            _controller.getPostlist()[length - index].duration);
+                      title: _controller.getPostlist()[length - index].title,
+                      content:
+                          _controller.getPostlist()[length - index].content,
+                      imageList:
+                          _controller.getPostlist()[length - index].imagelist,
+                      writeDate:
+                          _controller.getPostlist()[length - index].writeDate,
+                      duration:
+                          _controller.getPostlist()[length - index].duration,
+                      dateTime:
+                          _controller.getPostlist()[length - index].writeDate,
+                    );
                   },
                   itemCount: length + 1,
                   options: CarouselOptions(

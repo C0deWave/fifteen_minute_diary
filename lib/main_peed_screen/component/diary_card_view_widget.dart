@@ -13,6 +13,7 @@ class DiaryCardViewWidget extends StatelessWidget {
     required this.imageList,
     required this.writeDate,
     required this.duration,
+    required this.dateTime,
   }) : super(key: key);
 
   final String title;
@@ -20,7 +21,7 @@ class DiaryCardViewWidget extends StatelessWidget {
   final List<File>? imageList;
   final DateTime? writeDate;
   final int duration;
-
+  final DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,6 +53,7 @@ class DiaryCardViewWidget extends StatelessWidget {
                   duration: duration,
                   imagelist: imageList,
                   writeDate: writeDate,
+                  dateTime: dateTime,
                 )),
           ),
           const SizedBox(
