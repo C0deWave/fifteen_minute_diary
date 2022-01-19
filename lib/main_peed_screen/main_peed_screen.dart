@@ -14,10 +14,12 @@ class MainPeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     checkData(context);
-    return Scaffold(
-        appBar: mainPeedAppBar,
-        body: const MainPeedBody(),
-        drawer: const DrawerWidget());
+    return Container(
+      color: Colors.white,
+      child: const SafeArea(
+        child: Scaffold(body: MainPeedBody(), drawer: DrawerWidget()),
+      ),
+    );
   }
 
   // 스플래시를 보지 않았을 경우 스플래시 설명화면으로 이동
