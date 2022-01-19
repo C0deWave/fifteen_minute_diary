@@ -12,8 +12,20 @@ class CustomDrawerController extends GetxController {
   }
 
   void mailToDeveloper() async {
-    String _url =
-        'mailto:jamg123123@naver.com?subject=[15Minute Diary] 에러신고&body=에러내용, 사용기기, os버전을 작성해 주세요.';
-    if (!await launch(_url)) throw 'Could not launch $_url';
+    final Uri scheme = Uri(
+        scheme: "mailto",
+        path: "jamg123123@naver.com",
+        query: encodeQueryParameters(<String, String>{
+          "subject": "[15Minute Diary] 에러신고",
+          "body": "사용하시는 휴대폰 기종, OS와 함께 에러 내용을 적어주세요."
+        }));
+    if (!await launch(scheme.toString())) throw 'Could not launch $scheme';
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
   }
 }
