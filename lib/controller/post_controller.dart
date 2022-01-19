@@ -124,7 +124,7 @@ class PostController extends GetxController {
     }
   }
 
-  // 현재 쓴 내용을 객체로 변환합니다.
+  // 현재 쓴 내용을 객체로 반환합니다.
   Future<Post> _makePostBasedCurrentWrite(
       DateTime writeDate, int duration) async {
     int tempImage = Random(DateTime.now().hashCode).nextInt(3) + 1;
@@ -142,7 +142,7 @@ class PostController extends GetxController {
         duration: duration);
   }
 
-  //에셋에서 이미지를 불러옵니다.
+  //에셋에서 임시 이미지를 불러옵니다.
   Future<File> _getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load(path);
     debugPrint('임시파일 생성');
@@ -216,14 +216,25 @@ class PostController extends GetxController {
     update();
   }
 
+  // 특정 위치의 인덱스를 제거 합니다.
+  void removeImageOfIndex(int index) {
+    _selectedImageList?.removeAt(index);
+    update();
+  }
+
+  // 특정 위치의 인덱스를 1번으로 해서 대표이미지화 합니다.
+  void setRepresentativeImage(int index) {
+    XFile temp = _selectedImageList![index];
+    _selectedImageList?.removeAt(index);
+    _selectedImageList?.insert(0, temp);
+    update();
+  }
+
   // 재목에서 내용으로 포커스 전환
   void completeTitleWrite() {
     debugPrint(_tag + "data");
     _contextFocusController.requestFocus();
   }
-
-  // // 숫자 포맷을 두자리로 한다.
-  // String _twoDigits(int n) => n >= 10 ? "$n" : "0$n";
 
   // 오늘 적은 일기가 있는지 확인합니다.
   void _checkTodayWrite() {
