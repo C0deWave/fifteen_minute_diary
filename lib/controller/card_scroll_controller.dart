@@ -16,31 +16,38 @@ class CardScrollController extends GetxController {
     super.onInit();
   }
 
-  _addChildScrollControllerListener() {
+  _addChildScrollControllerListener() async {
     // debugPrint('자식 스크롤 이동');
     if (_childScrollController.positions.first.pixels <=
             _childScrollController.positions.first.minScrollExtent &&
         _childScrollController.positions.first.outOfRange &&
         isTop) {
-      _parentScrollController.animateTo(0,
+      isTop = false;
+      await _parentScrollController.animateTo(0,
           duration: const Duration(milliseconds: 100), curve: Curves.linear);
-    } else if (_childScrollController.positions.first.pixels <=
+      debugPrint('위로 이동');
+    } else if (_parentScrollController.offset != 0 &&
+        _childScrollController.positions.first.pixels <=
             _childScrollController.positions.first.minScrollExtent &&
         !_childScrollController.positions.first.outOfRange) {
       debugPrint('isTop = true');
       isTop = true;
       isNotBottom = true;
+      debugPrint('위에 접촉');
     } else if (_childScrollController.positions.first.pixels >
             _childScrollController.positions.first.minScrollExtent + 7 &&
         isNotBottom) {
-      _parentScrollController.animateTo(
+      await _parentScrollController.animateTo(
           _parentScrollController.position.maxScrollExtent,
           duration: const Duration(milliseconds: 100),
           curve: Curves.linear);
       isTop = false;
       isNotBottom = false;
-    } else {
-      isTop = false;
+      debugPrint('아래로 이동');
     }
+    // else {
+    //   isTop = false;
+    //   debugPrint('아무것도 아님');
+    // }
   }
 }
