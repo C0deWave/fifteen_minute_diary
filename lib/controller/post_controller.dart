@@ -6,6 +6,7 @@ import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -120,6 +121,7 @@ class PostController extends GetxController {
       await _postBox.pushPostToHive(temp);
       _getPostlistFromPostbox();
       resetWriteState();
+      _checkTodayWrite();
       update();
     }
   }
@@ -172,13 +174,11 @@ class PostController extends GetxController {
   }
 
   // 글을 초기 상태로 되돌립니다.
-  //TODO추후 제거예정 고려
   void resetWriteState() {
     _titleController.clear();
     _contextController.clear();
     _isUsedImage = false;
     _selectedImageList = null;
-    _checkTodayWrite();
     update();
   }
 
@@ -196,19 +196,14 @@ class PostController extends GetxController {
     update();
   }
 
-  // 선택한 이미지로 변경
-  void updateSelectImageList(List<XFile>? imageListData) {
-    if (imageListData != null) {
-      _selectedImageList = imageListData;
-      debugPrint(_tag + "이미지 데이터를 업로드 합니다.");
-    } else {
-      debugPrint('선택한 이미지가 없습니다.');
-    }
-  }
-
   // 특정 이미지 추가
   void addSelectImage(XFile selectedImage) {
     if (_selectedImageList != null) {
+      if (_selectedImageList!.length >= 5) {
+        debugPrint('5개 이상 이미지 선택 불가');
+        _showLimitFiveImageToast();
+        return;
+      }
       _selectedImageList?.add(selectedImage);
     } else {
       _selectedImageList = [selectedImage];
@@ -238,14 +233,10 @@ class PostController extends GetxController {
 
   // 오늘 적은 일기가 있는지 확인합니다.
   void _checkTodayWrite() {
-    DateTime? lastPostDate;
-    if (_postlist.isEmpty) {
-      lastPostDate = DateTime(1997);
-    } else {
-      lastPostDate = _postlist.last.writeDate;
-    }
+    DateTime lastPostDate =
+        _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate!;
     DateTime todayDate = DateTime.now();
-    if (!_checkDateIsSame(lastPostDate!, todayDate)) {
+    if (!_checkDateIsSame(lastPostDate, todayDate)) {
       debugPrint('조커 카드 추가');
       _postlist.add(k_NotWritePost);
     } else {
@@ -312,9 +303,20 @@ class PostController extends GetxController {
       }
     }
     await hiveDataBase.deletePostFromHive(tempData);
-    if (_postlist.length == 0) {
-      _postlist.add(k_NotWritePost);
-    }
+    resetWriteState();
+    _checkTodayWrite();
     update();
+  }
+
+  // 이미지 5개 제한 Toast 메세지
+  void _showLimitFiveImageToast() {
+    debugPrint('이미지 5개 제한 toast');
+    Fluttertoast.showToast(
+        msg: "이미지는 5개 까지만 선택할 수 있습니다.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.grey.shade700,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
