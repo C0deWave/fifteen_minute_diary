@@ -197,13 +197,23 @@ class PostController extends GetxController {
   }
 
   // 선택한 이미지로 변경
-  void updateSelectImage(List<XFile>? imageListData) {
+  void updateSelectImageList(List<XFile>? imageListData) {
     if (imageListData != null) {
       _selectedImageList = imageListData;
       debugPrint(_tag + "이미지 데이터를 업로드 합니다.");
     } else {
       debugPrint('선택한 이미지가 없습니다.');
     }
+  }
+
+  // 특정 이미지 추가
+  void addSelectImage(XFile selectedImage) {
+    if (_selectedImageList != null) {
+      _selectedImageList?.add(selectedImage);
+    } else {
+      _selectedImageList = [selectedImage];
+    }
+    update();
   }
 
   // 재목에서 내용으로 포커스 전환
