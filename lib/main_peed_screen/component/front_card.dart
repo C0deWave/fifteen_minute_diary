@@ -32,7 +32,7 @@ class FrontCard extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   image: (image != null)
                       ? DecorationImage(
-                          image: FileImage(image!), fit: BoxFit.fill)
+                          image: FileImage(image!), fit: BoxFit.cover)
                       : const DecorationImage(
                           image: NetworkImage(
                               'https://t1.daumcdn.net/cfile/tistory/99F6FC465D4563E132'),

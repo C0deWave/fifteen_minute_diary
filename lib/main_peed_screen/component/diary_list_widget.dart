@@ -39,8 +39,8 @@ class DiaryListWidget extends StatelessWidget {
                   options: CarouselOptions(
                     autoPlay: false,
                     enableInfiniteScroll: false,
-                    height: Get.height * 0.9,
-                    viewportFraction: 0.90,
+                    height: Get.height * 0.88,
+                    viewportFraction: 0.9,
                   ),
                 ),
               );

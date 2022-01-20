@@ -82,7 +82,7 @@ class ImageWidget extends StatelessWidget {
                                       ),
                                       Text(
                                         index == 0 ? "대표이미지" : "",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],

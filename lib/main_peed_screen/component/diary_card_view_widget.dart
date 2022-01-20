@@ -29,7 +29,7 @@ class DiaryCardViewWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           Text(
             writeDate != null
