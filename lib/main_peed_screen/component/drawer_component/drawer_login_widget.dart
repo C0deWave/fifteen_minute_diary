@@ -60,6 +60,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.question_mark),
                     text: '일기주제 추천',
                     clickFunction: () {
+                      //TODO: 일기주제 구현하기
                       debugPrint('일기주제 추천');
                     },
                   ),
@@ -108,6 +109,8 @@ class DrawerLoginWidget extends StatelessWidget {
                     text: '계정정보 변경',
                     clickFunction: () {
                       debugPrint('계정정보 변경');
+                      Get.find<CustomDrawerController>()
+                          .showUpdateUserdataModalSheet(context);
                     },
                   ),
                   const UnderlineWidget(),

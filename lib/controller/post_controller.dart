@@ -80,7 +80,7 @@ class PostController extends GetxController {
         var dataRef = FirebaseStorage.instance
             .ref()
             .child('user_image')
-            .child('${userUid}_${imageList[i].hashCode}.jpg');
+            .child('${userUid}_${imageList[i].hashCode}.png');
         await dataRef.putFile(imageList[i]);
         urlList.add(await dataRef.getDownloadURL());
       }
@@ -129,6 +129,7 @@ class PostController extends GetxController {
   // 현재 쓴 내용을 객체로 반환합니다.
   Future<Post> _makePostBasedCurrentWrite(
       DateTime writeDate, int duration) async {
+    //TODO: 이미지 개수 constant화
     int tempImage = Random(DateTime.now().hashCode).nextInt(3) + 1;
     debugPrint(_tag + '파일명 image/$tempImage.jpg');
     return Post(
@@ -286,7 +287,7 @@ class PostController extends GetxController {
     HiveDataBase().pushPostToHive(postdata);
   }
 
-  // 일기를 리스트와 데이터베이스에서 삭제합니다.
+  // 일기를 리스트와 내부 데이터베이스에서 삭제합니다.
   void deletePostByWriteDate(DateTime? dateTime) async {
     HiveDataBase hiveDataBase = HiveDataBase();
     late Post tempData;

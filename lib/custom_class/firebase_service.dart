@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,6 +13,20 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  // 유저 이미지를 업데이트 합니다.
+  Future<void> updateUserImage(File image) async {
+    _auth.currentUser!.updatePhotoURL("");
+    String userUid = _auth.currentUser!.uid;
+    Reference dataRef = FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child('$userUid.png');
+    await dataRef.putFile(image);
+    String imageUri = await dataRef.getDownloadURL();
+    debugPrint(imageUri);
+    await _auth.currentUser!.updatePhotoURL(imageUri);
+  }
 
   //애플 로그인을 구현합니다.
   Future<void> signWithApple() async {
