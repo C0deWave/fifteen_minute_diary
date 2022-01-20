@@ -15,14 +15,12 @@ class DrawerWidget extends StatelessWidget {
     return Stack(
       children: [
         StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: FirebaseAuth.instance.userChanges(),
           builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
             if (snapshot.data == null) {
               return DrawerNotLoginWidget();
             } else {
-              return DrawerLoginWidget(
-                snapshot: snapshot,
-              );
+              return DrawerLoginWidget(snapshot: snapshot);
             }
           },
         ),
