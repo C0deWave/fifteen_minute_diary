@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
+import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -111,7 +113,9 @@ class CustomDrawerController extends GetxController {
                     '계정 탈퇴',
                   ),
                   onPressed: () async {
+                    //TODO: 계정 탈퇴 구현
                     Get.back();
+                    showLeaveAccountDialog(context);
                   },
                 ),
               ],
@@ -176,6 +180,41 @@ class CustomDrawerController extends GetxController {
             isDestructiveAction: true,
             child: const Text('취소'),
             onPressed: () {
+              Get.back();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  void showLeaveAccountDialog(BuildContext context) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text(
+          '계정 탈퇴',
+          style: TextStyle(fontWeight: FontWeight.normal),
+        ),
+        content: const Text(
+            '계정정보, 일기, 백업데이터를 삭제합니다.\n삭제된 데이터는 복구할 수 없습니다.\n정말 삭제하시겠습니까?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: () async {
+              Get.back();
+            },
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            child: const Text('확인'),
+            onPressed: () async {
+              //TODO : 계정정보 삭제 구현
+              //파이어베이스유저DB / 계정삭제
+              Get.find<PostController>().deletePostListAll();
+              await HiveDataBase().clearHiveDatabase();
+              //파이어베이스 백업, 이미지, 계정이미지, 계정 데이터 삭제
+              await FirebaseService().deleteUser();
               Get.back();
             },
           )
