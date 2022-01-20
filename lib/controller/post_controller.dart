@@ -58,19 +58,20 @@ class PostController extends GetxController {
   bool getIsShowIndicator() => _isShowIndicator;
 
   //Json화한 게시글 리스트를 받습니다.
-  Future<Map<String, dynamic>> getPostlistJson() async {
+  Future<Map<String, dynamic>> getPostlistJson(String userUid) async {
     var postList = getPostlist();
     List<Map<String, dynamic>> jsondata = [];
     for (var i = 0; i < postList.length; i++) {
       List<String> imageUrl =
-          await _uploadImageToFireStorage(postList[i].imagelist);
+          await _uploadImageToFireStorage(postList[i].imagelist, userUid);
       jsondata.add(postList[i].toJson(imageUrl: imageUrl));
     }
     return {"data": jsondata};
   }
 
-  // 이미지를 업로드 합니다.
-  Future<List<String>> _uploadImageToFireStorage(List<File>? imageList) async {
+  // 이미지를 파이어베이스에 업로드 합니다.
+  Future<List<String>> _uploadImageToFireStorage(
+      List<File>? imageList, String userUid) async {
     if (imageList == null) {
       return [""];
     } else {
@@ -80,6 +81,7 @@ class PostController extends GetxController {
         var dataRef = FirebaseStorage.instance
             .ref()
             .child('user_image')
+            .child(userUid)
             .child('${userUid}_${imageList[i].hashCode}.png');
         await dataRef.putFile(imageList[i]);
         urlList.add(await dataRef.getDownloadURL());
@@ -287,7 +289,7 @@ class PostController extends GetxController {
     HiveDataBase().pushPostToHive(postdata);
   }
 
-  // 일기를 리스트와 내부 데이터베이스에서 삭제합니다.
+  // 특정일기를 리스트와 내부 데이터베이스에서 삭제합니다.
   void deletePostByWriteDate(DateTime? dateTime) async {
     HiveDataBase hiveDataBase = HiveDataBase();
     late Post tempData;
@@ -307,6 +309,12 @@ class PostController extends GetxController {
     resetWriteState();
     _checkTodayWrite();
     update();
+  }
+
+  //일기 리스트를 전부 제거하고 조커를 추가합니다.
+  void deletePostListAll() {
+    _postlist.removeRange(0, _postlist.length);
+    _postlist.add(k_NotWritePost);
   }
 
   // 이미지 5개 제한 Toast 메세지

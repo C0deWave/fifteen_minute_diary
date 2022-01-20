@@ -14,12 +14,16 @@ class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  //userUid 반환
+  String getUserUid() => _auth.currentUser!.uid;
+
   // 유저 이미지를 업데이트 합니다.
   Future<void> updateUserImage(File image) async {
     String userUid = _auth.currentUser!.uid;
     Reference dataRef = FirebaseStorage.instance
         .ref()
         .child('user_image')
+        .child(userUid)
         .child('$userUid.png');
     await dataRef.putFile(image);
     String imageUri = await dataRef.getDownloadURL();
@@ -116,6 +120,31 @@ class FirebaseService {
   Future<void> signOutFromGoogle() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+  }
+
+  // 유저 데이터를 삭제합니다.
+  Future<void> deleteUser() async {
+    // 파이어베이스 데이터 삭제
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('usersBackupData')
+        .doc(userUid)
+        .delete();
+    // 계정정보 이미지, Post 이미지 삭제
+    var data = await FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(userUid)
+        .listAll();
+
+    for (var item in data.items) {
+      item.delete();
+    }
+
+    // 계정 정보 삭제
+    // 계정정보를 제거하기위해 인증을 재시도 합니다.
+    // _auth.currentUser?.reauthenticateWithCredential(credential);
+    await _auth.currentUser?.delete();
   }
 
   // 파이어베이스에서 데이터를 다운받아 옵니다.

@@ -74,7 +74,8 @@ class DrawerLoginWidget extends StatelessWidget {
                       Get.find<CustomDrawerController>()
                           .setIsShowIndicator(true);
                       Map<String, dynamic> list =
-                          await Get.find<PostController>().getPostlistJson();
+                          await Get.find<PostController>()
+                              .getPostlistJson(firebaseService.getUserUid());
                       firebaseService.uploadDateToFireStore(list);
                       Get.find<CustomDrawerController>()
                           .setIsShowIndicator(false);
