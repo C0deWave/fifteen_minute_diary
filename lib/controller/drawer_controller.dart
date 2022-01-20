@@ -102,12 +102,13 @@ class CustomDrawerController extends GetxController {
                   ),
                   onPressed: () async {
                     Get.back();
+                    showChangeWhatName(context);
                   },
                 ),
                 CupertinoActionSheetAction(
+                  isDestructiveAction: true,
                   child: const Text(
                     '계정 탈퇴',
-                    style: TextStyle(color: Colors.red),
                   ),
                   onPressed: () async {
                     Get.back();
@@ -144,5 +145,42 @@ class CustomDrawerController extends GetxController {
     } else {
       return File(selectedImage.path);
     }
+  }
+
+  void showChangeWhatName(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text(
+          '유저명',
+          style: TextStyle(fontWeight: FontWeight.normal),
+        ),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CupertinoTextField(
+            controller: textEditingController,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: const Text('확인'),
+            onPressed: () async {
+              if (textEditingController.text.isNotEmpty) {
+                FirebaseService().updateUserName(textEditingController.text);
+              }
+              Get.back();
+            },
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            child: const Text('취소'),
+            onPressed: () {
+              Get.back();
+            },
+          )
+        ],
+      ),
+    );
   }
 }
