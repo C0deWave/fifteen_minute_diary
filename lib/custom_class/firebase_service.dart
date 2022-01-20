@@ -16,7 +16,6 @@ class FirebaseService {
 
   // 유저 이미지를 업데이트 합니다.
   Future<void> updateUserImage(File image) async {
-    _auth.currentUser!.updatePhotoURL("");
     String userUid = _auth.currentUser!.uid;
     Reference dataRef = FirebaseStorage.instance
         .ref()
@@ -26,6 +25,11 @@ class FirebaseService {
     String imageUri = await dataRef.getDownloadURL();
     debugPrint(imageUri);
     await _auth.currentUser!.updatePhotoURL(imageUri);
+  }
+
+  // 유저 이름을 업데이트 합니다.
+  Future<void> updateUserName(String name) async {
+    await _auth.currentUser!.updateDisplayName(name);
   }
 
   //애플 로그인을 구현합니다.
