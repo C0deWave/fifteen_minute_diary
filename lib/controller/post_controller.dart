@@ -239,7 +239,7 @@ class PostController extends GetxController {
     DateTime lastPostDate =
         _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate!;
     DateTime todayDate = DateTime.now();
-    if (!_checkDateIsSame(lastPostDate, todayDate)) {
+    if (!checkDateIsSame(lastPostDate, todayDate)) {
       debugPrint('조커 카드 추가');
       _postlist.add(k_NotWritePost);
     } else {
@@ -259,7 +259,7 @@ class PostController extends GetxController {
   }
 
   // 년월일이 같은지 확인합니다.
-  bool _checkDateIsSame(DateTime date1, DateTime date2) {
+  bool checkDateIsSame(DateTime date1, DateTime date2) {
     return (date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day);
@@ -281,7 +281,7 @@ class PostController extends GetxController {
     _postlist.add(postdata);
     _sortPostlist();
     if (_postlist.last.writeDate != null &&
-        _checkDateIsSame(DateTime.now(), _postlist.last.writeDate!)) {
+        checkDateIsSame(DateTime.now(), _postlist.last.writeDate!)) {
       addCallback(_postlist.last.duration);
       _updateWriteScreenContent();
     }
@@ -299,7 +299,7 @@ class PostController extends GetxController {
     }
     for (var i = 0; i < _postlist.length; i++) {
       if (_postlist[i].writeDate != null &&
-          _checkDateIsSame(dateTime, _postlist[i].writeDate!)) {
+          checkDateIsSame(dateTime, _postlist[i].writeDate!)) {
         tempData = _postlist[i];
         _postlist.removeAt(i);
         break;

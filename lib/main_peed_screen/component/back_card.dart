@@ -5,6 +5,7 @@ import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class BackCard extends StatelessWidget {
@@ -110,11 +111,29 @@ class BackCard extends StatelessWidget {
                     style: TextStyle(color: Colors.red),
                   ),
                   onPressed: () async {
-                    Get.find<PostController>().deletePostByWriteDate(dateTime);
+                    bool isSame = Get.find<PostController>()
+                        .checkDateIsSame(dateTime!, DateTime.now());
+                    if (!isSame) {
+                      Get.find<PostController>()
+                          .deletePostByWriteDate(dateTime);
+                    } else {
+                      showCantDeleteToast();
+                    }
                     Get.back();
                   },
                 ),
               ],
             ));
+  }
+
+  void showCantDeleteToast() {
+    Fluttertoast.showToast(
+        msg: "오늘 일기는 삭제할 수 없습니다.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey.shade800,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
