@@ -31,7 +31,7 @@ class CustomDrawerController extends GetxController {
         path: "jamg123123@naver.com",
         query: encodeQueryParameters(<String, String>{
           "subject": "[15Minute Diary] 에러신고",
-          "body": "사용하시는 휴대폰 기종, OS와 함께 에러 내용을 적어주세요."
+          "body": "사용하시는 휴대폰 기종, OS와 함께 에러 내용을 적어주세요.\nOS: \n기종: \n: 에러내용: "
         }));
     if (!await launch(scheme.toString())) throw 'Could not launch $scheme';
   }
