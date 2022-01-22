@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/wide_image_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,7 +72,18 @@ class BackCard extends StatelessWidget {
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
-                        child: StaggeredImageView(imagelist: imagelist),
+                        child: GestureDetector(
+                            onTap: () {
+                              if (imagelist != null) {
+                                Get.to(
+                                    WideImageWidget(
+                                      imagelist: imagelist,
+                                    ),
+                                    transition: Transition.downToUp,
+                                    popGesture: false);
+                              }
+                            },
+                            child: StaggeredImageView(imagelist: imagelist)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
