@@ -74,7 +74,10 @@ class BackCard extends StatelessWidget {
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
-                        child: StaggeredImageView(imagelist: imagelist),
+                        child: StaggeredImageView(
+                          imagelist: imagelist,
+                          dateTime: writeDate,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
