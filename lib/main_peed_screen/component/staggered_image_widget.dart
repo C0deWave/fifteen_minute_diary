@@ -6,9 +6,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 class StaggeredImageView extends StatelessWidget {
-  StaggeredImageView({Key? key, required this.imagelist}) : super(key: key);
+  StaggeredImageView({Key? key, required this.imagelist, this.dateTime})
+      : super(key: key);
 
   List<File>? imagelist;
+  DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
     if (imagelist != null && imagelist!.length == 1) {
@@ -21,7 +23,11 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 1,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
         ],
       );
@@ -35,12 +41,20 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 1,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 2,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
         ],
       );
@@ -54,17 +68,29 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 1,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 2,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 3,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
         ],
       );
@@ -78,22 +104,38 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 1,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 2,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 3,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 4),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 4,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
         ],
       );
@@ -107,27 +149,47 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 1,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 2,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 3,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 4),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 4,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: StaggeredItem(imagelist: imagelist, indexNumber: 5),
+            child: StaggeredItem(
+              imagelist: imagelist,
+              indexNumber: 5,
+              dateTime: dateTime ?? DateTime.now(),
+            ),
           ),
         ],
       );
@@ -140,11 +202,13 @@ class StaggeredItem extends StatelessWidget {
   StaggeredItem({
     required this.indexNumber,
     required this.imagelist,
+    required this.dateTime,
     Key? key,
   }) : super(key: key);
 
   final List<File>? imagelist;
   int indexNumber;
+  DateTime dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -154,16 +218,18 @@ class StaggeredItem extends StatelessWidget {
         Get.to(WideImageWidget(
           imagelist: imagelist,
           indexNumber: indexNumber,
+          dateTime: dateTime,
         ));
       },
       child: Hero(
-        tag: indexNumber.toString(),
-        child: Container(
-            color: Colors.red,
-            child: Image.file(
-              imagelist![indexNumber - 1],
-              fit: BoxFit.cover,
-            )),
+        tag: dateTime.toString() + indexNumber.toString(),
+        child: Image.file(
+          imagelist![indexNumber - 1],
+          fit: BoxFit.cover,
+          cacheHeight: 200,
+          cacheWidth: 200,
+          key: Key("image" + indexNumber.toString()),
+        ),
       ),
     );
   }
