@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:fifteen_minute_diary/controller/wide_image_controller.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/wide_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 class StaggeredImageView extends StatelessWidget {
   StaggeredImageView({Key? key, required this.imagelist}) : super(key: key);
@@ -18,12 +21,7 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.green,
-                child: Image.file(
-                  imagelist![0],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
           ),
         ],
       );
@@ -37,22 +35,12 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.pink,
-                child: Image.file(
-                  imagelist![0],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![1],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
           ),
         ],
       );
@@ -66,32 +54,17 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![0],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![1],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![2],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
           ),
         ],
       );
@@ -105,42 +78,22 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![0],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![1],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![2],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![3],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 4),
           ),
         ],
       );
@@ -154,56 +107,64 @@ class StaggeredImageView extends StatelessWidget {
           StaggeredGridTile.count(
             crossAxisCellCount: 2,
             mainAxisCellCount: 2,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![0],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 1),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![1],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 2),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![2],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 3),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![3],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 4),
           ),
           StaggeredGridTile.count(
             crossAxisCellCount: 1,
             mainAxisCellCount: 1,
-            child: Container(
-                color: Colors.red,
-                child: Image.file(
-                  imagelist![4],
-                  fit: BoxFit.cover,
-                )),
+            child: StaggeredItem(imagelist: imagelist, indexNumber: 5),
           ),
         ],
       );
     }
     return Container();
+  }
+}
+
+class StaggeredItem extends StatelessWidget {
+  StaggeredItem({
+    required this.indexNumber,
+    required this.imagelist,
+    Key? key,
+  }) : super(key: key);
+
+  final List<File>? imagelist;
+  int indexNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.find<WideImageController>().setIndexNumber(indexNumber);
+        Get.to(WideImageWidget(
+          imagelist: imagelist,
+          indexNumber: indexNumber,
+        ));
+      },
+      child: Hero(
+        tag: indexNumber.toString(),
+        child: Container(
+            color: Colors.red,
+            child: Image.file(
+              imagelist![indexNumber - 1],
+              fit: BoxFit.cover,
+            )),
+      ),
+    );
   }
 }
