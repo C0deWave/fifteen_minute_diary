@@ -1,15 +1,18 @@
 import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_list_tile.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/license_info_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/recommend_diary_topic_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/underline_widget.dart';
+import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class DrawerLoginWidget extends StatelessWidget {
@@ -20,6 +23,8 @@ class DrawerLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseService firebaseService = FirebaseService();
+    var timerController = Get.find<TimerController>();
+    var postController = Get.find<PostController>();
     return Drawer(
       backgroundColor: Colors.white,
       child: SafeArea(
@@ -60,7 +65,33 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.question_mark),
                     text: '일기주제 추천',
                     clickFunction: () {
-                      //TODO: 일기주제 구현하기
+                      // Get.dialog(RecommendDiaryTopicWidget());
+                      RecommendDiaryTopic().showDailyTopic(context,
+                          okFunction: () async {
+                        Get.back();
+                        await Future.delayed(Duration(milliseconds: 500));
+                        if (timerController.haveTime()) {
+                          timerController.startTimer(
+                              finishFunction: () {
+                                postController
+                                    .addPostList(
+                                        writeDuration:
+                                            timerController.getDuration())
+                                    .then((value) =>
+                                        Get.find<CalendarController>()
+                                            .updateCalenderPostlist());
+                                timerController.stopTimer();
+                                Get.back();
+                              },
+                              remain1MinuteFunction:
+                                  ToastList.show1MinuteRemainToast);
+                          Get.to(() => const WriteDiaryScreen());
+                          debugPrint("click timer");
+                        } else {
+                          ToastList.showNotHaveRemainTimeToast();
+                          debugPrint('남은 시간이 없습니다.');
+                        }
+                      });
                       debugPrint('일기주제 추천');
                     },
                   ),
@@ -70,7 +101,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     text: '데이터 업로드',
                     clickFunction: () async {
                       debugPrint('업로드 버튼 입력');
-                      _show1MinuteRemainToast();
+                      ToastList.showDataUploadToast();
                       Get.find<CustomDrawerController>()
                           .setIsShowIndicator(true);
                       Map<String, dynamic> list =
@@ -107,9 +138,9 @@ class DrawerLoginWidget extends StatelessWidget {
                   const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.settings),
-                    text: '계정정보 변경',
+                    text: '계정 정보',
                     clickFunction: () {
-                      debugPrint('계정정보 변경');
+                      debugPrint('계정 정보');
                       Get.find<CustomDrawerController>()
                           .showUpdateUserdataModalSheet(context);
                     },
@@ -162,17 +193,5 @@ class DrawerLoginWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _show1MinuteRemainToast() {
-    debugPrint('show Toast Message');
-    Fluttertoast.showToast(
-        msg: "데이터를 업로드 합니다.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey.shade800,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
