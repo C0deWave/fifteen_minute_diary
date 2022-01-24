@@ -14,6 +14,7 @@ import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart'
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerLoginWidget extends StatelessWidget {
   const DrawerLoginWidget({Key? key, required this.snapshot}) : super(key: key);
@@ -42,8 +43,10 @@ class DrawerLoginWidget extends StatelessWidget {
                     foregroundImage: (snapshot.data?.photoURL?.isEmpty != null)
                         ? NetworkImage("${snapshot.data?.photoURL}")
                         : Image.asset(
-                                "lib/assets/image/main_drawer_image/user.png")
-                            .image,
+                            "lib/assets/image/main_drawer_image/user.png",
+                            cacheHeight: 200,
+                            cacheWidth: 200,
+                          ).image,
                   ),
                 ),
                 Padding(
@@ -162,8 +165,11 @@ class DrawerLoginWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       FirebaseAuth.instance.signOut();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString(k_OAuthProvider, k_ProviderNull);
                     },
                     child: const Text("로그아웃"),
                   ),

@@ -55,3 +55,11 @@ const k_AlertYes = "넵";
 const k_AlertNo = "아니요";
 // alert cancle 텍스트
 const k_AlertCancle = "다음에 쓸래요!";
+
+//----------------------------------------------------------------
+//firebase_service
+// shared preference 키
+const k_OAuthProvider = 'OAuthProvider';
+const k_ProviderApple = 'apple';
+const k_ProviderGoogle = 'google';
+const k_ProviderNull = 'null';

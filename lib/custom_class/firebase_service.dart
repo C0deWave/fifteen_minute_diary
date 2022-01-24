@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fifteen_minute_diary/private_constant.dart';
+import 'package:fifteen_minute_diary/constant.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseService {
@@ -38,72 +38,60 @@ class FirebaseService {
 
   //애플 로그인을 구현합니다.
   Future<void> signWithApple() async {
-    final appleCredential = await SignInWithApple.getAppleIDCredential(
+    final appleCredential = await _getAppleCredential();
+    var userName = appleCredential.givenName;
+    final oauthCredential = await _getAppleOAuthCredential(appleCredential);
+    await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    if (FirebaseAuth.instance.currentUser?.displayName == null) {
+      FirebaseAuth.instance.currentUser!.updateDisplayName(userName);
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(k_OAuthProvider, k_ProviderApple);
+  }
+
+  //애플 인증서를 반환합니다.
+  Future<AuthorizationCredentialAppleID> _getAppleCredential() async {
+    return await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    var userName = appleCredential.givenName;
-    final oauthCredential = OAuthProvider("apple.com").credential(
+  }
+
+  // 애플  oauth인증서를 반환합니다.
+  Future<OAuthCredential> _getAppleOAuthCredential(
+      AuthorizationCredentialAppleID appleCredential) async {
+    return OAuthProvider("apple.com").credential(
       idToken: appleCredential.identityToken,
       accessToken: appleCredential.authorizationCode,
     );
-    await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    if (FirebaseAuth.instance.currentUser?.displayName == null) {
-      FirebaseAuth.instance.currentUser!.updateDisplayName(userName);
-    }
-  }
-
-  // 깃허브 로그인을 합니다.
-  Future<void> signInwithGithub() async {
-    String code = await _getCodeTokenFromGithub();
-    String accessToken = await _getAccessTokenFromGithub(codeToken: code);
-    var githubAuthCredential = GithubAuthProvider.credential(accessToken);
-    FirebaseAuth.instance.signInWithCredential(githubAuthCredential);
-  }
-
-  //  깃허브에 로그인을 해서 code 토큰을 얻습니다.
-  Future<String> _getCodeTokenFromGithub() async {
-    Uri url = Uri.parse(
-        "https://github.com/login/oauth/authorize?client_id=$clientId&scope=user");
-    String result = await FlutterWebAuth.authenticate(
-        url: url.toString(),
-        callbackUrlScheme: urlScheme,
-        preferEphemeral: true);
-
-    final code = Uri.parse(result).queryParameters['code'];
-    return code ?? 'null';
-  }
-
-  // code 값을 받아서 AccessToken을 발급 받습니다.
-  Future<String> _getAccessTokenFromGithub({required String codeToken}) async {
-    var dater = await http.post(Uri.parse(
-        'https://github.com/login/oauth/access_token?client_id=$clientId&client_secret=$clientSecret&code=$codeToken'));
-    // 정규식으로 토큰을 검출합니다.
-    RegExp regExp = RegExp(r"access_token=[^&]*");
-    String accessToken =
-        regExp.stringMatch(dater.body)?.substring(13) ?? 'null';
-    return accessToken;
   }
 
   // 구글 로그인을 합니다.
   Future<String?> signInwithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+      final credential = await _getGoogleCredential();
       await _auth.signInWithCredential(credential);
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(k_OAuthProvider, k_ProviderGoogle);
     } on FirebaseAuthException catch (e) {
       debugPrint(e.message);
       rethrow;
     }
-    return null;
+  }
+
+  // 구글 인증서를 생성합니다.
+  Future<OAuthCredential> _getGoogleCredential() async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    return GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
   }
 
   //데이터를 업로드 합니다.
@@ -118,33 +106,22 @@ class FirebaseService {
 
   // 로그아웃을 구현합니다.
   Future<void> signOutFromGoogle() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(k_OAuthProvider, k_ProviderNull);
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
 
   // 유저 데이터를 삭제합니다.
   Future<void> deleteUser() async {
+    String userUid = FirebaseAuth.instance.currentUser?.uid ?? "null";
     // 파이어베이스 데이터 삭제
-    String userUid = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance
-        .collection('usersBackupData')
-        .doc(userUid)
-        .delete();
-    // 계정정보 이미지, Post 이미지 삭제
-    var data = await FirebaseStorage.instance
-        .ref()
-        .child('user_image')
-        .child(userUid)
-        .listAll();
-
-    for (var item in data.items) {
-      item.delete();
-    }
-
+    deleteFirebaseStorage(userUid);
+    // 일반 스토리지 데이터 삭제
+    await deleteExternalStorage(userUid);
     // 계정 정보 삭제
     // 계정정보를 제거하기위해 인증을 재시도 합니다.
-    // _auth.currentUser?.reauthenticateWithCredential(credential);
-    await _auth.currentUser?.delete();
+    await deleteUserData();
   }
 
   // 파이어베이스에서 데이터를 다운받아 옵니다.
@@ -161,5 +138,44 @@ class FirebaseService {
       debugPrint('null 반환');
       return null;
     }
+  }
+
+  // 파이어베이스 데이터베이스의 해당 유저 데이터를 제거합니다.
+  void deleteFirebaseStorage(String userUid) async {
+    await FirebaseFirestore.instance
+        .collection('usersBackupData')
+        .doc(userUid)
+        .delete();
+  }
+
+  // 일반 스토리지 데이터베이스를 제거합니다.
+  // 유저이미지, 게시글 이미지 입니다.
+  Future<void> deleteExternalStorage(String userUid) async {
+    var data = await FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(userUid)
+        .listAll();
+
+    for (var item in data.items) {
+      item.delete();
+    }
+  }
+
+  // 유저 데이터를 삭제합니다.
+  // 파이어베이스 정책상 일정시간 로그인이 없었으면 재 로그인을 해서 인증을 받은 다음에 계정을 삭제할 수 있습니다.
+  Future<void> deleteUserData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var oauthProvider = pref.getString(k_OAuthProvider);
+    ToastList.showRequireUserCreditialToast();
+    late OAuthCredential credential;
+    if (oauthProvider == k_ProviderApple) {
+      final appleCredential = await _getAppleCredential();
+      credential = await _getAppleOAuthCredential(appleCredential);
+    } else if (oauthProvider == k_ProviderGoogle) {
+      credential = await _getGoogleCredential();
+    }
+    await _auth.currentUser?.reauthenticateWithCredential(credential);
+    await _auth.currentUser?.delete();
   }
 }
