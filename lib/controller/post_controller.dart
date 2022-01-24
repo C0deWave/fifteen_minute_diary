@@ -57,6 +57,11 @@ class PostController extends GetxController {
   bool getIsUsedImage() => _isUsedImage;
   bool getIsShowIndicator() => _isShowIndicator;
 
+  //제목을 변경합니다.
+  void updateTitleText(String title) {
+    _titleController.text = title;
+  }
+
   //Json화한 게시글 리스트를 받습니다.
   Future<Map<String, dynamic>> getPostlistJson(String userUid) async {
     var postList = getPostlist();
