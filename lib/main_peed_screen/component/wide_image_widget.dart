@@ -18,7 +18,12 @@ class WideImageWidget extends StatelessWidget {
   DateTime dateTime;
   @override
   Widget build(BuildContext context) {
-    var imagedata = imagelist?.map((e) => Image.file(e)).toList();
+    var imagedata = imagelist
+        ?.map((e) => Image.file(
+              e,
+              fit: BoxFit.fitWidth,
+            ))
+        .toList();
     return GetBuilder<WideImageController>(
       builder: (controller) => Hero(
         tag: dateTime.toString() +
@@ -45,22 +50,31 @@ class WideImageWidget extends StatelessWidget {
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
-            body: Container(
-              color: Colors.black,
-              child: Center(
-                child: CarouselSlider(
-                  items: imagedata,
-                  options: CarouselOptions(
-                    onPageChanged: (index, reason) {
-                      Get.find<WideImageController>().setIndexNumber(index + 1);
-                    },
-                    initialPage: indexNumber - 1,
-                    enableInfiniteScroll: false,
-                    aspectRatio: 1,
-                    viewportFraction: 1,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.black,
+                  child: Center(
+                    child: CarouselSlider(
+                      items: imagedata,
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          Get.find<WideImageController>()
+                              .setIndexNumber(index + 1);
+                        },
+                        initialPage: indexNumber - 1,
+                        enableInfiniteScroll: false,
+                        height: Get.height * 0.7,
+                        // aspectRatio: 9 / 16,
+                        viewportFraction: 1,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 100),
+              ],
             ),
           ),
         ),
