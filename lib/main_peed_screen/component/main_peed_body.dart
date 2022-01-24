@@ -4,6 +4,7 @@ import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/diary_list_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
@@ -70,11 +71,11 @@ class MainPeedBody extends StatelessWidget {
                                             Get.back();
                                           },
                                           remain1MinuteFunction:
-                                              _show1MinuteRemainToast);
+                                              ToastList.show1MinuteRemainToast);
                                       Get.to(() => const WriteDiaryScreen());
                                       debugPrint(_tag + "click timer");
                                     } else {
-                                      _showNotHaveRemainTimeToast();
+                                      ToastList.showNotHaveRemainTimeToast();
                                       debugPrint(_tag + '남은 시간이 없습니다.');
                                     }
                                   },
@@ -114,29 +115,5 @@ class MainPeedBody extends StatelessWidget {
         ]),
       ),
     );
-  }
-
-  void _show1MinuteRemainToast() {
-    debugPrint('show Toast Message');
-    Fluttertoast.showToast(
-        msg: "1분 남았습니다.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey.shade800,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-
-  void _showNotHaveRemainTimeToast() {
-    debugPrint('show Toast Message');
-    Fluttertoast.showToast(
-        msg: "남은 시간이 없습니다.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey.shade800,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
