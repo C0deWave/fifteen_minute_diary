@@ -11,7 +11,7 @@
     </intent>
     </queries>
    <application
-        android:label="fifteen_minute_diary"
+        android:label="15분 일기"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
         <activity
