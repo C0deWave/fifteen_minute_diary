@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/camera_and_image_picker.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DialogList {
@@ -153,6 +155,60 @@ class DialogList {
               Navigator.pop(context);
             },
           )
+        ],
+      ),
+    );
+  }
+
+  // ios 일기 다씀 확인 alert
+  static void iosWriteCheckAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text(k_AlertTitle),
+        content: Text(k_AlertContent1 +
+            Get.find<TimerController>().getTimeText().value +
+            k_AlertContent2),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text(k_AlertYes),
+            onPressed: yesAction,
+          ),
+          CupertinoDialogAction(
+            child: const Text(k_AlertNo),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 안드로이드 일기 다씀 확인
+  static void androidWriteCheckAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(k_AlertTitle),
+        content: Text(k_AlertContent1 +
+            Get.find<TimerController>().getTimeText().value +
+            k_AlertContent2),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(k_AlertYes),
+            onPressed: yesAction,
+          ),
+          TextButton(
+            child: const Text(k_AlertNo),
+            onPressed: noAction,
+          ),
         ],
       ),
     );
