@@ -136,8 +136,8 @@ class PostController extends GetxController {
   // 현재 쓴 내용을 객체로 반환합니다.
   Future<Post> _makePostBasedCurrentWrite(
       DateTime writeDate, int duration) async {
-    //TODO: 이미지 개수 constant화
-    int tempImage = Random(DateTime.now().hashCode).nextInt(3) + 1;
+    int tempImage =
+        Random(DateTime.now().hashCode).nextInt(k_StandardImageLength) + 1;
     debugPrint(_tag + '파일명 image/$tempImage.jpg');
     return Post(
         title: _titleController.text,
@@ -323,6 +323,7 @@ class PostController extends GetxController {
   }
 
   // 이미지 5개 제한 Toast 메세지
+  // TODO: Toast 하부로 이동
   void _showLimitFiveImageToast() {
     debugPrint('이미지 5개 제한 toast');
     Fluttertoast.showToast(

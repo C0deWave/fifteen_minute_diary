@@ -32,6 +32,8 @@ const k_OneSec = Duration(seconds: 1);
 
 //---------------------------------------------------
 // post_controller
+// 기본이미지의 개수
+const k_StandardImageLength = 3;
 // 시간값이 없는경우 항상 큰값으로 인정합니다.
 const k_SortRight = 1;
 // 일기를 쓰지 않았을 경우 생기는 탬플릿입니다.
@@ -69,4 +71,6 @@ const k_ProviderNull = 'null';
 const List<String> k_topiclist = [
   '"오늘 먹은 음식은 어땠나요?"',
   '"최근에 가장 행복한 일이 뭐였나요?"',
+  '"나를 힘차게 하는 것들은 무엇이 있나요?"',
+  '"오늘의 고마운 점 3가지"',
 ];
