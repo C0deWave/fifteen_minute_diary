@@ -1,12 +1,4 @@
-import 'dart:io';
-
-import 'package:fifteen_minute_diary/controller/post_controller.dart';
-import 'package:fifteen_minute_diary/custom_class/dialog_list.dart';
-import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
-import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawerController extends GetxController {
@@ -42,46 +34,5 @@ class CustomDrawerController extends GetxController {
         .map((e) =>
             '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
         .join('&');
-  }
-
-  // 이미지 어디서 선택할지 물어보기
-
-  // 계정정보 변경 BottomSheet
-  void showUpdateUserdataModalSheet(BuildContext context) {
-    showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) => CupertinoActionSheet(
-              actions: <CupertinoActionSheetAction>[
-                CupertinoActionSheetAction(
-                  child: const Text(
-                    '대표이미지 선택',
-                  ),
-                  onPressed: () async {
-                    Get.back();
-                    DialogList.showWhereSelectImage(context);
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text(
-                    '이름 변경',
-                  ),
-                  onPressed: () async {
-                    Get.back();
-                    DialogList.showChangeWhatName(context);
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  isDestructiveAction: true,
-                  child: const Text(
-                    '계정 탈퇴',
-                  ),
-                  onPressed: () async {
-                    //TODO: 계정 탈퇴 구현
-                    Get.back();
-                    DialogList.showLeaveAccountDialog(context);
-                  },
-                ),
-              ],
-            ));
   }
 }

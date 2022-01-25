@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/wide_image_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,9 +66,23 @@ class BackCard extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                                onTap: () {
-                                  showDeleteDiaryCupertinoActionSheet(context);
-                                },
+                                onTap: () =>
+                                    ActionSheetList.deleteDiaryActionSheet(
+                                        context: context,
+                                        deleteFunction: () {
+                                          bool isSame =
+                                              Get.find<PostController>()
+                                                  .checkDateIsSame(dateTime!,
+                                                      DateTime.now());
+                                          if (!isSame) {
+                                            Get.find<PostController>()
+                                                .deletePostByWriteDate(
+                                                    dateTime);
+                                          } else {
+                                            ToastList.showCantDeleteToast();
+                                          }
+                                          Get.back();
+                                        }),
                                 child: const Icon(Icons.more_vert_rounded))
                           ],
                         ),
@@ -107,31 +120,5 @@ class BackCard extends StatelessWidget {
             ),
           ],
         ));
-  }
-
-  void showDeleteDiaryCupertinoActionSheet(BuildContext context) {
-    showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) => CupertinoActionSheet(
-              actions: <CupertinoActionSheetAction>[
-                CupertinoActionSheetAction(
-                  child: const Text(
-                    '일기 삭제',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  onPressed: () async {
-                    bool isSame = Get.find<PostController>()
-                        .checkDateIsSame(dateTime!, DateTime.now());
-                    if (!isSame) {
-                      Get.find<PostController>()
-                          .deletePostByWriteDate(dateTime);
-                    } else {
-                      ToastList.showCantDeleteToast();
-                    }
-                    Get.back();
-                  },
-                ),
-              ],
-            ));
   }
 }
