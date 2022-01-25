@@ -16,7 +16,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
         color: Colors.white,
         child: CupertinoTabBar(
@@ -28,7 +28,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               style: TextStyle(
                 color: index == 0 ? Colors.white : Colors.black,
                 fontSize: 20,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -36,8 +36,8 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               "캘린더",
               style: TextStyle(
                 color: index == 1 ? Colors.white : Colors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.w400,
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
