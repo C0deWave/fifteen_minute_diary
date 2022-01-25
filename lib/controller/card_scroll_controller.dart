@@ -45,9 +45,5 @@ class CardScrollController extends GetxController {
       isNotBottom = false;
       debugPrint('아래로 이동');
     }
-    // else {
-    //   isTop = false;
-    //   debugPrint('아무것도 아님');
-    // }
   }
 }

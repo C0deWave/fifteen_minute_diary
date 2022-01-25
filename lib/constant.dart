@@ -63,3 +63,10 @@ const k_OAuthProvider = 'OAuthProvider';
 const k_ProviderApple = 'apple';
 const k_ProviderGoogle = 'google';
 const k_ProviderNull = 'null';
+
+//-------------------------------------------------------------------
+// dialog_list
+const List<String> k_topiclist = [
+  '"오늘 먹은 음식은 어땠나요?"',
+  '"최근에 가장 행복한 일이 뭐였나요?"',
+];
