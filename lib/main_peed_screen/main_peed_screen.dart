@@ -13,7 +13,7 @@ class MainPeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     checkData(context);
-    return Scaffold(body: MainPeedBody(), drawer: DrawerWidget());
+    return const Scaffold(body: MainPeedBody(), drawer: DrawerWidget());
   }
 
   // 스플래시를 보지 않았을 경우 스플래시 설명화면으로 이동
