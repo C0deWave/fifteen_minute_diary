@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ActionSheetList {
   // 이미지 추가 액션 시트
@@ -21,6 +22,13 @@ class ActionSheetList {
             onPressed: () => chooseAlbum(),
           )
         ],
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          child: const Text(
+            '취소',
+          ),
+          onPressed: () => Get.back(),
+        ),
       ),
     );
   }
@@ -49,6 +57,13 @@ class ActionSheetList {
                   onPressed: () => deleteImageFunction(),
                 )
               ],
+              cancelButton: CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text(
+                  '취소',
+                ),
+                onPressed: () => Get.back(),
+              ),
             ));
   }
 
@@ -67,6 +82,13 @@ class ActionSheetList {
                   onPressed: () => deleteFunction(),
                 ),
               ],
+              cancelButton: CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text(
+                  '취소',
+                ),
+                onPressed: () => Get.back(),
+              ),
             ));
   }
 
@@ -101,6 +123,13 @@ class ActionSheetList {
                   onPressed: () => leaveAccountFunction(),
                 ),
               ],
+              cancelButton: CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text(
+                  '취소',
+                ),
+                onPressed: () => Get.back(),
+              ),
             ));
   }
 }
