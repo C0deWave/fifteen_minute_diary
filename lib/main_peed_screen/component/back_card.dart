@@ -1,13 +1,13 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/wide_image_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/wide_image_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class BackCard extends StatelessWidget {
@@ -56,12 +56,15 @@ class BackCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              title.toString(),
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                            Flexible(
+                              child: Text(
+                                title.toString(),
+                                maxLines: 3,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
                             GestureDetector(
                                 onTap: () {
@@ -123,23 +126,12 @@ class BackCard extends StatelessWidget {
                       Get.find<PostController>()
                           .deletePostByWriteDate(dateTime);
                     } else {
-                      showCantDeleteToast();
+                      ToastList.showCantDeleteToast();
                     }
                     Get.back();
                   },
                 ),
               ],
             ));
-  }
-
-  void showCantDeleteToast() {
-    Fluttertoast.showToast(
-        msg: "오늘 일기는 삭제할 수 없습니다.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey.shade800,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
