@@ -5,7 +5,7 @@ import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_tab_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/diary_carosel_card_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
@@ -47,12 +47,12 @@ class MainPeedBody extends StatelessWidget {
                         delegate: SliverChildBuilderDelegate(
                           (context, i) => Column(
                             children: [
-                              mainPeedAppBar,
+                              const MainPeedAppBar(),
                               Container(
                                 color: Colors.white,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
+                                      vertical: 0, horizontal: 10),
                                   child: Hero(
                                     tag: k_TimerHerotag,
                                     child: TimerWidget(
@@ -95,9 +95,12 @@ class MainPeedBody extends StatelessWidget {
                     //일기 리스트
                     GetBuilder<PostController>(builder: (_) {
                       return SliverStickyHeader(
-                        header: const Padding(
-                          padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                          child: TabbarWidget(),
+                        header: Container(
+                          color: Colors.white,
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: TabbarWidget(),
+                          ),
                         ),
                         sliver: GetBuilder<TabbarController>(
                           init: TabbarController(),
@@ -106,7 +109,7 @@ class MainPeedBody extends StatelessWidget {
                                 TabbarState.diaryState) {
                               return DiaryCaroselCardWidget();
                             } else {
-                              return const CalenderWidget();
+                              return const CalenderTabWidget();
                             }
                           },
                         ),
