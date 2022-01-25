@@ -6,7 +6,7 @@ import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/diary_list_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/diary_carosel_card_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
@@ -104,7 +104,7 @@ class MainPeedBody extends StatelessWidget {
                           builder: (_) {
                             if (tabbarController.currentState ==
                                 TabbarState.diaryState) {
-                              return DiaryListWidget();
+                              return DiaryCaroselCardWidget();
                             } else {
                               return const CalenderWidget();
                             }
