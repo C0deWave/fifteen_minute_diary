@@ -4,6 +4,7 @@ import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/write_diary_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+    ));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '15분 일기',
