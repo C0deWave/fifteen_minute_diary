@@ -59,4 +59,16 @@ class ToastList {
         textColor: Colors.white,
         fontSize: 16.0);
   }
+
+  // 이미지 5개 제한 Toast 메세지
+  static void showLimitFiveImageToast() {
+    debugPrint('이미지 5개 제한 toast');
+    Fluttertoast.showToast(
+        msg: "이미지는 5개 까지만 선택할 수 있습니다.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.grey.shade700,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 }

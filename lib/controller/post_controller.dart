@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +210,7 @@ class PostController extends GetxController {
     if (_selectedImageList != null) {
       if (_selectedImageList!.length >= 5) {
         debugPrint('5개 이상 이미지 선택 불가');
-        _showLimitFiveImageToast();
+        ToastList.showLimitFiveImageToast();
         return;
       }
       _selectedImageList?.add(selectedImage);
@@ -320,18 +321,5 @@ class PostController extends GetxController {
   void deletePostListAll() {
     _postlist.removeRange(0, _postlist.length);
     _postlist.add(k_NotWritePost);
-  }
-
-  // 이미지 5개 제한 Toast 메세지
-  // TODO: Toast 하부로 이동
-  void _showLimitFiveImageToast() {
-    debugPrint('이미지 5개 제한 toast');
-    Fluttertoast.showToast(
-        msg: "이미지는 5개 까지만 선택할 수 있습니다.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.grey.shade700,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
