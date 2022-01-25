@@ -12,6 +12,7 @@ class CalendarController extends GetxController {
   List<Post> _postlist = [];
   List<DateTime> _dateTime = [];
   DateTime _focusDay = DateTime.now();
+  CalendarFormat _calendarFormat = CalendarFormat.month;
 
   //----------------------------------------------------------------------------
   // 함수
@@ -27,10 +28,11 @@ class CalendarController extends GetxController {
 
   // 현재 선택한 날짜 반환
   DateTime getFocusDay() => _focusDay;
+  CalendarFormat getCalendarFormat() => _calendarFormat;
 
   // 헤더 스타일을 반환
   HeaderStyle getHeaderStyle() => const HeaderStyle(
-        headerMargin: EdgeInsets.only(left: 40, top: 10, right: 40, bottom: 10),
+        headerMargin: EdgeInsets.only(left: 40, top: 0, right: 40, bottom: 5),
         titleCentered: true,
         formatButtonVisible: false,
         leftChevronIcon: Icon(Icons.arrow_left),
@@ -62,7 +64,7 @@ class CalendarController extends GetxController {
   // 저번달 다음달 날짜들 표시 안함
   Widget _getOutsideBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
-    return Container();
+    return _getDefaultCalendarItem(date, textColor: Colors.grey);
   }
 
   // 선택한 날짜 디자인
@@ -71,15 +73,16 @@ class CalendarController extends GetxController {
     DateTime nowDate = DateTime.now();
     return _getDefaultCalendarItem(date,
         boxDecoration: _getDefaultBoxDecoration(date).copyWith(
-            border: Border.all(
-                width: 3,
-                color: _getHolidayColors(
-                    DateTime.utc(nowDate.year, nowDate.month, nowDate.day)))));
+            // border: Border.all(
+            //     width: 3,
+            //     color: _getHolidayColors(
+            //         DateTime.utc(nowDate.year, nowDate.month, nowDate.day)))
+            ));
   }
 
   // 가본 일자 디자인
   Widget _getDefaultCalendarItem(DateTime date,
-      {BoxDecoration? boxDecoration}) {
+      {BoxDecoration? boxDecoration, MaterialColor? textColor}) {
     return Padding(
       padding: const EdgeInsets.all(2.5),
       child: Container(
@@ -88,8 +91,8 @@ class CalendarController extends GetxController {
             child: Text(date.day.toString(),
                 style: (date.weekday == DateTime.sunday ||
                         date.weekday == DateTime.saturday)
-                    ? const TextStyle(color: Colors.red)
-                    : const TextStyle(color: Colors.black))),
+                    ? TextStyle(color: textColor ?? Colors.red)
+                    : TextStyle(color: textColor ?? Colors.black))),
       ),
     );
   }
@@ -192,10 +195,19 @@ class CalendarController extends GetxController {
           temp.month == date.month &&
           temp.day == date.day) {
         debugPrint('글을 찾았습니다.' + date.month.toString() + date.day.toString());
-        debugPrint(_postlist[i].duration.toString());
         return _postlist[i];
       }
     }
     return null;
+  }
+
+  // 캘린더 포맷을 변경합니다.
+  calendarFormatChange() {
+    if (_calendarFormat == CalendarFormat.month) {
+      _calendarFormat = CalendarFormat.week;
+    } else {
+      _calendarFormat = CalendarFormat.month;
+    }
+    update();
   }
 }
