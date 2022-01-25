@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class FrontCard extends StatelessWidget {
@@ -50,13 +51,17 @@ class FrontCard extends StatelessWidget {
               children: [Container(), showWriteDuration()],
             ),
           ),
-          Center(
-            child: Text(
-              title.toString(),
-              style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Center(
+              child: AutoSizeText(
+                title.toString(),
+                maxLines: 1,
+                style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
             ),
           ),
         ],
