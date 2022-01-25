@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class FrontCard extends StatelessWidget {
-  const FrontCard({
+class DiaryCardFront extends StatelessWidget {
+  const DiaryCardFront({
     Key? key,
     required this.title,
     required this.content,
@@ -69,6 +69,7 @@ class FrontCard extends StatelessWidget {
     );
   }
 
+//PostController 하부로 이동
   Text showWriteDuration() {
     if (duration >= 60) {
       return Text(

@@ -9,8 +9,8 @@ import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BackCard extends StatelessWidget {
-  const BackCard({
+class DiaryCardBack extends StatelessWidget {
+  const DiaryCardBack({
     Key? key,
     required this.title,
     required this.content,

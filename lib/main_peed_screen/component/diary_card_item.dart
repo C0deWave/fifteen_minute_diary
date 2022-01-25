@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:date_format/date_format.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/back_card.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/front_card.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_back.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_front.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
-class DiaryCardViewWidget extends StatelessWidget {
-  const DiaryCardViewWidget({
+class DiaryCardItem extends StatelessWidget {
+  const DiaryCardItem({
     Key? key,
     required this.title,
     required this.content,
@@ -40,14 +40,14 @@ class DiaryCardViewWidget extends StatelessWidget {
           ),
           Expanded(
             child: FlipCard(
-                front: FrontCard(
+                front: DiaryCardFront(
                   title: title,
                   content: content,
                   duration: duration,
                   image: imageList?[0],
                   writeDate: writeDate,
                 ),
-                back: BackCard(
+                back: DiaryCardBack(
                   title: title,
                   content: content,
                   duration: duration,

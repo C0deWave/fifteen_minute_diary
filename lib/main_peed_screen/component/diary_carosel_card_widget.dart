@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_view_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DiaryListWidget extends StatelessWidget {
-  DiaryListWidget({
+class DiaryCaroselCardWidget extends StatelessWidget {
+  DiaryCaroselCardWidget({
     Key? key,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class DiaryListWidget extends StatelessWidget {
                 color: Colors.white,
                 child: CarouselSlider.builder(
                   itemBuilder: (BuildContext context, int index, int a) {
-                    return DiaryCardViewWidget(
+                    return DiaryCardItem(
                       title: _controller.getPostlist()[length - index].title,
                       content:
                           _controller.getPostlist()[length - index].content,
