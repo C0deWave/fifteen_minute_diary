@@ -3,6 +3,8 @@ import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/drawer_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
+import 'package:fifteen_minute_diary/custom_class/dialog_list.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
@@ -146,8 +148,20 @@ class DrawerLoginWidget extends StatelessWidget {
                     text: '계정 정보',
                     clickFunction: () {
                       debugPrint('계정 정보');
-                      Get.find<CustomDrawerController>()
-                          .showUpdateUserdataModalSheet(context);
+                      ActionSheetList.showUpdateUserdataActionSheet(
+                          context: context,
+                          selectRepresentativeImageFunction: () {
+                            Get.back();
+                            DialogList.showWhereSelectImage(context);
+                          },
+                          updateUserNameFunction: () {
+                            Get.back();
+                            DialogList.showChangeWhatName(context);
+                          },
+                          leaveAccountFunction: () {
+                            Get.back();
+                            DialogList.showLeaveAccountDialog(context);
+                          });
                     },
                   ),
                   const UnderlineWidget(),

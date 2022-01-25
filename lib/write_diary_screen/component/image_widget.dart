@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,38 +23,20 @@ class ImageWidget extends StatelessWidget {
                           (index) => GestureDetector(
                                 onTap: () {
                                   debugPrint(_tag + "tab");
-                                  showCupertinoModalPopup<void>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          CupertinoActionSheet(
-                                            title: const Text('사진 선택'),
-                                            // message: const Text('사진은 최대 5장까지 가능합니다.'),
-                                            actions: <
-                                                CupertinoActionSheetAction>[
-                                              CupertinoActionSheetAction(
-                                                child: const Text('대표 이미지로 지정'),
-                                                onPressed: () async {
-                                                  Get.find<PostController>()
-                                                      .setRepresentativeImage(
-                                                          index);
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                              CupertinoActionSheetAction(
-                                                child: const Text(
-                                                  '이미지 삭제',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                                onPressed: () async {
-                                                  Get.find<PostController>()
-                                                      .removeImageOfIndex(
-                                                          index);
-                                                  Navigator.pop(context);
-                                                },
-                                              )
-                                            ],
-                                          ));
+
+                                  ActionSheetList
+                                      .selectImageDeleteOrRepresentImage(
+                                          context: context,
+                                          selectRepresentImageFunction: () {
+                                            Get.find<PostController>()
+                                                .setRepresentativeImage(index);
+                                            Get.back();
+                                          },
+                                          deleteImageFunction: () {
+                                            Get.find<PostController>()
+                                                .removeImageOfIndex(index);
+                                            Get.back();
+                                          });
                                 },
                                 child: Padding(
                                   padding:
