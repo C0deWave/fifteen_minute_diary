@@ -5,6 +5,7 @@ import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,15 +52,16 @@ class FirebaseService {
 
   //애플 인증서를 반환합니다.
   Future<AuthorizationCredentialAppleID> _getAppleCredential() async {
-    return await SignInWithApple.getAppleIDCredential(
+    var data = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
     );
+    return data;
   }
 
-  // 애플  oauth인증서를 반환합니다.
+  // 애플 oauth인증서를 반환합니다.
   Future<OAuthCredential> _getAppleOAuthCredential(
       AuthorizationCredentialAppleID appleCredential) async {
     return OAuthProvider("apple.com").credential(

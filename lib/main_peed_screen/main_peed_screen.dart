@@ -1,7 +1,6 @@
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/init_splash_screen/init_splash_screen.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component/drawer_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +22,7 @@ class MainPeedScreen extends StatelessWidget {
     bool isViewSplash = prefs.getBool(k_IsViewSplashViewKey) ?? false;
     if (!isViewSplash) {
       debugPrint(_tag + 'Splash이동');
-      Get.to(InitSplashScreen());
+      Get.to(const InitSplashScreen());
       // Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => const InitSplashScreen()));
     }

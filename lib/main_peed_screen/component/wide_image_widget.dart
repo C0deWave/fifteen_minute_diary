@@ -50,31 +50,23 @@ class WideImageWidget extends StatelessWidget {
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  color: Colors.black,
-                  child: Center(
-                    child: CarouselSlider(
-                      items: imagedata,
-                      options: CarouselOptions(
-                        onPageChanged: (index, reason) {
-                          Get.find<WideImageController>()
-                              .setIndexNumber(index + 1);
-                        },
-                        initialPage: indexNumber - 1,
-                        enableInfiniteScroll: false,
-                        height: Get.height * 0.7,
-                        // aspectRatio: 9 / 16,
-                        viewportFraction: 1,
-                      ),
-                    ),
+            body: Container(
+              color: Colors.black,
+              child: Center(
+                child: CarouselSlider(
+                  items: imagedata,
+                  options: CarouselOptions(
+                    onPageChanged: (index, reason) {
+                      Get.find<WideImageController>().setIndexNumber(index + 1);
+                    },
+                    initialPage: indexNumber - 1,
+                    enableInfiniteScroll: false,
+                    height: Get.height * 0.8,
+                    // aspectRatio: 9 / 16,
+                    viewportFraction: 1,
                   ),
                 ),
-                const SizedBox(height: 100),
-              ],
+              ),
             ),
           ),
         ),

@@ -52,7 +52,9 @@ class DrawerLoginWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "${snapshot.data?.displayName}님 환영합니다.",
+                    snapshot.data?.displayName != null
+                        ? "${snapshot.data?.displayName}님 환영합니다."
+                        : "계정정보에서 이름을 지정해 주세요.",
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),

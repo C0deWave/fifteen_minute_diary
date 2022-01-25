@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/dialog_list.dart';
 import 'package:fifteen_minute_diary/custom_class/firebase_service.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,43 +45,6 @@ class CustomDrawerController extends GetxController {
   }
 
   // 이미지 어디서 선택할지 물어보기
-  void showWhereSelectImage(BuildContext context) {
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('이미지 선택'),
-        content: const Text('어디에서 이미지를 가져올까요?'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            child: const Text('카메라'),
-            onPressed: () async {
-              File? data = await selectFromCamera();
-              if (data != null) {
-                FirebaseService().updateUserImage(data);
-              }
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: const Text('앨범'),
-            onPressed: () async {
-              File? data = await selectFromAlbum();
-              if (data != null) {
-                FirebaseService().updateUserImage(data);
-              }
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: const Text('취소'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
-      ),
-    );
-  }
 
   // 계정정보 변경 BottomSheet
   void showUpdateUserdataModalSheet(BuildContext context) {
@@ -95,7 +58,7 @@ class CustomDrawerController extends GetxController {
                   ),
                   onPressed: () async {
                     Get.back();
-                    showWhereSelectImage(context);
+                    DialogList.showWhereSelectImage(context);
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -104,7 +67,7 @@ class CustomDrawerController extends GetxController {
                   ),
                   onPressed: () async {
                     Get.back();
-                    showChangeWhatName(context);
+                    DialogList.showChangeWhatName(context);
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -115,111 +78,10 @@ class CustomDrawerController extends GetxController {
                   onPressed: () async {
                     //TODO: 계정 탈퇴 구현
                     Get.back();
-                    showLeaveAccountDialog(context);
+                    DialogList.showLeaveAccountDialog(context);
                   },
                 ),
               ],
             ));
-  }
-
-  // 카메라에서 이미지를 선택합니다.
-  Future<File?> selectFromCamera() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? selectedImage = await _picker.pickImage(
-        source: ImageSource.camera,
-        maxWidth: 200,
-        maxHeight: 200,
-        imageQuality: 95);
-    if (selectedImage == null) {
-      return null;
-    } else {
-      return File(selectedImage.path);
-    }
-  }
-
-  selectFromAlbum() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? selectedImage = await _picker.pickImage(
-        source: ImageSource.gallery,
-        maxHeight: 200,
-        maxWidth: 200,
-        imageQuality: 95);
-    if (selectedImage == null) {
-      return null;
-    } else {
-      return File(selectedImage.path);
-    }
-  }
-
-  void showChangeWhatName(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text(
-          '유저명',
-          style: TextStyle(fontWeight: FontWeight.normal),
-        ),
-        content: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CupertinoTextField(
-            controller: textEditingController,
-          ),
-        ),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            child: const Text('확인'),
-            onPressed: () async {
-              if (textEditingController.text.isNotEmpty) {
-                FirebaseService().updateUserName(textEditingController.text);
-              }
-              Get.back();
-            },
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: const Text('취소'),
-            onPressed: () {
-              Get.back();
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  void showLeaveAccountDialog(BuildContext context) {
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text(
-          '계정 탈퇴',
-          style: TextStyle(fontWeight: FontWeight.normal),
-        ),
-        content: const Text(
-            '계정정보, 일기, 백업데이터를 삭제합니다.\n삭제된 데이터는 복구할 수 없습니다.\n정말 삭제하시겠습니까?'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            child: const Text('취소'),
-            onPressed: () async {
-              Get.back();
-            },
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: const Text('확인'),
-            onPressed: () async {
-              //TODO : 계정정보 삭제 구현
-              //파이어베이스유저DB / 계정삭제
-              Get.find<PostController>().deletePostListAll();
-              await HiveDataBase().clearHiveDatabase();
-              //파이어베이스 백업, 이미지, 계정이미지, 계정 데이터 삭제
-              await FirebaseService().deleteUser();
-              Get.back();
-            },
-          )
-        ],
-      ),
-    );
   }
 }

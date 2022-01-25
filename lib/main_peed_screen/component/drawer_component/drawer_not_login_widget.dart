@@ -5,16 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
 
 class DrawerNotLoginWidget extends StatelessWidget {
   DrawerNotLoginWidget({Key? key}) : super(key: key);
@@ -80,19 +70,6 @@ class DrawerNotLoginWidget extends StatelessWidget {
                   },
                 ),
                 LicenseInfoWidget(),
-                // SignInButton(
-                //   Buttons.GitHub,
-                //   onPressed: () async {
-                //     Get.find<CustomDrawerController>().setIsShowIndicator(true);
-                //     try {
-                //       FirebaseService service = new FirebaseService();
-                //       await service.signInwithGithub();
-                //     } finally {
-                //       Get.find<CustomDrawerController>()
-                //           .setIsShowIndicator(false);
-                //     }
-                //   },
-                // ),
               ],
             ),
           ],
