@@ -42,7 +42,8 @@ Post k_NotWritePost = Post(
     content: "",
     duration: 0,
     writeDate: null,
-    imagelist: null);
+    imagelist: null,
+    hashtags: []);
 
 //---------------------------------------------------
 // timer_complete_alert

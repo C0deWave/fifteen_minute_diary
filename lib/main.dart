@@ -19,7 +19,7 @@ void main() async {
   final document = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(document.path)
       .then((value) => debugPrint(_tag + "Hive init"));
-  Hive.registerAdapter(PostAdapter(), override: true);
+  Hive.registerAdapter(PostAdapter());
   await Hive.openBox<Post>(k_PostBox);
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }

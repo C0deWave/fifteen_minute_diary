@@ -8,6 +8,7 @@ import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hashtagable/hashtagable.dart';
 
 class DiaryCardBack extends StatelessWidget {
   const DiaryCardBack({
@@ -104,12 +105,12 @@ class DiaryCardBack extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          content,
-                          // maxLines: 17,
-                          // overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                        child: HashTagText(
+                          text: content,
+                          basicStyle: const TextStyle(
                               color: Colors.black, fontSize: 20),
+                          decoratedStyle:
+                              const TextStyle(color: Colors.blue, fontSize: 20),
                         ),
                       )
                     ],

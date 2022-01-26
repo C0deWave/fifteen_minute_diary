@@ -76,6 +76,8 @@ dependencies:
   dismissible_page: ^0.6.4
   # 요일별 차트 그릴때 사용
   fl_chart: ^0.41.0
+  # 일기 해시태그에 사용
+  hashtagable: ^2.0.2+1
 
 dev_dependencies:
   flutter_test:

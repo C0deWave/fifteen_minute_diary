@@ -6,15 +6,16 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class DiaryCardItem extends StatelessWidget {
-  const DiaryCardItem({
-    Key? key,
-    required this.title,
-    required this.content,
-    required this.imageList,
-    required this.writeDate,
-    required this.duration,
-    required this.dateTime,
-  }) : super(key: key);
+  const DiaryCardItem(
+      {Key? key,
+      required this.title,
+      required this.content,
+      required this.imageList,
+      required this.writeDate,
+      required this.duration,
+      required this.dateTime,
+      required this.hashtags})
+      : super(key: key);
 
   final String title;
   final String content;
@@ -22,6 +23,7 @@ class DiaryCardItem extends StatelessWidget {
   final DateTime? writeDate;
   final int duration;
   final DateTime? dateTime;
+  final List<String> hashtags;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,6 +48,7 @@ class DiaryCardItem extends StatelessWidget {
                   duration: duration,
                   image: imageList?[0],
                   writeDate: writeDate,
+                  hashtags: hashtags,
                 ),
                 back: DiaryCardBack(
                   title: title,

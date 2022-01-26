@@ -75,7 +75,8 @@ void main() {
               content: "content",
               imagelist: null,
               writeDate: null,
-              duration: 0)));
+              duration: 0,
+              hashtags: [])));
       expect(length + 1, hiveDataBase.getLength());
     });
     //---------------------------------------------------------------------------

@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hashtagable/hashtagable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
@@ -146,6 +147,7 @@ class PostController extends GetxController {
     int tempImage =
         Random(DateTime.now().hashCode).nextInt(k_StandardImageLength) + 1;
     debugPrint(_tag + '파일명 image/$tempImage.jpg');
+    List<String> hashtags = extractHashTags(_contextController.text);
     return Post(
         title: _titleController.text,
         content: _contextController.text,
@@ -156,7 +158,8 @@ class PostController extends GetxController {
                     'lib/assets/image/default_writing_image/image$tempImage.jpg')
               ],
         writeDate: writeDate,
-        duration: duration);
+        duration: duration,
+        hashtags: hashtags);
   }
 
   //에셋에서 임시 이미지를 불러옵니다.
@@ -248,8 +251,8 @@ class PostController extends GetxController {
 
   // 오늘 적은 일기가 있는지 확인합니다.
   bool _checkTodayWrite() {
-    DateTime lastPostDate =
-        _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate!;
+    DateTime? lastPostDate =
+        _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate;
     DateTime todayDate = DateTime.now();
     if (!checkDateIsSame(lastPostDate, todayDate)) {
       _postlist.add(k_NotWritePost);

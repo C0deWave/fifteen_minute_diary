@@ -21,18 +21,15 @@ class DiaryCaroselCardWidget extends StatelessWidget {
                 color: Colors.white,
                 child: CarouselSlider.builder(
                   itemBuilder: (BuildContext context, int index, int a) {
+                    var _temp = _controller.getPostlist()[length - index];
                     return DiaryCardItem(
-                      title: _controller.getPostlist()[length - index].title,
-                      content:
-                          _controller.getPostlist()[length - index].content,
-                      imageList:
-                          _controller.getPostlist()[length - index].imagelist,
-                      writeDate:
-                          _controller.getPostlist()[length - index].writeDate,
-                      duration:
-                          _controller.getPostlist()[length - index].duration,
-                      dateTime:
-                          _controller.getPostlist()[length - index].writeDate,
+                      title: _temp.title,
+                      content: _temp.content,
+                      imageList: _temp.imagelist,
+                      writeDate: _temp.writeDate,
+                      duration: _temp.duration,
+                      dateTime: _temp.writeDate,
+                      hashtags: _temp.hashtags,
                     );
                   },
                   itemCount: length + 1,
