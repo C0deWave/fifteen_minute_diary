@@ -15,6 +15,36 @@ class StaticController extends GetxController {
   String getTitleText() => _title;
   String getSubTitleText() => _subTitle;
 
+  getMonthlyStatistic({
+    required int totalDay,
+    required int dailyDay,
+    required int totalTime,
+    required int dailyTime,
+  }) {
+    return Column(
+      children: [
+        Center(
+          child: Text(
+            "$dailyDay일 / $totalDay일",
+            style: const TextStyle(
+                color: Color(0xff0f4a3c),
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        Center(
+          child: Text(
+            "$dailyTime분 / $totalTime분",
+            style: const TextStyle(
+                color: Color(0xff0f4a3c),
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
   setShowChartData({required bool status}) {
     _showChartData = status;
     updateWidgetHeight();
@@ -48,7 +78,7 @@ class StaticController extends GetxController {
   }
 
   // 주차별 차트 데이터를 반환합니다.
-  BarChartData mainBarData() {
+  BarChartData getMainBarData({required List<double> bardata}) {
     return BarChartData(
       barTouchData: BarTouchData(
         enabled: false,
@@ -90,29 +120,30 @@ class StaticController extends GetxController {
       borderData: FlBorderData(
         show: false,
       ),
-      barGroups: showingGroups(),
+      barGroups: showingGroups(bardata),
       gridData: FlGridData(show: false),
     );
   }
 
   // 요일 데이터
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
+  List<BarChartGroupData> showingGroups(List<double> data) =>
+      List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 15 * 15,
+            return makeGroupData(0, data[0],
                 barColor: Colors.green.shade800, isTouched: false);
           case 1:
-            return makeGroupData(1, 15 * 6);
+            return makeGroupData(1, data[1]);
           case 2:
-            return makeGroupData(2, 15 * 5);
+            return makeGroupData(2, data[2]);
           case 3:
-            return makeGroupData(3, 15 * 7);
+            return makeGroupData(3, data[3]);
           case 4:
-            return makeGroupData(4, 15 * 9);
+            return makeGroupData(4, data[4]);
           case 5:
-            return makeGroupData(5, 15 * 11.5);
+            return makeGroupData(5, data[5]);
           case 6:
-            return makeGroupData(6, 6.5);
+            return makeGroupData(6, data[6]);
           default:
             return throw Error();
         }
@@ -137,7 +168,7 @@ class StaticController extends GetxController {
           borderSide: const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 15 * 15,
+            y: 15,
             colors: [barBackgroundColor],
           ),
         ),

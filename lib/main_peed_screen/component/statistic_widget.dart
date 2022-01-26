@@ -1,3 +1,4 @@
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/statistic_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -50,31 +51,25 @@ class StatisticWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: controller.getShowChartData()
-                          ? BarChart(
-                              controller.mainBarData(),
-                              swapAnimationDuration: animDuration,
-                            )
-                          : Column(
-                              children: const [
-                                Center(
-                                  child: Text(
-                                    "15일 / 31일",
-                                    style: TextStyle(
-                                        color: Color(0xff0f4a3c),
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Center(
-                                  child: Text(
-                                    "19분 / 450분",
-                                    style: TextStyle(
-                                        color: Color(0xff0f4a3c),
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
+                          ? GetBuilder<CalendarController>(
+                              builder: (calendarController) {
+                              return BarChart(
+                                controller.getMainBarData(
+                                    bardata:
+                                        calendarController.getWeeklyData()),
+                                swapAnimationDuration: animDuration,
+                              );
+                            })
+                          : GetBuilder<CalendarController>(
+                              builder: (calendarController) {
+                                return controller.getMonthlyStatistic(
+                                    totalDay: calendarController.getTotalDay(),
+                                    dailyDay: calendarController.getDailyDay(),
+                                    totalTime:
+                                        calendarController.getTotalTime(),
+                                    dailyTime:
+                                        calendarController.getDailyTime());
+                              },
                             ),
                     ),
                     const SizedBox(

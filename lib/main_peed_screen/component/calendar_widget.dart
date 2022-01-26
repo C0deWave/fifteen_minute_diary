@@ -36,10 +36,12 @@ class CalendarWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   TableCalendar(
+                      pageJumpingEnabled: false,
+                      availableGestures: AvailableGestures.horizontalSwipe,
                       calendarFormat: calenderController.getCalendarFormat(),
                       calendarBuilders: calenderController.getCalendarBuilder(),
                       onPageChanged: (focusedDay) =>
-                          calenderController.onDaySelected(focusedDay),
+                          calenderController.onPageSelected(focusedDay),
                       onDaySelected: (seletedDay, focusday) =>
                           calenderController.onDaySelected(seletedDay),
                       headerStyle: calenderController.getHeaderStyle(),
@@ -47,9 +49,6 @@ class CalendarWidget extends StatelessWidget {
                       locale: 'ko_KR',
                       firstDay: DateTime.utc(2019, 10, 16),
                       lastDay: DateTime.utc(2030, 3, 14),
-                      // onFormatChanged: (_) => calenderController.calendarFormatChange,
-                      eventLoader: (data) =>
-                          calenderController.getEventLoader(data),
                       focusedDay: calenderController.getFocusDay(),
                       holidayPredicate: (date) =>
                           calenderController.isHoliday(date),
