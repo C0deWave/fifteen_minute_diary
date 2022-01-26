@@ -16,7 +16,8 @@ class Post extends HiveObject {
       required this.content,
       required this.imagelist,
       required this.writeDate,
-      required this.duration});
+      required this.duration,
+      required this.hashtags});
 
   @HiveField(0, defaultValue: "제목이 없습니다.")
   String title = 'empty';
@@ -28,6 +29,8 @@ class Post extends HiveObject {
   DateTime? writeDate;
   @HiveField(4, defaultValue: 0)
   int duration = 0;
+  @HiveField(5)
+  List<String> hashtags;
 
   static Future<Post> fromJson(Map<String, dynamic> json) async {
     List<File> imagelist = [];
@@ -44,12 +47,12 @@ class Post extends HiveObject {
       imagelist.add(file);
     }
     return Post(
-      title: json['title'],
-      content: json['content'],
-      imagelist: imagelist,
-      writeDate: (json['writeDate'] as Timestamp).toDate(),
-      duration: json['duration'] as int,
-    );
+        title: json['title'],
+        content: json['content'],
+        imagelist: imagelist,
+        writeDate: (json['writeDate'] as Timestamp).toDate(),
+        duration: json['duration'] as int,
+        hashtags: json['hashtags'] as List<String>);
   }
 
   Map<String, dynamic> toJson({required List<String> imageUrl}) => {
@@ -58,5 +61,6 @@ class Post extends HiveObject {
         'image': imageUrl,
         'writeDate': writeDate,
         'duration': duration,
+        'hashtags': hashtags,
       };
 }
