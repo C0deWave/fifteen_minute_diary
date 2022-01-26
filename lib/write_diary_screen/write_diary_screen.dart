@@ -5,6 +5,7 @@ import 'package:fifteen_minute_diary/write_diary_screen/component/hero_timer_wid
 import 'package:fifteen_minute_diary/write_diary_screen/component/image_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/component/title_textfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -49,14 +50,30 @@ class WriteDiaryScreen extends StatelessWidget {
           },
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: const [
-                HeroTimerWidget(),
-                ImageWidget(),
-                SizedBox(height: 6),
-                TitleTextFieldWidget(),
-                ContextTextFieldWidget(),
+          child: Container(
+            color: Colors.white,
+            child: CustomScrollView(
+              slivers: [
+                SliverStickyHeader(
+                    header: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: const [
+                          HeroTimerWidget(),
+                          ImageWidget(),
+                        ],
+                      ),
+                    ),
+                    sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                            (context, i) => Column(
+                                  children: const [
+                                    SizedBox(height: 3),
+                                    TitleTextFieldWidget(),
+                                    ContextTextFieldWidget(),
+                                  ],
+                                ),
+                            childCount: 1)))
               ],
             ),
           ),
