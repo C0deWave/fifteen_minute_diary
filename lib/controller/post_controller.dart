@@ -7,7 +7,6 @@ import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -63,9 +62,13 @@ class PostController extends GetxController {
     _titleController.text = title;
   }
 
-  //Json화한 게시글 리스트를 받습니다.
+  //조커 카드를 제외한 Json화한 게시글 리스트를 받습니다.
   Future<Map<String, dynamic>> getPostlistJson(String userUid) async {
     var postList = getPostlist();
+    if (postList.last == k_NotWritePost) {
+      debugPrint('조커카드가 있습니다. => 제거');
+      postList.removeLast();
+    }
     List<Map<String, dynamic>> jsondata = [];
     for (var i = 0; i < postList.length; i++) {
       List<String> imageUrl =
@@ -241,15 +244,17 @@ class PostController extends GetxController {
   }
 
   // 오늘 적은 일기가 있는지 확인합니다.
-  void _checkTodayWrite() {
+  bool _checkTodayWrite() {
     DateTime lastPostDate =
         _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate!;
     DateTime todayDate = DateTime.now();
     if (!checkDateIsSame(lastPostDate, todayDate)) {
-      debugPrint('조커 카드 추가');
       _postlist.add(k_NotWritePost);
+      resetWriteState();
+      return false;
     } else {
       _updateWriteScreenContent();
+      return true;
     }
   }
 
@@ -265,18 +270,26 @@ class PostController extends GetxController {
   }
 
   // 년월일이 같은지 확인합니다.
-  bool checkDateIsSame(DateTime date1, DateTime date2) {
+  bool checkDateIsSame(DateTime? date1, DateTime? date2) {
+    if (date1 == null || date2 == null) {
+      return false;
+    }
     return (date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day);
   }
 
   // 파이어베이스에서 Postlist를 불러와서 저장합니다.
-  void setPostlist(Map<String, dynamic> list, Function(int) addCallback) {
+  Future<void> setPostlist(
+      Map<String, dynamic> list, Function(int) addCallback) async {
     List<dynamic> data = list['data'];
     _postlist.clear();
     for (var item in data) {
-      _addPostFutureData(item, addCallback);
+      await _addPostFutureData(item, addCallback);
+    }
+    bool isTodayWrite = _checkTodayWrite();
+    if (!isTodayWrite) {
+      addCallback(0);
     }
     update();
   }
@@ -287,7 +300,7 @@ class PostController extends GetxController {
     _postlist.add(postdata);
     _sortPostlist();
     if (_postlist.last.writeDate != null &&
-        checkDateIsSame(DateTime.now(), _postlist.last.writeDate!)) {
+        checkDateIsSame(DateTime.now(), _postlist.last.writeDate)) {
       addCallback(_postlist.last.duration);
       _updateWriteScreenContent();
     }
