@@ -13,13 +13,12 @@ import 'package:get/get.dart';
 class HeroTimerWidget extends StatelessWidget {
   const HeroTimerWidget({Key? key}) : super(key: key);
 
-  yesAction() {
+  yesAction() async {
     TimerController timerController = Get.find<TimerController>();
-    Get.find<PostController>()
-        .addPostList(writeDuration: timerController.getDuration())
-        .then(
-            (value) => Get.find<CalendarController>().updateCalenderPostlist());
-    timerController.stopTimer();
+    bool isWritePost = await Get.find<PostController>()
+        .addPostList(writeDuration: timerController.getDuration());
+    Get.find<CalendarController>().updateCalenderPostlist();
+    isWritePost ? timerController.stopTimer() : timerController.resetTimer();
     Get.back();
     Get.back();
   }

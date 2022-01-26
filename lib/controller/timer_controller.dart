@@ -3,7 +3,6 @@ import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class TimerController extends GetxController {
@@ -95,6 +94,16 @@ class TimerController extends GetxController {
     _timer.cancel();
     _time = _getTimeString();
     _updateSubtext();
+  }
+
+  // 타이머를 리셋합니다.
+  void resetTimer() {
+    debugPrint('타이머 리셋');
+    _timer.cancel();
+    _timerDuration = k_TimerTotalDuration;
+    _updateSubtext();
+    _time = _getTimeString();
+    update();
   }
 
   // 시간 값을 1초씩 빼고 time텍스트를 업데이트한다.

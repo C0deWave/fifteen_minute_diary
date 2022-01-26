@@ -125,15 +125,18 @@ class PostController extends GetxController {
   }
 
   // 현재 적은 내용을 저장합니다.
-  Future<void> addPostList({required int writeDuration}) async {
+  Future<bool> addPostList({required int writeDuration}) async {
     DateTime writeDate = DateTime.now();
-    if (_checkTitleAndContentIsWrite()) {
+    if (_checkTitleAndContentIsWrite() || _checkTodayWrite()) {
       Post temp = await _makePostBasedCurrentWrite(writeDate, writeDuration);
       await _postBox.pushPostToHive(temp);
       _getPostlistFromPostbox();
-      resetWriteState();
       _checkTodayWrite();
       update();
+      return true;
+    } else {
+      resetWriteState();
+      return false;
     }
   }
 
