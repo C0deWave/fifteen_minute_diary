@@ -56,19 +56,24 @@ class MainPeedBody extends StatelessWidget {
                                   child: Hero(
                                     tag: k_TimerHerotag,
                                     child: TimerWidget(
+                                      //15분이 다될 경우
                                       callback: () {
                                         if (timerController.haveTime()) {
                                           timerController.startTimer(
-                                              finishFunction: () {
-                                                postController
-                                                    .addPostList(
-                                                        writeDuration:
-                                                            timerController
-                                                                .getDuration())
-                                                    .then((value) => Get.find<
-                                                            CalendarController>()
-                                                        .updateCalenderPostlist());
-                                                timerController.stopTimer();
+                                              finishFunction: () async {
+                                                bool isWritePost =
+                                                    await postController
+                                                        .addPostList(
+                                                            writeDuration:
+                                                                timerController
+                                                                    .getDuration());
+                                                Get.find<CalendarController>()
+                                                    .updateCalenderPostlist();
+                                                isWritePost
+                                                    ? timerController
+                                                        .stopTimer()
+                                                    : timerController
+                                                        .resetTimer();
                                                 Get.back();
                                               },
                                               remain1MinuteFunction: ToastList
