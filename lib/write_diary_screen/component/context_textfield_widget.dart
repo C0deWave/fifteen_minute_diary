@@ -20,7 +20,7 @@ class ContextTextFieldWidget extends StatelessWidget {
           basicStyle: const TextStyle(fontSize: 18),
           decoratedStyle: const TextStyle(fontSize: 18, color: Colors.blue),
           decoration: const InputDecoration(
-            hintText: "15분간 일기를 써 주세요.",
+            hintText: "15분간 일기를 써 주세요.\n#해시 #태그 #가능",
             border: UnderlineInputBorder(borderSide: BorderSide.none),
             enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
             focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
