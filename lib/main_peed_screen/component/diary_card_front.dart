@@ -79,7 +79,7 @@ class DiaryCardFront extends StatelessWidget {
             .getRange(0, hashtags.length >= 3 ? 3 : hashtags.length)
             .map(
               (e) => Text(
-                e,
+                e.length > 10 ? e.substring(0, 10) + '...' : e,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
