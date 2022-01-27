@@ -52,7 +52,9 @@ class Post extends HiveObject {
         imagelist: imagelist,
         writeDate: (json['writeDate'] as Timestamp).toDate(),
         duration: json['duration'] as int,
-        hashtags: json['hashtags'] as List<String>);
+        hashtags: (json['hashtags'] as List<dynamic>)
+            .map((e) => e.toString())
+            .toList());
   }
 
   Map<String, dynamic> toJson({required List<String> imageUrl}) => {
