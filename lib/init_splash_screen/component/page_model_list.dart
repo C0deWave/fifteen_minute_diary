@@ -7,7 +7,7 @@ import '../../constant.dart';
 var listPagesViewModel = <PageViewModel>[
   PageViewModel(
     title: "하루의 1%를 투자하세요",
-    body: "15Minute Diary는 15분의 \n시간제한이 있는 일기장 앱입니다.",
+    body: "15분 일기는 15분의 \n시간제한이 있는 일기장 앱입니다.",
     image: Padding(
       padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
       child: Center(
