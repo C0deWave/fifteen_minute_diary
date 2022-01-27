@@ -1,8 +1,11 @@
+import 'package:fifteen_minute_diary/custom_class/post.dart';
 import 'package:flutter/material.dart';
 
 class HashTagCardItemWidget extends StatelessWidget {
-  HashTagCardItemWidget({required this.width, Key? key}) : super(key: key);
+  HashTagCardItemWidget({required this.width, required this.postdata, Key? key})
+      : super(key: key);
 
+  Post postdata;
   double width;
 
   @override
@@ -20,22 +23,22 @@ class HashTagCardItemWidget extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   image: DecorationImage(
-                      image: NetworkImage(
-                        'https://img.khan.co.kr/news/2021/08/15/l_2021081501002249400192111.webp',
+                      image: FileImage(
+                        postdata.imagelist![0],
                       ),
                       fit: BoxFit.cover)),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Center(
                   child: Text(
-                "나를 가장 힘들게 한 기능은 이거다 으어어어어",
+                postdata.title,
                 overflow: TextOverflow.clip,
                 maxLines: 2,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 22,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),

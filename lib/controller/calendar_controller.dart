@@ -10,6 +10,8 @@ class CalendarController extends GetxController {
   // 변수
   final String _tag = 'calendarController: ';
   List<Post> _postlist = [];
+  List<Post> _searchedPostlist = [];
+  List<String> _searchedTaglist = [];
   // List<DateTime> _dateTime = [];
   DateTime _focusDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -42,6 +44,8 @@ class CalendarController extends GetxController {
   getTotalTime() => _totalTime;
   getDailyTime() => _dailyTime;
   List<double> getWeeklyData() => _weeklyData;
+  List<Post> getSearchedPostList() => _searchedPostlist;
+  List<String> getSearchedTagList() => _searchedTaglist;
 
   // 저장소에서 일기 데이터를 긁어 옵니다.
   List<Post> _getPostlistFromPostbox() {
@@ -86,6 +90,8 @@ class CalendarController extends GetxController {
     //월 , 화 , 수 , 목 , 금 , 토 , 일
     // 1   2   3   4    5   6   7
     int currentDay = date.weekday;
+    _searchedPostlist.clear();
+    _searchedTaglist.clear();
     var standardDay = date.subtract(Duration(days: currentDay)).toUtc();
     print('탐색을 시작합니다. 기준일 : ${standardDay}');
     List<double> tempWeeklyData = [];
@@ -94,6 +100,8 @@ class CalendarController extends GetxController {
       var temp = _getPostofDate(standardDay);
       if (temp != null) {
         tempWeeklyData.add(temp.duration / 60);
+        _searchedPostlist.add(temp);
+        _searchedTaglist.addAll(temp.hashtags);
       } else {
         tempWeeklyData.add(0);
       }
@@ -102,6 +110,7 @@ class CalendarController extends GetxController {
     }
     _weeklyData = tempWeeklyData;
     print(_weeklyData);
+    print("dddd:" + _searchedTaglist.toString());
     update();
   }
 
@@ -152,8 +161,11 @@ class CalendarController extends GetxController {
     update();
   }
 
+  // 월별 서치입니다.
   void updateDailyDaysAndTime({required int year, required int month}) {
     if (_calendarFormat == CalendarFormat.month) {
+      _searchedPostlist.clear();
+      _searchedTaglist.clear();
       _dailyDay = 0;
       _dailyTime = 0;
       for (var i = 1; i < _totalDay + 1; i++) {
@@ -163,6 +175,8 @@ class CalendarController extends GetxController {
             debugPrint('데일리 찾음');
             _dailyDay++;
             _dailyTime += _postlist[j].duration ~/ 60;
+            _searchedPostlist.add(_postlist[j]);
+            _searchedTaglist.addAll(_postlist[j].hashtags);
           }
         }
       }

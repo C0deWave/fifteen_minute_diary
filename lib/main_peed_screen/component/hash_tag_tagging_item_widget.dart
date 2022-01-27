@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HashTagItemWidget extends StatelessWidget {
-  HashTagItemWidget({required this.title, Key? key}) : super(key: key);
+class HashTagTaggingItemWidget extends StatelessWidget {
+  HashTagTaggingItemWidget({required this.title, Key? key}) : super(key: key);
   final String title;
   List<Color> itemColorList = [
     Colors.purple,
@@ -15,7 +15,9 @@ class HashTagItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    itemColorList.shuffle();
+    if (title == '') {
+      return Container();
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
       child: Container(
@@ -24,15 +26,19 @@ class HashTagItemWidget extends StatelessWidget {
               left: Radius.circular(12),
               right: Radius.circular(12),
             ),
-            border: Border.all(width: 2, color: itemColorList[0])),
+            border: Border.all(
+                width: 2,
+                color: itemColorList[title.hashCode % itemColorList.length])),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Text(
-            title,
+            title.length > 10 ? title.substring(0, 10) + '...' : title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: itemColorList[0]),
+                color: itemColorList[title.hashCode % itemColorList.length]),
           ),
         ),
       ),

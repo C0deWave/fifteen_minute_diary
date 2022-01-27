@@ -1,5 +1,7 @@
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_item_widget.dart';
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_tagging_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HashTagHeaderWidget extends StatelessWidget {
   const HashTagHeaderWidget({Key? key}) : super(key: key);
@@ -28,16 +30,22 @@ class HashTagHeaderWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
-          SizedBox(
-            height: 32,
-            child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (content, i) => HashTagItemWidget(title: "#장주명"),
-                    childCount: 10),
-              ),
-            ]),
-          ),
+          GetBuilder<CalendarController>(builder: (calendarController) {
+            var taglist = calendarController.getSearchedTagList();
+            print('taglist' + taglist.toString());
+            return SizedBox(
+              height: 32,
+              child:
+                  CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (content, i) =>
+                          HashTagTaggingItemWidget(title: taglist[i]),
+                      childCount: taglist.length),
+                ),
+              ]),
+            );
+          }),
         ],
       ),
     );
