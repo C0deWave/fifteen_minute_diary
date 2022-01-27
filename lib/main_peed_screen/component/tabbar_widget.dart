@@ -33,10 +33,10 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               textAlign: TextAlign.center,
             ),
             Text(
-              "캘린더",
+              "둘러보기",
               style: TextStyle(
                 color: index == 1 ? Colors.white : Colors.black,
-                fontSize: 22,
+                fontSize: 21,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
