@@ -16,7 +16,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
         color: Colors.white,
         child: CupertinoTabBar(

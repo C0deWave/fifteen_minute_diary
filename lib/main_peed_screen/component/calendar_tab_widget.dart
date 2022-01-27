@@ -19,9 +19,9 @@ class CalenderTabWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: const [
-                        SizedBox(height: 2),
+                        SizedBox(height: 10),
                         StatisticWidget(),
-                        SizedBox(height: 4),
+                        SizedBox(height: 12),
                         CalendarWidget(),
                       ],
                     ),
