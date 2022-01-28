@@ -10,8 +10,8 @@ class CalendarController extends GetxController {
   // 변수
   final String _tag = 'calendarController: ';
   List<Post> _postlist = [];
-  List<Post> _searchedPostlist = [];
-  List<String> _searchedTaglist = [];
+  final List<Post> _searchedPostlist = [];
+  final List<String> _searchedTaglist = [];
   // List<DateTime> _dateTime = [];
   DateTime _focusDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -110,7 +110,6 @@ class CalendarController extends GetxController {
     }
     _weeklyData = tempWeeklyData;
     print(_weeklyData);
-    print("dddd:" + _searchedTaglist.toString());
     update();
   }
 
