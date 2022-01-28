@@ -13,6 +13,8 @@ class CalendarController extends GetxController {
   List<Post> _postlist = [];
   final List<Post> _searchedPostlist = [];
   final List<Tag> _searchedTaglist = [];
+  List<Post> _filteredPostlist = [];
+  List<Tag> _filteredTaglist = [];
   // List<DateTime> _dateTime = [];
   DateTime _focusDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -30,7 +32,6 @@ class CalendarController extends GetxController {
     debugPrint("Calendar Controller 주입");
     _focusDay = DateTime.now();
     _postlist = _getPostlistFromPostbox();
-    // _dateTime = _getDatelistFromPostlist();
     updateWeeklyData(_focusDay);
     updateTotalDaysAndTime(year: _focusDay.year, month: _focusDay.month);
     updateDailyDaysAndTime(year: _focusDay.year, month: _focusDay.month);
@@ -45,23 +46,56 @@ class CalendarController extends GetxController {
   getTotalTime() => _totalTime;
   getDailyTime() => _dailyTime;
   List<double> getWeeklyData() => _weeklyData;
-  List<Post> getSearchedPostList() => _searchedPostlist;
-  List<Tag> getSearchedTagList() => _searchedTaglist;
+  List<Post> getFilteredPostList() => _filteredPostlist;
+  List<Tag> getFilteredTagList() => _filteredTaglist;
 
   // 태그 상태를 변화 합니다.
   void updateTagStatus(Tag tag) {
     var index = _searchedTaglist.indexOf(tag);
     tag.isChecked = !tag.isChecked;
-    if (index > 0) {
+    if (index >= 0) {
       _searchedTaglist[index] = tag;
+      updateFilteredPostlist();
     }
     sortTaglist();
     update();
   }
 
+  // 태그에 따라 포스트와 태그를 업데이트 합니다.
+  void updateFilteredPostlist() {
+    List<Post> tempData = _searchedPostlist.toList();
+    List<Tag> tempTagData = _searchedTaglist.toList();
+
+    for (Post post in _searchedPostlist) {
+      for (Tag tag in _searchedTaglist) {
+        if (tag.isChecked == true && !post.hashtags.contains(tag.title)) {
+          tempData.remove(post);
+          break;
+        }
+      }
+    }
+    _filteredPostlist = tempData;
+
+    for (Tag tag in _searchedTaglist) {
+      bool isDelete = true;
+      if (tag.isChecked == true) {
+        continue;
+      }
+      for (Post post in _filteredPostlist) {
+        if (post.hashtags.contains(tag.title)) {
+          isDelete = false;
+        }
+      }
+      if (isDelete) {
+        tempTagData.remove(tag);
+      }
+    }
+    _filteredTaglist = tempTagData;
+  }
+
   // 태그를 정렬합니다.
   sortTaglist() {
-    _searchedTaglist.sort(((a, b) {
+    _filteredTaglist.sort(((a, b) {
       if (a.isChecked == b.isChecked) {
         return a.title.compareTo(b.title);
       } else {
@@ -120,7 +154,6 @@ class CalendarController extends GetxController {
     _searchedPostlist.clear();
     _searchedTaglist.clear();
     var standardDay = date.subtract(Duration(days: currentDay)).toUtc();
-    print('탐색을 시작합니다. 기준일 : ${standardDay}');
     List<double> tempWeeklyData = [];
     // 일요일 부터 차례대로 1주 탐색
     for (var i = 0; i < 7; i++) {
@@ -128,9 +161,10 @@ class CalendarController extends GetxController {
       if (temp != null) {
         tempWeeklyData.add(temp.duration / 60);
         _searchedPostlist.add(temp);
-        // _searchedTaglist.addAll(temp.hashtags);
         for (var item in temp.hashtags) {
-          _searchedTaglist.add(Tag(title: item, isChecked: false));
+          if (!checkHasTag(item)) {
+            _searchedTaglist.add(Tag(title: item, isChecked: false));
+          }
         }
       } else {
         tempWeeklyData.add(0);
@@ -138,6 +172,8 @@ class CalendarController extends GetxController {
       standardDay = standardDay.subtract(const Duration(days: -1));
       print(standardDay);
     }
+    _filteredPostlist = _searchedPostlist.toList();
+    _filteredTaglist = _searchedTaglist.toList();
     _weeklyData = tempWeeklyData;
     sortTaglist();
     print(_weeklyData);
@@ -165,7 +201,6 @@ class CalendarController extends GetxController {
       updateWeeklyData(_focusDay);
     } else {
       _calendarFormat = CalendarFormat.month;
-
       updateTotalDaysAndTime(year: _focusDay.year, month: _focusDay.month);
       updateDailyDaysAndTime(year: _focusDay.year, month: _focusDay.month);
     }
@@ -207,13 +242,27 @@ class CalendarController extends GetxController {
             _dailyTime += _postlist[j].duration ~/ 60;
             _searchedPostlist.add(_postlist[j]);
             for (var item in _postlist[j].hashtags) {
-              _searchedTaglist.add(Tag(title: item, isChecked: false));
+              if (!checkHasTag(item)) {
+                _searchedTaglist.add(Tag(title: item, isChecked: false));
+              }
             }
           }
         }
       }
+      _filteredPostlist = _searchedPostlist.toList();
+      _filteredTaglist = _searchedTaglist.toList();
       sortTaglist();
     }
+  }
+
+  // 가지고 있는 태그인지 검사합니다.
+  bool checkHasTag(String data) {
+    for (var i = 0; i < _searchedTaglist.length; i++) {
+      if (_searchedTaglist[i].title == data) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // 년월을 받아서 전체 일자를 반환해 줍니다.
@@ -268,25 +317,12 @@ class CalendarController extends GetxController {
                 : const TextStyle(color: Colors.black)));
   }
 
-  // 저번달 다음달 날짜들 표시 안함
+  // 저번달 다음달 날짜들 월별일 경우 회색 주별일 경우 그냥 표시
   Widget _getOutsideBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
     return _getDefaultCalendarItem(date,
         textColor:
             _calendarFormat == CalendarFormat.month ? Colors.grey : null);
-  }
-
-  // 선택한 날짜 디자인
-  Widget _getSelectedBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    DateTime nowDate = DateTime.now();
-    return _getDefaultCalendarItem(date,
-        boxDecoration: _getDefaultBoxDecoration(date).copyWith(
-            // border: Border.all(
-            //     width: 3,
-            //     color: _getHolidayColors(
-            //         DateTime.utc(nowDate.year, nowDate.month, nowDate.day)))
-            ));
   }
 
   // 가본 일자 디자인
@@ -306,12 +342,6 @@ class CalendarController extends GetxController {
     );
   }
 
-  //특별한 날 표시
-  Widget _getHolidayBuilder(
-      BuildContext context, DateTime date, DateTime olderDate) {
-    return _getDefaultCalendarItem(date);
-  }
-
   // 일반적인 요일들 주말 : 빨강
   Widget _getDefaultBuilder(
       BuildContext context, DateTime date, DateTime olderDate) {
@@ -321,8 +351,8 @@ class CalendarController extends GetxController {
   // CalendatBuilder를 반환
   CalendarBuilders getCalendarBuilder() => CalendarBuilders(
       dowBuilder: _getdoWBuilder,
-      selectedBuilder: _getSelectedBuilder,
-      holidayBuilder: _getHolidayBuilder,
+      selectedBuilder: _getDefaultBuilder,
+      holidayBuilder: _getDefaultBuilder,
       defaultBuilder: _getDefaultBuilder,
       outsideBuilder: _getOutsideBuilder);
 
