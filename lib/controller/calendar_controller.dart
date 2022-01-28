@@ -1,5 +1,6 @@
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
+import 'package:fifteen_minute_diary/custom_class/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,7 @@ class CalendarController extends GetxController {
   final String _tag = 'calendarController: ';
   List<Post> _postlist = [];
   final List<Post> _searchedPostlist = [];
-  final List<String> _searchedTaglist = [];
+  final List<Tag> _searchedTaglist = [];
   // List<DateTime> _dateTime = [];
   DateTime _focusDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -45,7 +46,33 @@ class CalendarController extends GetxController {
   getDailyTime() => _dailyTime;
   List<double> getWeeklyData() => _weeklyData;
   List<Post> getSearchedPostList() => _searchedPostlist;
-  List<String> getSearchedTagList() => _searchedTaglist;
+  List<Tag> getSearchedTagList() => _searchedTaglist;
+
+  // 태그 상태를 변화 합니다.
+  void updateTagStatus(Tag tag) {
+    var index = _searchedTaglist.indexOf(tag);
+    tag.isChecked = !tag.isChecked;
+    if (index > 0) {
+      _searchedTaglist[index] = tag;
+    }
+    sortTaglist();
+    update();
+  }
+
+  // 태그를 정렬합니다.
+  sortTaglist() {
+    _searchedTaglist.sort(((a, b) {
+      if (a.isChecked == b.isChecked) {
+        return a.title.compareTo(b.title);
+      } else {
+        if (a.isChecked == true) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+    }));
+  }
 
   // 저장소에서 일기 데이터를 긁어 옵니다.
   List<Post> _getPostlistFromPostbox() {
@@ -101,7 +128,10 @@ class CalendarController extends GetxController {
       if (temp != null) {
         tempWeeklyData.add(temp.duration / 60);
         _searchedPostlist.add(temp);
-        _searchedTaglist.addAll(temp.hashtags);
+        // _searchedTaglist.addAll(temp.hashtags);
+        for (var item in temp.hashtags) {
+          _searchedTaglist.add(Tag(title: item, isChecked: false));
+        }
       } else {
         tempWeeklyData.add(0);
       }
@@ -109,6 +139,7 @@ class CalendarController extends GetxController {
       print(standardDay);
     }
     _weeklyData = tempWeeklyData;
+    sortTaglist();
     print(_weeklyData);
     update();
   }
@@ -175,10 +206,13 @@ class CalendarController extends GetxController {
             _dailyDay++;
             _dailyTime += _postlist[j].duration ~/ 60;
             _searchedPostlist.add(_postlist[j]);
-            _searchedTaglist.addAll(_postlist[j].hashtags);
+            for (var item in _postlist[j].hashtags) {
+              _searchedTaglist.add(Tag(title: item, isChecked: false));
+            }
           }
         }
       }
+      sortTaglist();
     }
   }
 

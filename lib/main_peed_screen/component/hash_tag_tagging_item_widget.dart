@@ -1,14 +1,12 @@
-import 'package:fifteen_minute_diary/controller/tag_controller.dart';
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
+import 'package:fifteen_minute_diary/custom_class/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HashTagTaggingItemWidget extends StatelessWidget {
-  HashTagTaggingItemWidget(
-      {required this.title, required this.isChecked, Key? key})
-      : super(key: key);
+  HashTagTaggingItemWidget({required this.tag, Key? key}) : super(key: key);
 
-  final bool isChecked;
-  final String title;
+  final Tag tag;
   List<Color> itemColorList = [
     Colors.purple,
     Colors.blueGrey,
@@ -22,7 +20,7 @@ class HashTagTaggingItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (title == '') {
+    if (tag.title == '') {
       return Container();
     }
     return Padding(
@@ -30,12 +28,12 @@ class HashTagTaggingItemWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           debugPrint('태그클릭');
-          Get.find<TagController>().setTagCheckStatus(title);
+          Get.find<CalendarController>().updateTagStatus(tag);
         },
         child: Container(
           decoration: BoxDecoration(
-              color: isChecked
-                  ? itemColorList[title.hashCode % itemColorList.length]
+              color: tag.isChecked
+                  ? itemColorList[tag.title.hashCode % itemColorList.length]
                   : Colors.white,
               borderRadius: const BorderRadius.horizontal(
                 left: Radius.circular(12),
@@ -43,19 +41,23 @@ class HashTagTaggingItemWidget extends StatelessWidget {
               ),
               border: Border.all(
                   width: 2,
-                  color: itemColorList[title.hashCode % itemColorList.length])),
+                  color: itemColorList[
+                      tag.title.hashCode % itemColorList.length])),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Text(
-              title.length > 10 ? title.substring(0, 10) + '...' : title,
+              tag.title.length > 10
+                  ? tag.title.substring(0, 10) + '...'
+                  : tag.title,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: isChecked
+                  color: tag.isChecked
                       ? Colors.white
-                      : itemColorList[title.hashCode % itemColorList.length]),
+                      : itemColorList[
+                          tag.title.hashCode % itemColorList.length]),
             ),
           ),
         ),

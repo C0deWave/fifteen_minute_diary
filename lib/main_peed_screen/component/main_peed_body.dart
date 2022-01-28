@@ -3,7 +3,6 @@ import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
-import 'package:fifteen_minute_diary/controller/tag_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_tab_widget.dart';
@@ -31,7 +30,6 @@ class MainPeedBody extends StatelessWidget {
     final timerController = Get.put(TimerController());
     final scrollController = Get.put(CardScrollController());
     Get.put(CalendarController());
-    Get.put(TagController());
     return Container(
       color: Colors.white,
       child: SafeArea(
