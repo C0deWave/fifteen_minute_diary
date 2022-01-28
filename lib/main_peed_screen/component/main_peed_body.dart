@@ -3,6 +3,7 @@ import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/card_scroll_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/controller/tabbar_controller.dart';
+import 'package:fifteen_minute_diary/controller/tag_controller.dart';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_tab_widget.dart';
@@ -30,6 +31,7 @@ class MainPeedBody extends StatelessWidget {
     final timerController = Get.put(TimerController());
     final scrollController = Get.put(CardScrollController());
     Get.put(CalendarController());
+    Get.put(TagController());
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -131,50 +133,45 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       );
                     }),
-                    GetBuilder<PostController>(builder: (_) {
-                      return GetBuilder<TabbarController>(
-                          init: TabbarController(),
-                          builder: (_) {
-                            if (tabbarController.currentState !=
-                                TabbarState.diaryState) {
-                              return SliverAppBar(
-                                titleSpacing: 0,
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.white,
-                                toolbarHeight: 110,
-                                leadingWidth: 0,
-                                elevation: 0,
-                                title: Container(
-                                  width: 700,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [HashTagHeaderWidget()],
-                                  ),
+                    GetBuilder<TabbarController>(
+                        init: TabbarController(),
+                        builder: (_) {
+                          if (tabbarController.currentState !=
+                              TabbarState.diaryState) {
+                            return SliverAppBar(
+                              titleSpacing: 0,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.white,
+                              toolbarHeight: 110,
+                              leadingWidth: 0,
+                              elevation: 0,
+                              title: Container(
+                                width: 700,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [HashTagHeaderWidget()],
                                 ),
-                                leading: Container(
-                                  color: Colors.red,
-                                ),
-                                pinned: true,
-                              );
-                            } else {
-                              return SliverStickyHeader();
-                            }
-                          });
-                    }),
-                    GetBuilder<PostController>(builder: (_) {
-                      return GetBuilder<TabbarController>(
-                          init: TabbarController(),
-                          builder: (_) {
-                            if (tabbarController.currentState !=
-                                TabbarState.diaryState) {
-                              return HashTagWidget();
-                            } else {
-                              return SliverStickyHeader();
-                            }
-                          });
-                    }),
+                              ),
+                              leading: Container(
+                                color: Colors.red,
+                              ),
+                              pinned: true,
+                            );
+                          } else {
+                            return SliverStickyHeader();
+                          }
+                        }),
+                    GetBuilder<TabbarController>(
+                        init: TabbarController(),
+                        builder: (_) {
+                          if (tabbarController.currentState !=
+                              TabbarState.diaryState) {
+                            return HashTagWidget();
+                          } else {
+                            return SliverStickyHeader();
+                          }
+                        }),
                   ],
                 ),
               )
