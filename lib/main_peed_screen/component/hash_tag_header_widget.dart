@@ -35,7 +35,7 @@ class HashTagHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         GetBuilder<CalendarController>(builder: (calendarController) {
-          var taglist = calendarController.getSearchedTagList();
+          var taglist = calendarController.getFilteredTagList();
           return SizedBox(
             height: 32,
             child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [

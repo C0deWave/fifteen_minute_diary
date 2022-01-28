@@ -1,6 +1,5 @@
 import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_card_item_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_tagging_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +24,7 @@ class HashTagWidget extends StatelessWidget {
                               alignment: WrapAlignment.start,
                               crossAxisAlignment: WrapCrossAlignment.start,
                               children: calendarController
-                                  .getSearchedPostList()
+                                  .getFilteredPostList()
                                   .map((item) => HashTagCardItemWidget(
                                         width: Get.width * 0.47,
                                         postdata: item,
