@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
@@ -34,6 +35,7 @@ class PostController extends GetxController {
   late HiveDataBase _postBox;
   //로그 확인용 태그
   final String _tag = 'post_controller: ';
+  final _carouselController = CarouselController();
 
   //--------------------------------------------------------------------
   // 함수
@@ -57,6 +59,16 @@ class PostController extends GetxController {
   List<XFile>? getSelectedImageList() => _selectedImageList;
   bool getIsUsedImage() => _isUsedImage;
   bool getIsShowIndicator() => _isShowIndicator;
+  CarouselController getCarouselConteoller() => _carouselController;
+
+  void jumpThisPost(Post postdata) {
+    for (var i = 0; i < _postlist.length; i++) {
+      if (checkDateIsSame(postdata.writeDate, _postlist[i].writeDate)) {
+        _carouselController.animateToPage(_postlist.length - 1 - i,
+            duration: Duration(milliseconds: 500), curve: Curves.easeOutQuint);
+      }
+    }
+  }
 
   //제목을 변경합니다.
   void updateTitleText(String title) {

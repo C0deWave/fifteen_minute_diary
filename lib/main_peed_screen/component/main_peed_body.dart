@@ -25,7 +25,7 @@ class MainPeedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var postController = Get.put(PostController());
+    var postController = Get.put(PostController(), permanent: true);
     var tabbarController = Get.put(TabbarController());
     final timerController = Get.put(TimerController());
     final scrollController = Get.put(CardScrollController());
@@ -99,7 +99,7 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SliverAppBar(
+                    SliverAppBar(
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.white,
                       toolbarHeight: 50,
