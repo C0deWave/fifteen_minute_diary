@@ -19,18 +19,16 @@ class HashTagWidget extends StatelessWidget {
                     Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
                         child: GetBuilder<CalendarController>(
-                          builder: (calendarController) => Center(
-                            child: Wrap(
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              children: calendarController
-                                  .getFilteredPostList()
-                                  .map((item) => HashTagCardItemWidget(
-                                        width: Get.width * 0.47,
-                                        postdata: item,
-                                      ))
-                                  .toList(),
-                            ),
+                          builder: (calendarController) => Wrap(
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            children: calendarController
+                                .getFilteredPostList()
+                                .map((item) => HashTagCardItemWidget(
+                                      width: Get.width * 0.473,
+                                      postdata: item,
+                                    ))
+                                .toList(),
                           ),
                         )),
                   ],

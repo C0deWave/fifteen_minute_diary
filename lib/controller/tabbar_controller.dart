@@ -8,6 +8,11 @@ class TabbarController extends GetxController {
 
   void changeTabbarState(TabbarState state) {
     currentState = state;
+    if (state == TabbarState.diaryState) {
+      index = 0;
+    } else {
+      index = 1;
+    }
     update();
   }
 }
