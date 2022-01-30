@@ -344,7 +344,6 @@ class PostController extends GetxController {
     }
     await hiveDataBase.deletePostFromHive(tempData);
     resetWriteState();
-    _checkTodayWrite();
     update();
   }
 
