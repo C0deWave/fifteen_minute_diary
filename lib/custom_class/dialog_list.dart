@@ -213,4 +213,30 @@ class DialogList {
       ),
     );
   }
+
+  // IOS 일기 삭제 확인 Dialog
+  static void iosDeleteDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('일기 삭제'),
+        content: Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text('확인'),
+            isDestructiveAction: true,
+            onPressed: yesAction,
+          ),
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
 }

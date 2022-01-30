@@ -14,7 +14,7 @@ class ActionSheetList {
         title: const Text('사진 선택'),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            child: const Text('카메라에서 선택'),
+            child: const Text('카메라에서 쵤영'),
             onPressed: () => chooseCamera(),
           ),
           CupertinoActionSheetAction(
@@ -31,6 +31,16 @@ class ActionSheetList {
         ),
       ),
     );
+  }
+
+  // 일기 삭제 Action Sheet
+  static void showDeleteDiarySheet(
+      {required BuildContext context, required Function deleteAction}) {
+    ActionSheetList.deleteDiaryActionSheet(
+        context: context,
+        deleteFunction: () {
+          deleteAction();
+        });
   }
 
   // 이미지 삭제 또는 대표이미지 지정 ActionSheet
