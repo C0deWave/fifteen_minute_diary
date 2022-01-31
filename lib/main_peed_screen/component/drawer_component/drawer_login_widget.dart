@@ -143,7 +143,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           Map<String, dynamic>? list =
                               await firebaseService.downloadDataToFireStore();
                           if (list != null) {
-                            Get.find<PostController>().setPostlist(list,
+                            await Get.find<PostController>().setPostlist(list,
                                 (duration) {
                               Get.find<TimerController>()
                                   .updateTimeFromLastPost(
