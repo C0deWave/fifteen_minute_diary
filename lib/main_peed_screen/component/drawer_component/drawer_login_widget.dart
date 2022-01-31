@@ -107,16 +107,25 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.upload),
                     text: '데이터 업로드',
                     clickFunction: () async {
-                      debugPrint('업로드 버튼 입력');
-                      ToastList.showDataUploadToast();
-                      Get.find<CustomDrawerController>()
-                          .setIsShowIndicator(true);
-                      Map<String, dynamic> list =
-                          await Get.find<PostController>()
-                              .getPostlistJson(firebaseService.getUserUid());
-                      firebaseService.uploadDateToFireStore(list);
-                      Get.find<CustomDrawerController>()
-                          .setIsShowIndicator(false);
+                      DialogList.iosBackUpStartDiaryAlert(
+                        context: context,
+                        yesAction: () async {
+                          Get.back();
+                          debugPrint('업로드 버튼 입력');
+                          ToastList.showDataUploadToast();
+                          Get.find<CustomDrawerController>()
+                              .setIsShowIndicator(true);
+                          Map<String, dynamic> list =
+                              await Get.find<PostController>().getPostlistJson(
+                                  firebaseService.getUserUid());
+                          firebaseService.uploadDateToFireStore(list);
+                          Get.find<CustomDrawerController>()
+                              .setIsShowIndicator(false);
+                        },
+                        noAction: () {
+                          Get.back();
+                        },
+                      );
                     },
                   ),
                   const UnderlineWidget(),
@@ -124,22 +133,32 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.download),
                     text: '데이터 다운로드',
                     clickFunction: () async {
-                      Get.find<CustomDrawerController>()
-                          .setIsShowIndicator(true);
-                      await HiveDataBase().clearHiveDatabase();
-                      Map<String, dynamic>? list =
-                          await firebaseService.downloadDataToFireStore();
-                      if (list != null) {
-                        Get.find<PostController>().setPostlist(list,
-                            (duration) {
-                          Get.find<TimerController>().updateTimeFromLastPost(
-                              k_TimerTotalDuration - duration);
-                        });
-                      } else {
-                        debugPrint('백업 데이터가 없습니다.');
-                      }
-                      Get.find<CustomDrawerController>()
-                          .setIsShowIndicator(false);
+                      DialogList.iosBackUpDownloadDiaryAlert(
+                        context: context,
+                        yesAction: () async {
+                          Get.back();
+                          Get.find<CustomDrawerController>()
+                              .setIsShowIndicator(true);
+                          await HiveDataBase().clearHiveDatabase();
+                          Map<String, dynamic>? list =
+                              await firebaseService.downloadDataToFireStore();
+                          if (list != null) {
+                            Get.find<PostController>().setPostlist(list,
+                                (duration) {
+                              Get.find<TimerController>()
+                                  .updateTimeFromLastPost(
+                                      k_TimerTotalDuration - duration);
+                            });
+                          } else {
+                            debugPrint('백업 데이터가 없습니다.');
+                          }
+                          Get.find<CustomDrawerController>()
+                              .setIsShowIndicator(false);
+                        },
+                        noAction: () {
+                          Get.back();
+                        },
+                      );
                     },
                   ),
                   const UnderlineWidget(),

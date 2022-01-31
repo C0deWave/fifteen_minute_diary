@@ -239,4 +239,54 @@ class DialogList {
       ),
     );
   }
+
+  // IOS 일기 백업 Dialog
+  static void iosBackUpStartDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('백업 올리기'),
+        content: Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text('확인'),
+            onPressed: yesAction,
+          ),
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // IOS 일기 백업 다운로드
+  static void iosBackUpDownloadDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('백업 내려받기'),
+        content: Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text('확인'),
+            onPressed: yesAction,
+          ),
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
 }
