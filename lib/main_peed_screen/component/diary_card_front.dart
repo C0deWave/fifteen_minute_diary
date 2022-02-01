@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class DiaryCardFront extends StatelessWidget {
   const DiaryCardFront(
@@ -37,9 +38,11 @@ class DiaryCardFront extends StatelessWidget {
                       ? DecorationImage(
                           image: FileImage(image!), fit: BoxFit.cover)
                       : const DecorationImage(
-                          image: NetworkImage(
-                              'https://t1.daumcdn.net/cfile/tistory/99F6FC465D4563E132'),
-                          fit: BoxFit.fill))),
+                          // image: NetworkImage(
+                          //     'https://t1.daumcdn.net/cfile/tistory/99F6FC465D4563E132'),
+                          image: Svg(
+                              'lib/assets/image/front_card/not_writing.svg'),
+                          fit: BoxFit.contain))),
           Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15)),

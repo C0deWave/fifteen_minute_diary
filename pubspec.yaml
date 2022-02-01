@@ -92,6 +92,7 @@ flutter:
     - lib/assets/image/init_splash_screen/
     - lib/assets/image/default_writing_image/
     - lib/assets/image/main_drawer_image/
+    - lib/assets/image/front_card/
 
   fonts:
     - family: Alarm_clock
