@@ -148,6 +148,8 @@ class DrawerLoginWidget extends StatelessWidget {
                               Get.find<TimerController>()
                                   .updateTimeFromLastPost(
                                       k_TimerTotalDuration - duration);
+                              Get.find<CalendarController>()
+                                  .updateCalenderPostlist();
                             });
                           } else {
                             debugPrint('백업 데이터가 없습니다.');
