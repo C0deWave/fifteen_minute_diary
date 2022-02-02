@@ -126,6 +126,8 @@ class CalendarController extends GetxController {
   // 캘린더로 탭 전환을 할때 게시글 목록을 업데이트 해줍니다.
   void updateCalenderPostlist() {
     _postlist = _getPostlistFromPostbox();
+    updateDailyDaysAndTime(
+        year: DateTime.now().year, month: DateTime.now().month);
     update();
   }
 
