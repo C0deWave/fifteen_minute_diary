@@ -7,7 +7,6 @@ import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_tab_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/diary_carosel_card_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_header_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_widget.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/main_peed_app_bar.dart';
 import 'package:fifteen_minute_diary/main_peed_screen/component/tabbar_widget.dart';
@@ -99,15 +98,6 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // SliverAppBar(
-                    //   backgroundColor: Colors.white,
-                    //   foregroundColor: Colors.white,
-                    //   toolbarHeight: 50,
-                    //   leadingWidth: 0,
-                    //   elevation: 0,
-                    //   title: TabbarWidget(),
-                    //   pinned: true,
-                    // ),
                     //일기 리스트
                     GetBuilder<PostController>(builder: (_) {
                       return SliverStickyHeader(
