@@ -1,5 +1,8 @@
+import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
+import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
+import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/component/context_textfield_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/component/hero_timer_widget.dart';
 import 'package:fifteen_minute_diary/write_diary_screen/component/image_widget.dart';
@@ -26,6 +29,7 @@ class WriteDiaryScreen extends StatelessWidget {
             ActionSheetList.showAddImageSheet(
                 context: context,
                 chooseCamera: () async {
+                  await stopTimer();
                   XFile? selectedImage =
                       await _picker.pickImage(source: ImageSource.camera);
                   if (selectedImage != null) {
@@ -33,8 +37,10 @@ class WriteDiaryScreen extends StatelessWidget {
                     Get.find<PostController>().changeImageWidgetStatus(true);
                   }
                   Navigator.pop(context);
+                  await restartTimer();
                 },
                 chooseAlbum: () async {
+                  await stopTimer();
                   final List<XFile>? imageList = await _picker.pickMultiImage();
                   if (imageList != null) {
                     debugPrint(imageList.length.toString() + '개의 이미지 선택');
@@ -45,6 +51,7 @@ class WriteDiaryScreen extends StatelessWidget {
                   } else {
                     debugPrint('선택된 사진이 없습니다.');
                   }
+                  await restartTimer();
                   Navigator.pop(context);
                 });
           },
@@ -80,5 +87,23 @@ class WriteDiaryScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> restartTimer() async {
+    var postController = Get.find<PostController>();
+    var timerController = Get.find<TimerController>();
+    Get.find<TimerController>().startTimer(finishFunction: () async {
+      bool isWritePost = await postController.addPostList(
+          writeDuration: timerController.getDuration());
+      Get.find<CalendarController>().updateCalenderPostlist();
+      isWritePost ? timerController.stopTimer() : timerController.resetTimer();
+      Get.back();
+    }, remain1MinuteFunction: () {
+      ToastList.show1MinuteRemainToast();
+    });
+  }
+
+  Future<void> stopTimer() async {
+    Get.find<TimerController>().stopTimer();
   }
 }

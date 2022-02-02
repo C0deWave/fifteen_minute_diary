@@ -267,7 +267,9 @@ class PostController extends GetxController {
         _postlist.isEmpty ? DateTime(1997) : _postlist.last.writeDate;
     DateTime todayDate = DateTime.now();
     if (!checkDateIsSame(lastPostDate, todayDate)) {
-      _postlist.add(k_NotWritePost);
+      if (!_postlist.contains(k_NotWritePost)) {
+        _postlist.add(k_NotWritePost);
+      }
       resetWriteState();
       return false;
     } else {
