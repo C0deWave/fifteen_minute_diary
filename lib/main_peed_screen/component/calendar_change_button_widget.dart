@@ -13,8 +13,7 @@ class CalendarChangeFormatButtonWidget extends StatelessWidget {
       builder: (controller) => TextButton(
           onPressed: () {
             controller.calendarFormatChange();
-            Get.find<StaticController>().setShowChartData(
-                status: !Get.find<StaticController>().getShowChartData());
+            Get.find<StaticController>().setShowChartData();
           },
           child: Text(controller.getCalendarFormat() == CalendarFormat.month
               ? "주차별로 보기"

@@ -12,7 +12,8 @@ class StatisticWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StaticController>(
-      builder: (controller) => Container(
+      builder: (controller) => AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
         color: Colors.white,
         height: controller.getWidgetHeight(),
         child: Card(
