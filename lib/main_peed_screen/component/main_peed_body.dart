@@ -99,24 +99,24 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SliverAppBar(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.white,
-                      toolbarHeight: 50,
-                      leadingWidth: 0,
-                      elevation: 0,
-                      title: TabbarWidget(),
-                      pinned: true,
-                    ),
+                    // SliverAppBar(
+                    //   backgroundColor: Colors.white,
+                    //   foregroundColor: Colors.white,
+                    //   toolbarHeight: 50,
+                    //   leadingWidth: 0,
+                    //   elevation: 0,
+                    //   title: TabbarWidget(),
+                    //   pinned: true,
+                    // ),
                     //일기 리스트
                     GetBuilder<PostController>(builder: (_) {
                       return SliverStickyHeader(
                         header: Container(
                           color: Colors.white,
-                          // child: const Padding(
-                          //   padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                          //   child: TabbarWidget(),
-                          // ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 6, 15, 0),
+                            child: TabbarWidget(),
+                          ),
                         ),
                         sliver: GetBuilder<TabbarController>(
                           init: TabbarController(),
@@ -131,35 +131,35 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       );
                     }),
-                    GetBuilder<TabbarController>(
-                        init: TabbarController(),
-                        builder: (_) {
-                          if (tabbarController.currentState !=
-                              TabbarState.diaryState) {
-                            return SliverAppBar(
-                              titleSpacing: 0,
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.white,
-                              toolbarHeight: 110,
-                              leadingWidth: 0,
-                              elevation: 0,
-                              title: Container(
-                                width: 700,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [HashTagHeaderWidget()],
-                                ),
-                              ),
-                              leading: Container(
-                                color: Colors.red,
-                              ),
-                              pinned: true,
-                            );
-                          } else {
-                            return SliverStickyHeader();
-                          }
-                        }),
+                    // GetBuilder<TabbarController>(
+                    //     init: TabbarController(),
+                    //     builder: (_) {
+                    //       if (tabbarController.currentState !=
+                    //           TabbarState.diaryState) {
+                    //         return SliverAppBar(
+                    //           titleSpacing: 0,
+                    //           backgroundColor: Colors.white,
+                    //           foregroundColor: Colors.white,
+                    //           toolbarHeight: 110,
+                    //           leadingWidth: 0,
+                    //           elevation: 0,
+                    //           title: Container(
+                    //             width: 700,
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.start,
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: const [HashTagHeaderWidget()],
+                    //             ),
+                    //           ),
+                    //           leading: Container(
+                    //             color: Colors.red,
+                    //           ),
+                    //           pinned: true,
+                    //         );
+                    //       } else {
+                    //         return SliverStickyHeader();
+                    //       }
+                    //     }),
                     GetBuilder<TabbarController>(
                         init: TabbarController(),
                         builder: (_) {

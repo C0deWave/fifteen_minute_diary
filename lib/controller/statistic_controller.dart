@@ -45,8 +45,8 @@ class StaticController extends GetxController {
     );
   }
 
-  setShowChartData({required bool status}) {
-    _showChartData = status;
+  setShowChartData() {
+    _showChartData = !_showChartData;
     updateWidgetHeight();
     updateTitle();
     updateSubTitle();
