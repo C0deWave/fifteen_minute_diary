@@ -188,10 +188,19 @@ class DrawerLoginWidget extends StatelessWidget {
                   const UnderlineWidget(),
                   DrawerListTile(
                     icon: const Icon(Icons.report),
-                    text: '버그 신고',
+                    text: '의견 제시',
                     clickFunction: () {
-                      debugPrint('버그신고');
-                      Get.find<CustomDrawerController>().mailToDeveloper();
+                      DialogList.iosReportMailAlert(
+                          context: context,
+                          yesAction: () {
+                            debugPrint('버그신고');
+                            Get.back();
+                            Get.find<CustomDrawerController>()
+                                .mailToDeveloper();
+                          },
+                          noAction: () {
+                            Get.back();
+                          });
                     },
                   ),
                 ],

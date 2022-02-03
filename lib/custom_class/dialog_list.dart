@@ -289,4 +289,30 @@ class DialogList {
       ),
     );
   }
+
+  // IOS 메일 안내 메세지
+  static void iosReportMailAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('개발자에게 의견제시'),
+        content: const Text(
+            '각종 버그나 의견이 있다면 말해주세요.\n감성 사진도 보내 주시면 추후 업데이트에 반영하겠습니다.'),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text('확인'),
+            onPressed: yesAction,
+          ),
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
 }
