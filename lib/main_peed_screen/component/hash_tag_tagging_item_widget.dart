@@ -24,7 +24,7 @@ class HashTagTaggingItemWidget extends StatelessWidget {
       return Container();
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
+      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
       child: GestureDetector(
         onTap: () {
           debugPrint('태그클릭');

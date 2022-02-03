@@ -121,35 +121,6 @@ class MainPeedBody extends StatelessWidget {
                         ),
                       );
                     }),
-                    // GetBuilder<TabbarController>(
-                    //     init: TabbarController(),
-                    //     builder: (_) {
-                    //       if (tabbarController.currentState !=
-                    //           TabbarState.diaryState) {
-                    //         return SliverAppBar(
-                    //           titleSpacing: 0,
-                    //           backgroundColor: Colors.white,
-                    //           foregroundColor: Colors.white,
-                    //           toolbarHeight: 110,
-                    //           leadingWidth: 0,
-                    //           elevation: 0,
-                    //           title: Container(
-                    //             width: 700,
-                    //             child: Column(
-                    //               mainAxisAlignment: MainAxisAlignment.start,
-                    //               crossAxisAlignment: CrossAxisAlignment.start,
-                    //               children: const [HashTagHeaderWidget()],
-                    //             ),
-                    //           ),
-                    //           leading: Container(
-                    //             color: Colors.red,
-                    //           ),
-                    //           pinned: true,
-                    //         );
-                    //       } else {
-                    //         return SliverStickyHeader();
-                    //       }
-                    //     }),
                     GetBuilder<TabbarController>(
                         init: TabbarController(),
                         builder: (_) {
