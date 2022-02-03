@@ -21,6 +21,7 @@ void main() async {
       .then((value) => debugPrint(_tag + "Hive init"));
   Hive.registerAdapter(PostAdapter());
   await Hive.openBox<Post>(k_PostBox);
+  await Future.delayed(Duration(milliseconds: 500));
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
