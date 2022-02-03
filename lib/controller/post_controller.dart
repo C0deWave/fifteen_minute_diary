@@ -178,8 +178,8 @@ class PostController extends GetxController {
   Future<File> _getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load(path);
     debugPrint('임시파일 생성');
-    final file = File(
-        '${(await getTemporaryDirectory()).path}/test${path.hashCode}.jpg');
+    final file =
+        File('${(await getTemporaryDirectory()).path}/${path.hashCode}.jpg');
     await file.writeAsBytes(byteData.buffer
         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     return file;

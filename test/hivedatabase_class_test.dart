@@ -33,7 +33,7 @@ void main() {
     });
 
     //---------------------------------------------------------------------------
-    // database open test
+    // database open
     test("database open test", () async {
       // 작동 테스트
       expect(true, hiveDataBase.isOpenBox());
