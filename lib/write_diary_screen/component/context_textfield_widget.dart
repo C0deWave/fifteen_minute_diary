@@ -15,6 +15,7 @@ class ContextTextFieldWidget extends StatelessWidget {
           controller: controller.getContextController(),
           focusNode: controller.getContextFocusController(),
           keyboardType: TextInputType.multiline,
+          keyboardAppearance: Brightness.light,
           minLines: 17, //Normal textInputField will be displayed
           maxLines: 200,
           basicStyle: const TextStyle(fontSize: 18),
