@@ -85,6 +85,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   hive_generator: ^1.1.1
   build_runner: ^2.1.7
+  flutter_launcher_icons: ^0.9.2
 
 flutter:
   uses-material-design: true
@@ -99,3 +100,8 @@ flutter:
     - family: Alarm_clock
       fonts:
         - asset: lib/assets/font/alarm_clock.ttf
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/icon-1024.png"
