@@ -40,9 +40,12 @@ class HashTagHeaderWidget extends StatelessWidget {
             height: 32,
             child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
               SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (content, i) => HashTagTaggingItemWidget(tag: taglist[i]),
-                    childCount: taglist.length),
+                delegate: SliverChildBuilderDelegate((content, i) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(i == 0 ? 15 : 0, 0, 0, 0),
+                    child: HashTagTaggingItemWidget(tag: taglist[i]),
+                  );
+                }, childCount: taglist.length),
               ),
             ]),
           );
