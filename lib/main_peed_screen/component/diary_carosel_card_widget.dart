@@ -36,7 +36,7 @@ class DiaryCaroselCardWidget extends StatelessWidget {
                   options: CarouselOptions(
                     autoPlay: false,
                     enableInfiniteScroll: false,
-                    height: Get.height * 0.89,
+                    height: Get.height - 70,
                     viewportFraction: 0.9,
                   ),
                   carouselController: _controller.getCarouselConteoller(),
