@@ -106,6 +106,32 @@ All images, assets and vectors published on unDraw can be used for free. You can
             const SizedBox(
               height: 10,
             ),
+            Center(
+                child: Text(
+              'flaticon licence',
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade700,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.bold),
+            )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'https://www.flaticon.com/kr/free-icons/ 고르다 아이콘  \n제작자: Freepik - Flaticon',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade700,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
