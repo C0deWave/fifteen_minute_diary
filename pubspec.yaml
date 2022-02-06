@@ -96,6 +96,7 @@ flutter:
     - lib/assets/image/main_drawer_image/
     - lib/assets/image/front_card/
     - lib/assets/image/calendar_search/
+    - lib/assets/image/back_card/
 
   fonts:
     - family: Alarm_clock
