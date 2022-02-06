@@ -116,6 +116,15 @@ class DiaryCardBack extends StatelessWidget {
                           height: 1,
                         ),
                       ),
+                      content.isNotEmpty
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Center(
+                                child: Image.asset(
+                                    'lib/assets/image/back_card/click_timer.png'),
+                              ),
+                            ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: HashTagText(

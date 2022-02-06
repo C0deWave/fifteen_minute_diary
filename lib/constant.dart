@@ -38,7 +38,7 @@ const k_StandardImageLength = 15;
 const k_SortRight = 1;
 // 일기를 쓰지 않았을 경우 생기는 탬플릿입니다.
 Post k_NotWritePost = Post(
-    title: "오늘 일기를 작성해 주세요",
+    title: "타이머를 눌러 일기를 작성하세요.",
     content: "",
     duration: 0,
     writeDate: null,
