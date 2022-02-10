@@ -6,7 +6,7 @@ import 'package:fifteen_minute_diary/controller/wide_image_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
 import 'package:fifteen_minute_diary/custom_class/dialog_list.dart';
 import 'package:fifteen_minute_diary/custom_class/toast_list.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/staggered_image_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/cardview_tab/staggered_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hashtagable/hashtagable.dart';

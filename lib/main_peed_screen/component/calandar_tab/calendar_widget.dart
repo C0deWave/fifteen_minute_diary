@@ -1,5 +1,5 @@
 import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_change_button_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/calendar_change_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';

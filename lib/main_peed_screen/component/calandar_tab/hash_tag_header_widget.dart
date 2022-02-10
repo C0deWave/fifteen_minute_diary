@@ -1,5 +1,5 @@
 import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_tagging_item_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/hash_tag_tagging_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

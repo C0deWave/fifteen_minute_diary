@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:date_format/date_format.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_back.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_front.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/cardview_tab/diary_card_back.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/cardview_tab/diary_card_front.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:fifteen_minute_diary/controller/wide_image_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/wide_image_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/cardview_tab/wide_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
