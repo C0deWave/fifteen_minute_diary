@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/diary_card_item.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/cardview_tab/diary_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

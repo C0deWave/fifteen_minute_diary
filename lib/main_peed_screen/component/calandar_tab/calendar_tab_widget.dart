@@ -1,6 +1,6 @@
 import 'package:fifteen_minute_diary/controller/statistic_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/calendar_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/statistic_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/calendar_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/statistic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,6 +1,6 @@
 import 'package:fifteen_minute_diary/controller/calendar_controller.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_card_item_widget.dart';
-import 'package:fifteen_minute_diary/main_peed_screen/component/hash_tag_header_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/hash_tag_card_item_widget.dart';
+import 'package:fifteen_minute_diary/main_peed_screen/component/calandar_tab/hash_tag_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
