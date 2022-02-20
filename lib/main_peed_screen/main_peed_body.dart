@@ -16,7 +16,7 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
-import 'timer_widget.dart';
+import 'component/timer_widget.dart';
 
 class MainPeedBody extends StatelessWidget {
   final String _tag = 'MainPeedBody: ';

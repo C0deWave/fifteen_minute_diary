@@ -4,7 +4,7 @@ import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'component/main_peed_body.dart';
+import 'main_peed_body.dart';
 
 class MainPeedScreen extends StatelessWidget {
   final String _tag = 'MainPeedScreen: ';
