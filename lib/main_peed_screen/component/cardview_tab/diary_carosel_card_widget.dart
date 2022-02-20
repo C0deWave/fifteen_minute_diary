@@ -18,7 +18,13 @@ class DiaryCaroselCardWidget extends StatelessWidget {
             builder: (_controller) {
               var length = _controller.getPostlist().length;
               var postlist = _controller.getPostlist().reversed.toList();
+              final availableHeight = MediaQuery.of(context).size.height -
+                  AppBar().preferredSize.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom -
+                  5;
               return Container(
+                height: availableHeight,
                 color: Colors.white,
                 child: CarouselSlider.builder(
                   itemBuilder: (BuildContext context, int index, int a) {
@@ -36,7 +42,7 @@ class DiaryCaroselCardWidget extends StatelessWidget {
                   options: CarouselOptions(
                     autoPlay: false,
                     enableInfiniteScroll: false,
-                    height: Get.height - 70,
+                    height: availableHeight,
                     viewportFraction: 0.9,
                   ),
                   carouselController: _controller.getCarouselConteoller(),
