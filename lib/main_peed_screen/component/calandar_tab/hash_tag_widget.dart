@@ -10,6 +10,11 @@ class HashTagWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final availableHeight = MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom -
+        75;
     return SliverList(
         delegate: SliverChildBuilderDelegate(
             (context, i) => Column(
@@ -34,7 +39,7 @@ class HashTagWidget extends StatelessWidget {
                                       'lib/assets/image/calendar_search/undraw_knowledge_re_leit.svg',
                                       size: Size(200, 500)))),
                           width: Get.width,
-                          height: Get.height * 0.75,
+                          height: availableHeight,
                         ),
                         Padding(
                             padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
