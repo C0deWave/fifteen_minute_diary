@@ -73,28 +73,30 @@ class DiaryCardBack extends StatelessWidget {
                                         ActionSheetList.showDeleteDiarySheet(
                                             context: context,
                                             deleteAction: () {
-                                              DialogList.iosDeleteDiaryAlert(
-                                                  context: context,
-                                                  yesAction: () {
-                                                    Get.back();
-                                                    bool isSame = Get.find<
-                                                            PostController>()
-                                                        .checkDateIsSame(
-                                                            dateTime!,
-                                                            DateTime.now());
-                                                    if (!isSame) {
-                                                      Get.find<PostController>()
-                                                          .deletePostByWriteDate(
-                                                              dateTime);
-                                                    } else {
-                                                      ToastList
-                                                          .showCantDeleteToast();
-                                                    }
-                                                    Get.back();
-                                                  },
-                                                  noAction: () {
-                                                    Get.back();
-                                                  });
+                                              DialogList
+                                                  .showIosDeleteDiaryAlert(
+                                                      context: context,
+                                                      yesAction: () {
+                                                        Get.back();
+                                                        bool isSame = Get.find<
+                                                                PostController>()
+                                                            .checkDateIsSame(
+                                                                dateTime!,
+                                                                DateTime.now());
+                                                        if (!isSame) {
+                                                          Get.find<
+                                                                  PostController>()
+                                                              .deletePostByWriteDate(
+                                                                  dateTime);
+                                                        } else {
+                                                          ToastList
+                                                              .showCantDeleteToast();
+                                                        }
+                                                        Get.back();
+                                                      },
+                                                      noAction: () {
+                                                        Get.back();
+                                                      });
                                             }),
                                     child: const Icon(Icons.more_vert_rounded))
                                 : Container(),

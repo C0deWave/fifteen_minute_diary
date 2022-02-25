@@ -9,6 +9,6 @@ class RecommendDiaryTopic {
       Random(DateTime.now().microsecond.toInt()).nextInt(k_topiclist.length);
 
   void showDailyTopic(BuildContext context, {required Function() okFunction}) {
-    DialogList.showDailyTopic(context, topicIndex, okFunction: okFunction);
+    DialogList.showIosDailyTopic(context, topicIndex, okFunction: okFunction);
   }
 }

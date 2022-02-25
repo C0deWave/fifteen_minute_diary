@@ -107,7 +107,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.upload),
                     text: '데이터 업로드',
                     clickFunction: () async {
-                      DialogList.iosBackUpStartDiaryAlert(
+                      DialogList.showIosBackUpStartDiaryAlert(
                         context: context,
                         yesAction: () async {
                           Get.back();
@@ -133,7 +133,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.download),
                     text: '데이터 다운로드',
                     clickFunction: () async {
-                      DialogList.iosBackUpDownloadDiaryAlert(
+                      DialogList.showIosBackUpDownloadDiaryAlert(
                         context: context,
                         yesAction: () async {
                           Get.back();
@@ -173,15 +173,15 @@ class DrawerLoginWidget extends StatelessWidget {
                           context: context,
                           selectRepresentativeImageFunction: () {
                             Get.back();
-                            DialogList.showWhereSelectImage(context);
+                            DialogList.showIosWhereSelectImage(context);
                           },
                           updateUserNameFunction: () {
                             Get.back();
-                            DialogList.showChangeWhatName(context);
+                            DialogList.showIosChangeWhatName(context);
                           },
                           leaveAccountFunction: () {
                             Get.back();
-                            DialogList.showLeaveAccountDialog(context);
+                            DialogList.showIosLeaveAccountDialog(context);
                           });
                     },
                   ),
@@ -190,7 +190,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.report),
                     text: '의견 제시',
                     clickFunction: () {
-                      DialogList.iosReportMailAlert(
+                      DialogList.showIosReportMailAlert(
                           context: context,
                           yesAction: () {
                             debugPrint('버그신고');
