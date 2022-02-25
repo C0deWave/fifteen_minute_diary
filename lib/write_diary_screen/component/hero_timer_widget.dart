@@ -33,9 +33,9 @@ class HeroTimerWidget extends StatelessWidget {
           tag: k_TimerHerotag,
           child: TimerWidget(callback: () {
             !Platform.isIOS
-                ? DialogList.androidWriteCheckAlert(
+                ? DialogList.showAndroidWriteCheckAlert(
                     context: context, yesAction: yesAction, noAction: noAction)
-                : DialogList.iosWriteCheckAlert(
+                : DialogList.showIosWriteCheckAlert(
                     context: context, yesAction: yesAction, noAction: noAction);
           })),
     );

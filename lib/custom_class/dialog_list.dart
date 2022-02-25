@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 
 class DialogList {
   // 일기 추천 dialog
-  static void showDailyTopic(BuildContext context, int topicIndex,
+  static void showIosDailyTopic(BuildContext context, int topicIndex,
       {required Function okFunction}) {
     showCupertinoDialog<void>(
       context: context,
@@ -49,7 +49,7 @@ class DialogList {
   }
 
   //이름 변경 dialog
-  static void showChangeWhatName(BuildContext context) {
+  static void showIosChangeWhatName(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
     showCupertinoDialog<void>(
       context: context,
@@ -87,7 +87,7 @@ class DialogList {
   }
 
   // 계정탈퇴 dialog
-  static void showLeaveAccountDialog(BuildContext context) {
+  static void showIosLeaveAccountDialog(BuildContext context) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
@@ -122,7 +122,7 @@ class DialogList {
   }
 
   //이미지 선택 dialog
-  static void showWhereSelectImage(BuildContext context) {
+  static void showIosWhereSelectImage(BuildContext context) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
@@ -161,7 +161,7 @@ class DialogList {
   }
 
   // ios 일기 다씀 확인 alert
-  static void iosWriteCheckAlert({
+  static void showIosWriteCheckAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
@@ -188,7 +188,7 @@ class DialogList {
   }
 
   // 안드로이드 일기 다씀 확인
-  static void androidWriteCheckAlert({
+  static void showAndroidWriteCheckAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
@@ -215,7 +215,7 @@ class DialogList {
   }
 
   // IOS 일기 삭제 확인 Dialog
-  static void iosDeleteDiaryAlert({
+  static void showIosDeleteDiaryAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
@@ -241,7 +241,7 @@ class DialogList {
   }
 
   // IOS 일기 백업 Dialog
-  static void iosBackUpStartDiaryAlert({
+  static void showIosBackUpStartDiaryAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
@@ -266,7 +266,7 @@ class DialogList {
   }
 
   // IOS 일기 백업 다운로드
-  static void iosBackUpDownloadDiaryAlert({
+  static void showIosBackUpDownloadDiaryAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
@@ -291,7 +291,7 @@ class DialogList {
   }
 
   // IOS 메일 안내 메세지
-  static void iosReportMailAlert({
+  static void showIosReportMailAlert({
     required BuildContext context,
     required Function() yesAction,
     required Function() noAction,
