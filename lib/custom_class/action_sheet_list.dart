@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart' as foundation;
 
 class ActionSheetList {
   // 이미지 추가 액션 시트
@@ -102,8 +103,32 @@ class ActionSheetList {
             ));
   }
 
-  // 계정 정보 변경 AcrionSheet
+  // 계정 정보 변경 플랫폼 확인
   static void showUpdateUserdataActionSheet({
+    required BuildContext context,
+    required Function selectRepresentativeImageFunction,
+    required Function updateUserNameFunction,
+    required Function leaveAccountFunction,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosUpdateUserdataActionSheet(
+            context: context,
+            selectRepresentativeImageFunction:
+                selectRepresentativeImageFunction,
+            updateUserNameFunction: updateUserNameFunction,
+            leaveAccountFunction: leaveAccountFunction,
+          )
+        : showAndroidUpdateUserdataActionSheet(
+            context: context,
+            selectRepresentativeImageFunction:
+                selectRepresentativeImageFunction,
+            updateUserNameFunction: updateUserNameFunction,
+            leaveAccountFunction: leaveAccountFunction,
+          );
+  }
+
+  // 계정 정보 변경 AcrionSheet
+  static void showIosUpdateUserdataActionSheet({
     required BuildContext context,
     required Function selectRepresentativeImageFunction,
     required Function updateUserNameFunction,
@@ -141,5 +166,57 @@ class ActionSheetList {
                 onPressed: () => Get.back(),
               ),
             ));
+  }
+
+  // 안드로이드 계정정보 확인 Action Sheet
+  static void showAndroidUpdateUserdataActionSheet({
+    required BuildContext context,
+    required Function selectRepresentativeImageFunction,
+    required Function updateUserNameFunction,
+    required Function leaveAccountFunction,
+  }) {
+    showModalBottomSheet<dynamic>(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15),
+          ),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        builder: (BuildContext context) {
+          return Wrap(
+            children: [
+              GestureDetector(
+                onTap: () => selectRepresentativeImageFunction(),
+                child: const ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text(
+                    '대표이미지 선택',
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => updateUserNameFunction(),
+                child: const ListTile(
+                  leading: Icon(Icons.edit),
+                  title: Text(
+                    '이름 변경',
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => leaveAccountFunction(),
+                child: const ListTile(
+                  leading: Icon(Icons.delete_forever),
+                  title: Text(
+                    '계정 탈퇴',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
