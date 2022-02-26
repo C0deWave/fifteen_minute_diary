@@ -190,7 +190,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.report),
                     text: '의견 제시',
                     clickFunction: () {
-                      DialogList.showIosReportMailAlert(
+                      DialogList.showReportMailAlert(
                           context: context,
                           yesAction: () {
                             debugPrint('버그신고');
