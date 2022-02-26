@@ -15,7 +15,7 @@ class StatisticWidget extends StatelessWidget {
       builder: (controller) => AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         color: Colors.white,
-        height: controller.getWidgetHeight(),
+        height: controller.getWidgetHeight() + 20,
         child: Card(
           elevation: 1,
           shape:
