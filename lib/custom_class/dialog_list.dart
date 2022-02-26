@@ -9,6 +9,7 @@ import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart' as foundation;
 
 class DialogList {
   // 일기 추천 dialog
@@ -278,6 +279,19 @@ class DialogList {
     );
   }
 
+  // 플랫폼 확인 코드 추가하기
+  static void showBackUpStartDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosBackUpStartDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction)
+        : showAndroidBackUpStartDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction);
+  }
+
   // IOS 일기 백업 Dialog
   static void showIosBackUpStartDiaryAlert({
     required BuildContext context,
@@ -295,6 +309,31 @@ class DialogList {
             onPressed: yesAction,
           ),
           CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Android 일기 백업 Dialog
+  static void showAndroidBackUpStartDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('백업 올리기'),
+        content: Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('확인'),
+            onPressed: yesAction,
+          ),
+          TextButton(
             child: const Text('취소'),
             onPressed: noAction,
           ),

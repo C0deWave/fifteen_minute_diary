@@ -107,7 +107,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.upload),
                     text: '데이터 업로드',
                     clickFunction: () async {
-                      DialogList.showIosBackUpStartDiaryAlert(
+                      DialogList.showBackUpStartDiaryAlert(
                         context: context,
                         yesAction: () async {
                           Get.back();
