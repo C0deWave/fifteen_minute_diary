@@ -279,7 +279,7 @@ class DialogList {
     );
   }
 
-  // 플랫폼 확인 코드 추가하기
+  // 일기 백업 플랫폼 확인 코드 추가하기
   static void showBackUpStartDiaryAlert({
     required BuildContext context,
     required Function() yesAction,
@@ -342,6 +342,19 @@ class DialogList {
     );
   }
 
+// 플랫폼 확인 코드 추가하기
+  static void showBackUpDownloadDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosBackUpDownloadDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction)
+        : showAndroidBackUpDownloadDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction);
+  }
+
   // IOS 일기 백업 다운로드
   static void showIosBackUpDownloadDiaryAlert({
     required BuildContext context,
@@ -361,6 +374,31 @@ class DialogList {
           CupertinoDialogAction(
             child: const Text('취소'),
             onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Android 일기 백업 다운로드
+  static void showAndroidBackUpDownloadDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('백업 내려받기'),
+        content: Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+          TextButton(
+            child: const Text('확인'),
+            onPressed: yesAction,
           ),
         ],
       ),
