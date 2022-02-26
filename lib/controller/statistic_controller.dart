@@ -15,7 +15,7 @@ class StaticController extends GetxController {
   String getTitleText() => _title;
   String getSubTitleText() => _subTitle;
 
-  getMonthlyStatistic({
+  Widget getMonthlyStatistic({
     required int totalDay,
     required int dailyDay,
     required int totalTime,
