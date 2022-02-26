@@ -405,6 +405,19 @@ class DialogList {
     );
   }
 
+  // 메일안내 메세지 플랫폼 확인
+  static void showReportMailAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosReportMailAlert(
+            context: context, yesAction: yesAction, noAction: noAction)
+        : showAndroidReportMailAlert(
+            context: context, yesAction: yesAction, noAction: noAction);
+  }
+
   // IOS 메일 안내 메세지
   static void showIosReportMailAlert({
     required BuildContext context,
@@ -425,6 +438,32 @@ class DialogList {
           CupertinoDialogAction(
             child: const Text('취소'),
             onPressed: noAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Android 메일안내 메세지
+  static void showAndroidReportMailAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('개발자에게 의견제시'),
+        content: const Text(
+            '각종 버그나 의견이 있다면 말해주세요.\n감성 사진도 보내 주시면 추후 업데이트에 반영하겠습니다.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+          TextButton(
+            child: const Text('확인'),
+            onPressed: yesAction,
           ),
         ],
       ),
