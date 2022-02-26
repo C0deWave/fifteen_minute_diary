@@ -177,7 +177,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           },
                           updateUserNameFunction: () {
                             Get.back();
-                            DialogList.showIosChangeWhatName(context);
+                            DialogList.showChangeWhatName(context: context);
                           },
                           leaveAccountFunction: () {
                             Get.back();

@@ -87,7 +87,18 @@ class DialogList {
     );
   }
 
-  //이름 변경 dialog
+  //-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  // 이름변경 요청 플랫폼 확인하기
+  static void showChangeWhatName({
+    required BuildContext context,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosChangeWhatName(context)
+        : showAndroidChangeWhatName(context);
+  }
+
+  //IOS 이름 변경 dialog
   static void showIosChangeWhatName(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
     showCupertinoDialog<void>(
@@ -124,6 +135,48 @@ class DialogList {
       ),
     );
   }
+
+  //Android 이름 변경 dialog
+  static void showAndroidChangeWhatName(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          '유저명',
+          style: TextStyle(fontWeight: FontWeight.normal),
+        ),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: textEditingController,
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: const Text(
+              '취소',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          TextButton(
+            child: const Text('확인'),
+            onPressed: () async {
+              if (textEditingController.text.isNotEmpty) {
+                FirebaseService().updateUserName(textEditingController.text);
+              }
+              Get.back();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+  //-----------------------------------------------------------------
+  //-----------------------------------------------------------------
 
   // 계정탈퇴 dialog
   static void showIosLeaveAccountDialog(BuildContext context) {
