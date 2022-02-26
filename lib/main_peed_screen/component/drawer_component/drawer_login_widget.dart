@@ -173,7 +173,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           context: context,
                           selectRepresentativeImageFunction: () {
                             Get.back();
-                            DialogList.showIosWhereSelectImage(context);
+                            DialogList.showWhereSelectImage(context: context);
                           },
                           updateUserNameFunction: () {
                             Get.back();
