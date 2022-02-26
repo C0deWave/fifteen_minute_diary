@@ -160,7 +160,18 @@ class DialogList {
     );
   }
 
-  //이미지 선택 dialog
+  // ----------------------------------------------------------------
+  // ----------------------------------------------------------------
+  // 대표이미지 선택 - 플랫폼 확인
+  static void showWhereSelectImage({
+    required BuildContext context,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosWhereSelectImage(context)
+        : showAndroidWhereSelectImage(context);
+  }
+
+  // IOS 이미지 선택 dialog
   static void showIosWhereSelectImage(BuildContext context) {
     showCupertinoDialog<void>(
       context: context,
@@ -198,6 +209,47 @@ class DialogList {
       ),
     );
   }
+
+  //Android 대표이미지 선택 Dialog
+  static void showAndroidWhereSelectImage(BuildContext context) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('이미지 선택'),
+        content: const Text('어디에서 이미지를 가져올까요?'),
+        actions: [
+          TextButton(
+            child: const Text('카메라'),
+            onPressed: () async {
+              File? data = await CameraAndImagePicker.selectFromCamera();
+              if (data != null) {
+                FirebaseService().updateUserImage(data);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          TextButton(
+            child: const Text('앨범'),
+            onPressed: () async {
+              File? data = await CameraAndImagePicker.selectFromAlbum();
+              if (data != null) {
+                FirebaseService().updateUserImage(data);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          TextButton(
+            child: const Text('취소'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
+  }
+  // ----------------------------------------------------------------
+  // ----------------------------------------------------------------
 
   // ios 일기 다씀 확인 alert
   static void showIosWriteCheckAlert({
@@ -405,6 +457,8 @@ class DialogList {
     );
   }
 
+  // ----------------------------------------------------------------
+  // ----------------------------------------------------------------
   // 메일안내 메세지 플랫폼 확인
   static void showReportMailAlert({
     required BuildContext context,
@@ -469,4 +523,6 @@ class DialogList {
       ),
     );
   }
+  // ----------------------------------------------------------------
+  // ----------------------------------------------------------------
 }
