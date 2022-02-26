@@ -175,10 +175,19 @@ class DialogList {
       ),
     );
   }
-  //-----------------------------------------------------------------
-  //-----------------------------------------------------------------
 
-  // 계정탈퇴 dialog
+  //-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  // 이름변경 요청 플랫폼 확인하기
+  static void showLeaveAccountDialog({
+    required BuildContext context,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosLeaveAccountDialog(context)
+        : showAndroidLeaveAccountDialog(context);
+  }
+
+  // IOS 계정탈퇴 dialog
   static void showIosLeaveAccountDialog(BuildContext context) {
     showCupertinoDialog<void>(
       context: context,
@@ -199,6 +208,43 @@ class DialogList {
           CupertinoDialogAction(
             isDestructiveAction: true,
             child: const Text('확인'),
+            onPressed: () async {
+              //파이어베이스유저DB / 계정삭제
+              Get.find<PostController>().deletePostListAll();
+              await HiveDataBase().clearHiveDatabase();
+              //파이어베이스 백업, 이미지, 계정이미지, 계정 데이터 삭제
+              await FirebaseService().deleteUser();
+              Get.back();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  //Android 계정탈퇴 Dialog
+  static void showAndroidLeaveAccountDialog(BuildContext context) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          '계정 탈퇴',
+          style: TextStyle(fontWeight: FontWeight.normal),
+        ),
+        content: const Text(
+            '계정정보, 일기, 백업데이터를 삭제합니다.\n삭제된 데이터는 복구할 수 없습니다.\n계정을 삭제하기 위해 재로그인이 필요합니다.'),
+        actions: [
+          TextButton(
+            child: const Text('취소'),
+            onPressed: () async {
+              Get.back();
+            },
+          ),
+          TextButton(
+            child: const Text(
+              '확인',
+              style: TextStyle(color: Colors.red),
+            ),
             onPressed: () async {
               //파이어베이스유저DB / 계정삭제
               Get.find<PostController>().deletePostListAll();
