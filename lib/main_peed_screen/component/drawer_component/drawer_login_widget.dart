@@ -181,7 +181,7 @@ class DrawerLoginWidget extends StatelessWidget {
                           },
                           leaveAccountFunction: () {
                             Get.back();
-                            DialogList.showIosLeaveAccountDialog(context);
+                            DialogList.showLeaveAccountDialog(context: context);
                           });
                     },
                   ),
