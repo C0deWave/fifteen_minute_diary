@@ -133,7 +133,7 @@ class DrawerLoginWidget extends StatelessWidget {
                     icon: const Icon(Icons.download),
                     text: '데이터 다운로드',
                     clickFunction: () async {
-                      DialogList.showIosBackUpDownloadDiaryAlert(
+                      DialogList.showBackUpDownloadDiaryAlert(
                         context: context,
                         yesAction: () async {
                           Get.back();
