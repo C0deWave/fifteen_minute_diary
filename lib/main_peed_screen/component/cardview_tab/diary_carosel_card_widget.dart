@@ -21,10 +21,9 @@ class DiaryCaroselCardWidget extends StatelessWidget {
               final availableHeight = MediaQuery.of(context).size.height -
                   AppBar().preferredSize.height -
                   MediaQuery.of(context).padding.top -
-                  MediaQuery.of(context).padding.bottom -
-                  5;
+                  MediaQuery.of(context).padding.bottom;
               return Container(
-                height: availableHeight,
+                height: availableHeight - 5,
                 color: Colors.white,
                 child: CarouselSlider.builder(
                   itemBuilder: (BuildContext context, int index, int a) {
@@ -42,7 +41,7 @@ class DiaryCaroselCardWidget extends StatelessWidget {
                   options: CarouselOptions(
                     autoPlay: false,
                     enableInfiniteScroll: false,
-                    height: availableHeight,
+                    height: availableHeight - 15,
                     viewportFraction: 0.9,
                   ),
                   carouselController: _controller.getCarouselConteoller(),
