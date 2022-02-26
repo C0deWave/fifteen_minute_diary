@@ -330,12 +330,12 @@ class DialogList {
         content: Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
         actions: <Widget>[
           TextButton(
-            child: const Text('확인'),
-            onPressed: yesAction,
-          ),
-          TextButton(
             child: const Text('취소'),
             onPressed: noAction,
+          ),
+          TextButton(
+            child: const Text('확인'),
+            onPressed: yesAction,
           ),
         ],
       ),
