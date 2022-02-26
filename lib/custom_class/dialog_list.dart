@@ -48,6 +48,44 @@ class DialogList {
     );
   }
 
+  // 안드로이드 일기 추천 dialog
+  static void showAndroidDailyTopic(BuildContext context, int topicIndex,
+      {required Function okFunction}) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          '오늘의 일기 주제',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: SingleChildScrollView(
+            child: ListBody(
+          children: [
+            Text(k_topiclist[topicIndex]),
+            const Text('확인을 누르면 바로 일기를 쓰러 이동합니다.'),
+          ],
+        )),
+        actions: [
+          TextButton(
+            child: const Text('취소'),
+            onPressed: () async {
+              Get.back();
+            },
+          ),
+          TextButton(
+            child: const Text('확인'),
+            onPressed: () async {
+              Get.find<PostController>()
+                  .updateTitleText(k_topiclist[topicIndex]);
+              Get.back();
+              okFunction();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   //이름 변경 dialog
   static void showIosChangeWhatName(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
