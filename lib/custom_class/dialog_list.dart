@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 class DialogList {
-  // 일기 추천 dialog
+  //Ios 일기 추천 dialog
   static void showIosDailyTopic(BuildContext context, int topicIndex,
       {required Function okFunction}) {
     showCupertinoDialog<void>(
@@ -404,6 +404,21 @@ class DialogList {
     );
   }
 
+  //-----------------------------------------------------------------------
+  //-----------------------------------------------------------------------
+  // 일기 삭제 확인 플랫폼 확인
+  static void showDeleteDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosDeleteDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction)
+        : showAndroidDeleteDiaryAlert(
+            context: context, yesAction: yesAction, noAction: noAction);
+  }
+
   // IOS 일기 삭제 확인 Dialog
   static void showIosDeleteDiaryAlert({
     required BuildContext context,
@@ -430,6 +445,36 @@ class DialogList {
     );
   }
 
+  // Android 일기 삭제 확인 Dialog
+  static void showAndroidDeleteDiaryAlert({
+    required BuildContext context,
+    required Function() yesAction,
+    required Function() noAction,
+  }) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('일기 삭제'),
+        content: Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('취소'),
+            onPressed: noAction,
+          ),
+          TextButton(
+            child: const Text(
+              '확인',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: yesAction,
+          ),
+        ],
+      ),
+    );
+  }
+
+  //-----------------------------------------------------------------------
+  //-----------------------------------------------------------------------
   // 일기 백업 플랫폼 확인 코드 추가하기
   static void showBackUpStartDiaryAlert({
     required BuildContext context,
@@ -493,7 +538,9 @@ class DialogList {
     );
   }
 
-// 플랫폼 확인 코드 추가하기
+  //-----------------------------------------------------------------------
+  //-----------------------------------------------------------------------
+  // 플랫폼 확인 코드 추가하기
   static void showBackUpDownloadDiaryAlert({
     required BuildContext context,
     required Function() yesAction,
