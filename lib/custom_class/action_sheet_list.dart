@@ -78,8 +78,25 @@ class ActionSheetList {
             ));
   }
 
-  // 일기 삭제 액션 시트
+  //------------------------------------------------------------------------
+  //------------------------------------------------------------------------
+  // 일기 삭제 Action Sheet
+  // 플랫폼 확인하기
   static void deleteDiaryActionSheet(
+      {required BuildContext context, required Function deleteFunction}) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? deleteIosDiaryActionSheet(
+            context: context,
+            deleteFunction: deleteFunction,
+          )
+        : deleteAndroidDiaryActionSheet(
+            context: context,
+            deleteFunction: deleteFunction,
+          );
+  }
+
+  // IOS 일기 삭제 액션 시트
+  static void deleteIosDiaryActionSheet(
       {required BuildContext context, required Function deleteFunction}) {
     showCupertinoModalPopup<void>(
         context: context,
@@ -100,6 +117,45 @@ class ActionSheetList {
                 ),
                 onPressed: () => Get.back(),
               ),
+            ));
+  }
+
+  // Android 일기 삭제 액션 시트
+  static void deleteAndroidDiaryActionSheet(
+      {required BuildContext context, required Function deleteFunction}) {
+    showModalBottomSheet<dynamic>(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15),
+          ),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        builder: (BuildContext context) => Wrap(
+              children: [
+                GestureDetector(
+                  child: const ListTile(
+                    leading: Icon(Icons.delete),
+                    title: Text(
+                      '일기 삭제',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  onTap: () => deleteFunction(),
+                ),
+                // 취소 버튼이 따로 존재하지 않아도 될것 같음
+                // GestureDetector(
+                //   child: const ListTile(
+                //     title: Text(
+                //       '취소',
+                //       style: TextStyle(color: Colors.red),
+                //     ),
+                //   ),
+                //   onTap: () => Get.back(),
+                // ),
+              ],
             ));
   }
 
@@ -129,7 +185,7 @@ class ActionSheetList {
           );
   }
 
-  // 계정 정보 변경 AcrionSheet
+  // Ios 계정 정보 변경 AcrionSheet
   static void showIosUpdateUserdataActionSheet({
     required BuildContext context,
     required Function selectRepresentativeImageFunction,
