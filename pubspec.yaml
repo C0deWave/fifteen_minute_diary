@@ -112,5 +112,5 @@ flutter_native_splash:
   color: "#FFFFFF"
   image: "lib/assets/splash_image.png"
   fullscreen: false
-  android_gravity: fill_vertical
+  android_gravity: fill
   ios_content_mode: scaleAspectFit
