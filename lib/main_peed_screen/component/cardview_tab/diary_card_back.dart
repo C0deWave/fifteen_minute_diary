@@ -70,9 +70,9 @@ class DiaryCardBack extends StatelessWidget {
                             writeDate != null
                                 ? GestureDetector(
                                     onTap: () =>
-                                        ActionSheetList.showDeleteDiarySheet(
+                                        ActionSheetList.deleteDiaryActionSheet(
                                             context: context,
-                                            deleteAction: () {
+                                            deleteFunction: () {
                                               DialogList.showDeleteDiaryAlert(
                                                   context: context,
                                                   yesAction: () {

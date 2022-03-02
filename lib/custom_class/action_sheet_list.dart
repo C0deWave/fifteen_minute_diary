@@ -34,16 +34,6 @@ class ActionSheetList {
     );
   }
 
-  // 일기 삭제 Action Sheet
-  static void showDeleteDiarySheet(
-      {required BuildContext context, required Function deleteAction}) {
-    ActionSheetList.deleteDiaryActionSheet(
-        context: context,
-        deleteFunction: () {
-          deleteAction();
-        });
-  }
-
   // 이미지 삭제 또는 대표이미지 지정 ActionSheet
   static void selectImageDeleteOrRepresentImage({
     required BuildContext context,
