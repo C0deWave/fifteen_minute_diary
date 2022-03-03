@@ -4,8 +4,29 @@ import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 class ActionSheetList {
-  // 이미지 추가 액션 시트
+  //------------------------------------------------------------------------
+  //------------------------------------------------------------------------
+  // 이미지 추가 Action Sheet
+  // 플랫폼 확인하기
   static void showAddImageSheet(
+      {required BuildContext context,
+      required Function chooseCamera,
+      required Function chooseAlbum}) {
+    foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        ? showIosAddImageSheet(
+            context: context,
+            chooseCamera: chooseCamera,
+            chooseAlbum: chooseAlbum,
+          )
+        : showAndroidAddImageSheet(
+            context: context,
+            chooseCamera: chooseCamera,
+            chooseAlbum: chooseAlbum,
+          );
+  }
+
+  // IOS 이미지 추가 액션 시트
+  static void showIosAddImageSheet(
       {required BuildContext context,
       required Function chooseCamera,
       required Function chooseAlbum}) {
@@ -34,6 +55,46 @@ class ActionSheetList {
     );
   }
 
+  // Android 이미지 추가 액션 시트
+  static void showAndroidAddImageSheet(
+      {required BuildContext context,
+      required Function chooseCamera,
+      required Function chooseAlbum}) {
+    showModalBottomSheet<dynamic>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15),
+        ),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) => Wrap(
+        children: [
+          const ListTile(
+            title: Center(child: Text("사진 선택")),
+          ),
+          GestureDetector(
+            child: const ListTile(
+              leading: Icon(Icons.camera),
+              title: Text('카메라에서 쵤영'),
+            ),
+            onTap: () => chooseCamera(),
+          ),
+          GestureDetector(
+            child: const ListTile(
+              leading: Icon(Icons.image),
+              title: Text('앨범에서 선택'),
+            ),
+            onTap: () => chooseAlbum(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //------------------------------------------------------------------------
+  //------------------------------------------------------------------------
   // 이미지 삭제 또는 대표이미지 지정 ActionSheet
   static void selectImageDeleteOrRepresentImage({
     required BuildContext context,
