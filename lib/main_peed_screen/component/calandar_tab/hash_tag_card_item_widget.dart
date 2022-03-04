@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HashTagCardItemWidget extends StatelessWidget {
-  HashTagCardItemWidget({required this.width, required this.postdata, Key? key})
+  const HashTagCardItemWidget(
+      {required this.width, required this.postdata, Key? key})
       : super(key: key);
 
-  Post postdata;
-  double width;
+  final Post postdata;
+  final double width;
 
   @override
   Widget build(BuildContext context) {

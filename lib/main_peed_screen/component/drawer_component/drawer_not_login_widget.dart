@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class DrawerNotLoginWidget extends StatelessWidget {
-  DrawerNotLoginWidget({Key? key}) : super(key: key);
-  GoogleSignInAccount? _currentUser = null;
+  const DrawerNotLoginWidget({Key? key}) : super(key: key);
+  final GoogleSignInAccount? _currentUser = null;
 
   @override
   Widget build(BuildContext context) {
