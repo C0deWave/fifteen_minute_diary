@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:fifteen_minute_diary/controller/post_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/action_sheet_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

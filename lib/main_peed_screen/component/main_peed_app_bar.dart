@@ -1,7 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:timer_builder/timer_builder.dart';
 
 // var mainPeedAppBar =
 class MainPeedAppBar extends StatelessWidget {
