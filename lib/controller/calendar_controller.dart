@@ -172,13 +172,13 @@ class CalendarController extends GetxController {
         tempWeeklyData.add(0);
       }
       standardDay = standardDay.subtract(const Duration(days: -1));
-      print(standardDay);
+      debugPrint(standardDay.toString());
     }
     _filteredPostlist = _searchedPostlist.toList();
     _filteredTaglist = _searchedTaglist.toList();
     _weeklyData = tempWeeklyData;
     sortTaglist();
-    print(_weeklyData);
+    debugPrint(_weeklyData.toString());
     update();
   }
 
