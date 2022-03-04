@@ -16,7 +16,7 @@ class HashTagCardItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.find<TabbarController>().changeTabbarState(TabbarState.diaryState);
-        Future.delayed(Duration(milliseconds: 500))
+        Future.delayed(const Duration(milliseconds: 500))
             .then((value) => Get.find<PostController>().jumpThisPost(postdata));
         debugPrint('일기 선택');
       },
@@ -33,7 +33,7 @@ class HashTagCardItemWidget extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                     image: DecorationImage(
                         image: FileImage(
                           postdata.imagelist![0],
@@ -41,7 +41,7 @@ class HashTagCardItemWidget extends StatelessWidget {
                         fit: BoxFit.cover)),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Center(
                     child: Text(
                   postdata.title,

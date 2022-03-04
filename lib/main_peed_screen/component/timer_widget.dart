@@ -19,7 +19,7 @@ class TimerWidget extends StatelessWidget {
           // height: Get.height / 7,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(11),
-              color: Color.fromARGB(255, 39, 88, 59),
+              color: const Color.fromARGB(255, 39, 88, 59),
               border: Border.all(width: 0)),
           child: Center(
             child: Column(
@@ -28,7 +28,7 @@ class TimerWidget extends StatelessWidget {
                 Row(
                   children: const [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(18, 0, 0, 0),
                       child: Text(
                         "일기쓰기",
                         style: TextStyle(

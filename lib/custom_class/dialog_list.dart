@@ -429,7 +429,7 @@ class DialogList {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text('일기 삭제'),
-        content: Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
+        content: const Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
         actions: <Widget>[
           CupertinoDialogAction(
             child: const Text('확인'),
@@ -455,7 +455,7 @@ class DialogList {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('일기 삭제'),
-        content: Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
+        content: const Text('일기를 삭제하시겠습니까?\n백업이 안 됐을 경우 되돌릴 수 없습니다.'),
         actions: <Widget>[
           TextButton(
             child: const Text('취소'),
@@ -498,7 +498,7 @@ class DialogList {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text('백업 올리기'),
-        content: Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
+        content: const Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
         actions: <Widget>[
           CupertinoDialogAction(
             child: const Text('확인'),
@@ -523,7 +523,7 @@ class DialogList {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('백업 올리기'),
-        content: Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
+        content: const Text('데이터를 서버에 백업 할까요?\n기존 백업 내용은 지워집니다.'),
         actions: <Widget>[
           TextButton(
             child: const Text('취소'),
@@ -563,7 +563,7 @@ class DialogList {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text('백업 내려받기'),
-        content: Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
+        content: const Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
         actions: <Widget>[
           CupertinoDialogAction(
             child: const Text('확인'),
@@ -588,7 +588,7 @@ class DialogList {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('백업 내려받기'),
-        content: Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
+        content: const Text('백업 데이터를 불러올까요?\n기존 일기가 지워질 수 있습니다.'),
         actions: <Widget>[
           TextButton(
             child: const Text('취소'),

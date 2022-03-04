@@ -15,7 +15,7 @@ class TabbarWidget extends StatelessWidget {
           color: Colors.white,
           child: CupertinoTabBar(
             Colors.white12,
-            Color.fromARGB(255, 48, 119, 51),
+            const Color.fromARGB(255, 48, 119, 51),
             [
               Text(
                 "내 일기 목록",

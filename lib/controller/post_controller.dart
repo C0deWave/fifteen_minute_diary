@@ -65,7 +65,8 @@ class PostController extends GetxController {
     for (var i = 0; i < _postlist.length; i++) {
       if (checkDateIsSame(postdata.writeDate, _postlist[i].writeDate)) {
         _carouselController.animateToPage(_postlist.length - 1 - i,
-            duration: Duration(milliseconds: 500), curve: Curves.easeOutQuint);
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutQuint);
       }
     }
   }

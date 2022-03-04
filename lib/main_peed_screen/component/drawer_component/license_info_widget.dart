@@ -8,7 +8,7 @@ class LicenseInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
-          Get.dialog(LicenseInfoDialog());
+          Get.dialog(const LicenseInfoDialog());
         },
         child: const Text(
           '라이센스정보',
@@ -62,7 +62,7 @@ class LicenseInfoDialog extends StatelessWidget {
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.bold),
             )),
-            SizedBox(height: 3),
+            const SizedBox(height: 3),
             Center(
               child: Text(
                 'Icons made by Freepik from \nwww.flaticon.com',

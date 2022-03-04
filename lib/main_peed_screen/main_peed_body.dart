@@ -113,7 +113,7 @@ class MainPeedBody extends StatelessWidget {
                           builder: (_) {
                             if (tabbarController.currentState ==
                                 TabbarState.diaryState) {
-                              return DiaryCaroselCardWidget();
+                              return const DiaryCaroselCardWidget();
                             } else {
                               return const CalenderTabWidget();
                             }
@@ -126,7 +126,7 @@ class MainPeedBody extends StatelessWidget {
                         builder: (_) {
                           if (tabbarController.currentState !=
                               TabbarState.diaryState) {
-                            return HashTagWidget();
+                            return const HashTagWidget();
                           } else {
                             return SliverStickyHeader();
                           }

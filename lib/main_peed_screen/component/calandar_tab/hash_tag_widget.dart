@@ -19,7 +19,7 @@ class HashTagWidget extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
             (context, i) => Column(
                   children: [
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Container(
                       width: 700,
                       child: Column(
@@ -28,7 +28,7 @@ class HashTagWidget extends StatelessWidget {
                         children: const [HashTagHeaderWidget()],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Stack(
                       children: [
                         Container(
