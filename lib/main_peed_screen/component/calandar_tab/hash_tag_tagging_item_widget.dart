@@ -7,7 +7,7 @@ class HashTagTaggingItemWidget extends StatelessWidget {
   HashTagTaggingItemWidget({required this.tag, Key? key}) : super(key: key);
 
   final Tag tag;
-  List<Color> itemColorList = [
+  final List<Color> itemColorList = [
     Colors.purple,
     Colors.blueGrey,
     Colors.blue,

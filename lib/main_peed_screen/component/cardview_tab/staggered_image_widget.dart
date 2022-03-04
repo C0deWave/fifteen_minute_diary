@@ -6,11 +6,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 class StaggeredImageView extends StatelessWidget {
-  StaggeredImageView({Key? key, required this.imagelist, this.dateTime})
+  const StaggeredImageView({Key? key, required this.imagelist, this.dateTime})
       : super(key: key);
 
-  List<File>? imagelist;
-  DateTime? dateTime;
+  final List<File>? imagelist;
+  final DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
     if (imagelist != null && imagelist!.length == 1) {
@@ -199,7 +199,7 @@ class StaggeredImageView extends StatelessWidget {
 }
 
 class StaggeredItem extends StatelessWidget {
-  StaggeredItem({
+  const StaggeredItem({
     required this.indexNumber,
     required this.imagelist,
     required this.dateTime,
@@ -207,8 +207,8 @@ class StaggeredItem extends StatelessWidget {
   }) : super(key: key);
 
   final List<File>? imagelist;
-  int indexNumber;
-  DateTime dateTime;
+  final int indexNumber;
+  final DateTime dateTime;
 
   @override
   Widget build(BuildContext context) {

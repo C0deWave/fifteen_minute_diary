@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WideImageWidget extends StatelessWidget {
-  WideImageWidget(
+  const WideImageWidget(
       {Key? key,
       required this.imagelist,
       required this.dateTime,
       required this.indexNumber})
       : super(key: key);
-  List<File>? imagelist;
-  int indexNumber;
-  DateTime dateTime;
+  final List<File>? imagelist;
+  final int indexNumber;
+  final DateTime dateTime;
   @override
   Widget build(BuildContext context) {
     var imagedata = imagelist

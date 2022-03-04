@@ -71,7 +71,7 @@ class FirebaseService {
   }
 
   // 구글 로그인을 합니다.
-  Future<String?> signInwithGoogle() async {
+  Future<void> signInwithGoogle() async {
     try {
       final credential = await _getGoogleCredential();
       await _auth.signInWithCredential(credential);
