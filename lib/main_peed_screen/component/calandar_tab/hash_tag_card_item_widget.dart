@@ -18,7 +18,7 @@ class HashTagCardItemWidget extends StatelessWidget {
         Get.find<TabbarController>().changeTabbarState(TabbarState.diaryState);
         Future.delayed(Duration(milliseconds: 500))
             .then((value) => Get.find<PostController>().jumpThisPost(postdata));
-        print('일기 선택');
+        debugPrint('일기 선택');
       },
       child: SizedBox(
         width: width,
