@@ -20,7 +20,7 @@ class HashTagWidget extends StatelessWidget {
             (context, i) => Column(
                   children: [
                     const SizedBox(height: 15),
-                    Container(
+                    SizedBox(
                       width: 700,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

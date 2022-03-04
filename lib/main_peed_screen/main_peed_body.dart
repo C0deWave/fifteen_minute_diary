@@ -103,8 +103,8 @@ class MainPeedBody extends StatelessWidget {
                       return SliverStickyHeader(
                         header: Container(
                           color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 6, 15, 0),
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 6, 15, 0),
                             child: TabbarWidget(),
                           ),
                         ),
