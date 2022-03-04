@@ -21,7 +21,7 @@ void main() async {
       .then((value) => debugPrint(_tag + "Hive init"));
   Hive.registerAdapter(PostAdapter());
   await Hive.openBox<Post>(k_PostBox);
-  await Future.delayed(Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 500));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }

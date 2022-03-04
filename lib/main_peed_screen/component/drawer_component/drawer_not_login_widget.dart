@@ -69,7 +69,7 @@ class DrawerNotLoginWidget extends StatelessWidget {
                     }
                   },
                 ),
-                LicenseInfoWidget(),
+                const LicenseInfoWidget(),
               ],
             ),
           ],

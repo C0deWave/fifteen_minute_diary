@@ -76,7 +76,7 @@ class DrawerLoginWidget extends StatelessWidget {
                       RecommendDiaryTopic().showDailyTopic(context,
                           okFunction: () async {
                         Get.back();
-                        await Future.delayed(Duration(milliseconds: 500));
+                        await Future.delayed(const Duration(milliseconds: 500));
                         if (timerController.haveTime()) {
                           timerController.startTimer(
                               finishFunction: () {

@@ -17,8 +17,8 @@ class CalendarWidget extends StatelessWidget {
         elevation: 1,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
-            side: BorderSide(width: 3, color: Color.fromARGB(255, 36, 90, 59))),
-        color: Color.fromARGB(255, 255, 255, 255),
+            side: const BorderSide(width: 3, color: Color.fromARGB(255, 36, 90, 59))),
+        color: const Color.fromARGB(255, 255, 255, 255),
         child: Stack(
           children: [
             Padding(
