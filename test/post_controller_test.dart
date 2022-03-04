@@ -6,7 +6,6 @@ import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
