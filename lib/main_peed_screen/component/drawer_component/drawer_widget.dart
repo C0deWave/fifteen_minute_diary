@@ -18,7 +18,7 @@ class DrawerWidget extends StatelessWidget {
           stream: FirebaseAuth.instance.userChanges(),
           builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
             if (snapshot.data == null) {
-              return DrawerNotLoginWidget();
+              return const DrawerNotLoginWidget();
             } else {
               return DrawerLoginWidget(snapshot: snapshot);
             }

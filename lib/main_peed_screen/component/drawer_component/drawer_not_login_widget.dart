@@ -4,11 +4,10 @@ import 'package:fifteen_minute_diary/main_peed_screen/component/drawer_component
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class DrawerNotLoginWidget extends StatelessWidget {
   const DrawerNotLoginWidget({Key? key}) : super(key: key);
-  final GoogleSignInAccount? _currentUser = null;
+  //final GoogleSignInAccount? _currentUser = null;
 
   @override
   Widget build(BuildContext context) {
