@@ -1,16 +1,19 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 import 'dart:math';
 
 import 'package:fifteen_minute_diary/constant.dart';
 import 'package:fifteen_minute_diary/custom_class/hive_database.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
-import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
+  const String k_PostBox = 'aaa';
+
   group("HiveDatabase: ", () {
     String? path;
     late HiveDataBase hiveDataBase;

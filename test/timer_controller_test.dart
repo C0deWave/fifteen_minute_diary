@@ -1,14 +1,16 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 import 'dart:math';
 import 'package:fifteen_minute_diary/controller/timer_controller.dart';
 import 'package:fifteen_minute_diary/custom_class/post.dart';
-import 'package:fifteen_minute_diary/private_constant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
+  const String k_PostBox = 'aaa';
   group('timer_controller', () {
     //---------------------------------------------------------------------------
     //테스트 사전 준비 설정
