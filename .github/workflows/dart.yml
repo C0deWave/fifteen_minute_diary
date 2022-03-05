@@ -26,8 +26,9 @@ jobs:
         run: flutter pub get
 
       # 문제점 출력
-      - name: Analyze project source
-        run: flutter analyze --fatal-infos
+      # API 키값 숨기는 문제 때문에 주석처리
+      # - name: Analyze project source
+      #   run: flutter analyze --fatal-infos
 
       # 테스트 코드 실행
       - name: Run tests
