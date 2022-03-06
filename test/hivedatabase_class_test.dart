@@ -12,7 +12,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
-  const String k_PostBox = 'aaa';
+  const String k_PostBox = 'postbox';
 
   group("HiveDatabase: ", () {
     String? path;

@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 // 전역 설정
 const k_TimerTotalDuration = 15 * 60;
 
+//Hive Database의 Post내용을 담는 박스 키값입니다.
+const k_PostBox = 'postbox';
+
 //---------------------------------------------------
 // init_splash_screen
 // 처음 앱을 실행했는지 확인하기 위한 Shared_preference의 키값입니다.
